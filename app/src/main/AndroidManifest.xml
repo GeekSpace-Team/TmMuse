@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="geek.space.tmmuse">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Activity.Help.HelpActivity"></activity>
+        <activity android:name=".Activity.TermsOfUse.Terms_of_use" />
+        <activity android:name=".Activity.AboutUs.AboutUsActivity" />
+        <activity android:name=".Activity.Main_menu.Main_Menu" />
+        <activity android:name=".Activity.Interest.Interest_Activity" />
+        <activity android:name=".Activity.Sig_Up.Sig_Up_Activity" />
+        <activity android:name=".Activity.Intro_Page.Perrmision_Activity" />
+        <activity android:name=".Activity.Intro_Page.Whats_New" />
+        <activity android:name=".Activity.Splash.Splash_Screen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>

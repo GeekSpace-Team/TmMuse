@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.CategoryFragment"
+    android:background="@drawable/card_gradient">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/category_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margins"
+                android:text="@string/category"
+                android:textColor="@color/text_color"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="25dp">
+
+
+                <soup.neumorphism.NeumorphCardView
+                    android:id="@+id/afish_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="@dimen/margins"
+                    android:layout_marginRight="@dimen/margins"
+                    android:layout_weight="1"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_afisha"
+                            app:tint="@color/text_color" />
+
+                        <TextView
+                            android:id="@+id/afisha_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/afisha"
+                            android:textColor="@color/text_color"
+                            android:textSize="16sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"/>
+
+
+                    </LinearLayout>
+
+                </soup.neumorphism.NeumorphCardView>
+
+                <soup.neumorphism.NeumorphCardView
+                    android:id="@+id/interesting_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="@dimen/margins"
+                    android:layout_marginRight="@dimen/margins"
+                    android:layout_weight="1"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_interesting"
+                            app:tint="@color/text_color" />
+
+                        <TextView
+                            android:id="@+id/intersting_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/interesting"
+                            android:textColor="@color/text_color"
+                            android:textSize="16sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"/>
+
+
+                    </LinearLayout>
+
+                </soup.neumorphism.NeumorphCardView>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="25dp">
+
+
+                <soup.neumorphism.NeumorphCardView
+                    android:id="@+id/caf_res_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="@dimen/margins"
+                    android:layout_marginRight="@dimen/margins"
+                    android:layout_weight="1"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_cafe_rest"
+                            app:tint="@color/text_color" />
+
+                        <TextView
+                            android:id="@+id/caf_res_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/cafe_res"
+                            android:textColor="@color/text_color"
+                            android:textSize="16sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"/>
+
+
+                    </LinearLayout>
+
+                </soup.neumorphism.NeumorphCardView>
+
+                <soup.neumorphism.NeumorphCardView
+                    android:id="@+id/shop_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="@dimen/margins"
+                    android:layout_marginRight="@dimen/margins"
+                    android:layout_weight="1"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_shop"
+                            app:tint="@color/text_color" />
+
+                        <TextView
+                            android:id="@+id/shop_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/shops"
+                            android:textColor="@color/text_color"
+                            android:textSize="16sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"/>
+
+
+                    </LinearLayout>
+
+                </soup.neumorphism.NeumorphCardView>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="25dp">
+
+
+                <soup.neumorphism.NeumorphCardView
+                    android:id="@+id/beauty_sport_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="@dimen/margins"
+                    android:layout_marginRight="@dimen/margins"
+                    android:layout_weight="1"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_beauty"
+                            app:tint="@color/text_color" />
+
+                        <TextView
+                            android:id="@+id/beauty_sport_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/beauty_sport"
+                            android:textColor="@color/text_color"
+                            android:textSize="16sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"/>
+
+
+                    </LinearLayout>
+
+                </soup.neumorphism.NeumorphCardView>
+
+                <soup.neumorphism.NeumorphCardView
+                    android:id="@+id/news_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="@dimen/margins"
+                    android:layout_marginRight="@dimen/margins"
+                    android:layout_weight="1"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_news"
+                            app:tint="@color/text_color" />
+
+                        <TextView
+                            android:id="@+id/news_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/news"
+                            android:textColor="@color/text_color"
+                            android:textSize="16sp"
+                            android:layout_gravity="center"
+                            android:gravity="center"/>
+
+
+                    </LinearLayout>
+
+                </soup.neumorphism.NeumorphCardView>
+
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"/>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</RelativeLayout>

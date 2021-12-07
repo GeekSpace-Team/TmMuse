@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottom_sheet_language"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="30dp"
+    android:background="@drawable/bottom_sheet_language_back">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="100dp"
+            android:background="#7F8FA7" />
+
+        <TextView
+            android:id="@+id/sel_lang_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margins"
+            android:layout_marginTop="25dp"
+            android:text="@string/sel_lang"
+            android:textColor="@color/text_color"
+            android:textSize="18sp" />
+
+        <RadioGroup
+            android:id="@+id/language_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/tm_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margins"
+                android:layout_marginTop="15dp"
+                android:text="Türkmen dili"
+                android:textColor="@color/text_color" />
+
+            <RadioButton
+                android:id="@+id/ru_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margins"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="30dp"
+                android:text="Русский язык"
+                android:textColor="@color/text_color" />
+
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

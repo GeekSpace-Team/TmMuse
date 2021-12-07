@@ -1,0 +1,74 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/aply_text_color</item>
+        <item name="colorPrimaryDark">@color/card_background</item>
+        <item name="colorAccent">@color/aply_text_color</item>
+    </style>
+
+
+    <dimen name="design_default_corner_custom_radius">8dp</dimen>
+
+    <style name="CustomShapeAppearance.CardView" parent="">
+        <item name="neumorph_cornerFamily">rounded</item>
+        <item name="neumorph_cornerSize">@dimen/design_default_corner_custom_radius</item>
+    </style>
+
+    <dimen name="design_custom_inset">2dp</dimen>
+
+    <style name="CustomShapeAppearance" parent="Widget">
+        <item name="android:padding">6dp</item>
+        <item name="android:stateListAnimator">@animator/button_state_list_anim_neumorph</item>
+        <item name="neumorph_inset">@dimen/design_custom_inset</item>
+        <item name="neumorph_shadowElevation">2dp</item>
+        <item name="neumorph_shadowColorLight">@color/gradient_end</item>
+        <item name="neumorph_shadowColorDark">@color/gradient_start</item>
+        <item name="neumorph_shapeType">flat</item>
+        <item name="neumorph_shapeAppearance">@style/CustomShapeAppearance.CardView</item>
+    </style>
+
+
+    <dimen name="design_default_corner_custom_radius_img">8dp</dimen>
+
+    <style name="CustomShapeAppearance.Img" parent="">
+        <item name="neumorph_cornerFamily">rounded</item>
+        <item name="neumorph_cornerSize">@dimen/design_default_corner_custom_radius_img</item>
+    </style>
+
+    <dimen name="design_custom_padding">5dp</dimen>
+
+    <style name="CustomBottomImgNeuw" parent="Widget">
+        <item name="android:padding">@dimen/design_custom_padding</item>
+        <item name="android:stateListAnimator">@animator/button_state_list_anim_neumorph</item>
+        <item name="neumorph_inset">@dimen/design_default_inset</item>
+        <item name="neumorph_shadowElevation">6dp</item>
+        <item name="neumorph_shadowColorLight">?colorShadowLight</item>
+        <item name="neumorph_shadowColorDark">?colorShadowDark</item>
+        <item name="neumorph_shapeType">flat</item>
+        <item name="neumorph_shapeAppearance">@style/CustomShapeAppearance.Img</item>
+    </style>
+
+
+
+    <dimen name="design_settings_card_padding">6dp</dimen>
+    <dimen name="design_custom_settings_corner_radius">14dp</dimen>
+
+    <style name="Custom.Neumorph.CardView" parent="">
+        <item name="neumorph_cornerFamily">rounded</item>
+        <item name="neumorph_cornerSize">@dimen/design_custom_settings_corner_radius</item>
+    </style>
+
+    <!--Settings CardView-->
+    <style name="SettingsCardView" parent="android:Widget">
+        <item name="android:padding">@dimen/design_settings_card_padding</item>
+        <item name="android:stateListAnimator">@animator/button_state_list_anim_neumorph</item>
+        <item name="neumorph_inset">@dimen/design_default_inset</item>
+        <item name="neumorph_shadowElevation">6dp</item>
+        <item name="neumorph_shadowColorLight">?colorShadowLight</item>
+        <item name="neumorph_shadowColorDark">?colorShadowDark</item>
+        <item name="neumorph_shapeType">flat</item>
+        <item name="neumorph_shapeAppearance">@style/Custom.Neumorph.CardView</item>
+    </style>
+
+</resources>
