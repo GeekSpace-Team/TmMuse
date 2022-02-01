@@ -6,94 +6,123 @@
     android:layout_height="match_parent"
     tools:context=".Activity.Main_menu.Main_Menu">
 
-    <FrameLayout
-        android:id="@+id/menu_frame"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:visibility="gone"
+        android:id="@+id/connection_is_ok_rel">
 
-    <soup.neumorphism.NeumorphCardView
-        android:id="@+id/bottom_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="15dp"
-        android:layout_gravity="center_horizontal"
-        app:neumorph_backgroundColor="@color/card_background">
-
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/menu_frame"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/bottom_menu"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+
+        <soup.neumorphism.NeumorphCardView
+            android:id="@+id/bottom_menu"
+            style="@style/CustomBottomImgNeuw"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal"
+            app:neumorph_backgroundColor="@color/card_background">
 
-            <soup.neumorphism.NeumorphImageView
-                android:id="@+id/main_menu_btn"
-                style="@style/CustomBottomImgNeuw"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/margins_for_bottom_navigation"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:onClick="onClick"
-                android:padding="18dp"
-                android:src="@drawable/ic_home" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-            <soup.neumorphism.NeumorphImageView
-                android:id="@+id/category_menu_btn"
-                style="@style/CustomBottomImgNeuw"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margins_for_bottom_navigation"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:onClick="onClick"
-                android:padding="18dp"
-                android:src="@drawable/ic_category" />
+                <soup.neumorphism.NeumorphImageView
+                    android:id="@+id/main_menu_btn"
+                    style="@style/CustomBottomImgNeuw"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margins_for_bottom_navigation"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:padding="@dimen/bottom_nav_ic"
+                    android:src="@drawable/ic_home" />
 
-            <soup.neumorphism.NeumorphImageView
-                android:id="@+id/card_menu_btn"
-                style="@style/CustomBottomImgNeuw"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margins_for_bottom_navigation"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:onClick="onClick"
-                android:padding="18dp"
-                android:src="@drawable/ic_card" />
+                <soup.neumorphism.NeumorphImageView
+                    android:id="@+id/category_menu_btn"
+                    style="@style/CustomBottomImgNeuw"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margins_for_bottom_navigation"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:padding="@dimen/bottom_nav_ic"
+                    android:src="@drawable/ic_category" />
 
-            <soup.neumorphism.NeumorphImageView
-                android:id="@+id/message_menu_btn"
-                style="@style/CustomBottomImgNeuw"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margins_for_bottom_navigation"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:onClick="onClick"
-                android:padding="18dp"
-                android:src="@drawable/ic_message" />
+                <soup.neumorphism.NeumorphImageView
+                    android:id="@+id/card_menu_btn"
+                    style="@style/CustomBottomImgNeuw"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margins_for_bottom_navigation"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:padding="@dimen/bottom_nav_ic"
+                    android:src="@drawable/ic_card" />
 
-
-            <soup.neumorphism.NeumorphImageView
-                android:id="@+id/settings_menu_btn"
-                style="@style/CustomBottomImgNeuw"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margins_for_bottom_navigation"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:onClick="onClick"
-                android:padding="18dp"
-                android:src="@drawable/ic_settings" />
+                <soup.neumorphism.NeumorphImageView
+                    android:id="@+id/message_menu_btn"
+                    style="@style/CustomBottomImgNeuw"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margins_for_bottom_navigation"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:padding="@dimen/bottom_nav_ic"
+                    android:src="@drawable/ic_message" />
 
 
-        </LinearLayout>
+                <soup.neumorphism.NeumorphImageView
+                    android:id="@+id/settings_menu_btn"
+                    style="@style/CustomBottomImgNeuw"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margins_for_bottom_navigation"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:padding="@dimen/bottom_nav_ic"
+                    android:src="@drawable/ic_settings" />
 
 
-    </soup.neumorphism.NeumorphCardView>
+            </LinearLayout>
+
+
+        </soup.neumorphism.NeumorphCardView>
+
+        <io.alterac.blurkit.BlurLayout
+            android:visibility="gone"
+            app:blk_blurRadius="3"
+            app:blk_downscaleFactor="0.12"
+            app:blk_fps="0"
+            android:id="@+id/blurLayout"
+            android:layout_width="10000dp"
+            android:layout_height="10000dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:id="@+id/connection_is_not_ok_rel">
+
+       <include layout="@layout/no_internet_connection"/>
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

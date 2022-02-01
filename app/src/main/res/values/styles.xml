@@ -10,6 +10,7 @@
 
     <dimen name="design_default_corner_custom_radius">8dp</dimen>
 
+
     <style name="CustomShapeAppearance.CardView" parent="">
         <item name="neumorph_cornerFamily">rounded</item>
         <item name="neumorph_cornerSize">@dimen/design_default_corner_custom_radius</item>
@@ -24,21 +25,20 @@
         <item name="neumorph_shadowElevation">2dp</item>
         <item name="neumorph_shadowColorLight">@color/gradient_end</item>
         <item name="neumorph_shadowColorDark">@color/gradient_start</item>
-        <item name="neumorph_shapeType">flat</item>
+        <item name="neumorph_shapeType">basin</item>
         <item name="neumorph_shapeAppearance">@style/CustomShapeAppearance.CardView</item>
     </style>
 
 
-    <dimen name="design_default_corner_custom_radius_img">8dp</dimen>
+    <!--Category CardView start-->
+    <dimen name="design_default_corner_custom_radius_category">8dp</dimen>
 
-    <style name="CustomShapeAppearance.Img" parent="">
+    <style name="CustomShapeAppearance.Category" parent="">
         <item name="neumorph_cornerFamily">rounded</item>
-        <item name="neumorph_cornerSize">@dimen/design_default_corner_custom_radius_img</item>
+        <item name="neumorph_cornerSize">@dimen/design_default_corner_custom_radius_category</item>
     </style>
 
-    <dimen name="design_custom_padding">5dp</dimen>
-
-    <style name="CustomBottomImgNeuw" parent="Widget">
+    <style name="CustomCategoryVidget" parent="Widget">
         <item name="android:padding">@dimen/design_custom_padding</item>
         <item name="android:stateListAnimator">@animator/button_state_list_anim_neumorph</item>
         <item name="neumorph_inset">@dimen/design_default_inset</item>
@@ -46,9 +46,78 @@
         <item name="neumorph_shadowColorLight">?colorShadowLight</item>
         <item name="neumorph_shadowColorDark">?colorShadowDark</item>
         <item name="neumorph_shapeType">flat</item>
+        <item name="neumorph_shapeAppearance">@style/CustomShapeAppearance.Category</item>
+    </style>
+
+
+    <!--Category CardView end-->
+
+
+    <style name="CustomProm_and_oofers_BTn" parent="Widget">
+        <item name="android:padding">@dimen/design_custom_padding</item>
+        <item name="android:stateListAnimator">@animator/button_state_list_anim_neumorph</item>
+        <item name="neumorph_inset">@dimen/design_default_inset</item>
+        <item name="neumorph_shadowElevation">6dp</item>
+        <item name="neumorph_shadowColorLight">?colorShadowLight</item>
+        <item name="neumorph_shadowColorDark">?colorShadowDark</item>
+        <item name="neumorph_shapeType">flat</item>
+        <item name="neumorph_shapeAppearance">@style/CustomShapeAppearance.Category</item>
+    </style>
+
+
+    <!--IMG Settings Card-->
+
+    <dimen name="design_default_corner_custom_radius_img">8dp</dimen>
+    <dimen name="design_default_corner_custom_img_carusel">16dp</dimen>
+
+    <style name="CustomShapeAppearance.Img" parent="">
+        <item name="neumorph_cornerFamily">rounded</item>
+        <item name="neumorph_cornerSize">@dimen/design_default_corner_custom_radius_img</item>
+    </style>
+
+    <style name="CustomCardImgCarusel" parent="">
+        <item name="neumorph_cornerFamily">rounded</item>
+        <item name="neumorph_cornerSize">@dimen/design_default_corner_custom_img_carusel</item>
+    </style>
+
+    <dimen name="design_custom_padding">1dp</dimen>
+
+    <style name="CustomBottomImgNeuw" parent="Widget">
+        <item name="android:padding">@dimen/design_custom_padding</item>
+        <item name="android:stateListAnimator">@animator/button_state_list_anim_neumorph</item>
+        <item name="neumorph_inset">5dp</item>
+        <item name="neumorph_shadowElevation">2dp</item>
+        <item name="neumorph_shadowColorLight">?colorShadowLight</item>
+        <item name="neumorph_shadowColorDark">?colorShadowDark</item>
+        <item name="neumorph_shapeType">flat</item>
         <item name="neumorph_shapeAppearance">@style/CustomShapeAppearance.Img</item>
     </style>
 
+
+    <style name="CustomBottomImgNeuwSecond" parent="Widget">
+        <item name="android:padding">@dimen/design_custom_padding</item>
+        <item name="android:stateListAnimator">@animator/button_state_list_anim_neumorph</item>
+        <item name="neumorph_inset">@dimen/design_default_inset</item>
+        <item name="neumorph_shadowElevation">4dp</item>
+        <item name="neumorph_shadowColorLight">?colorShadowLight</item>
+        <item name="neumorph_shadowColorDark">?colorShadowDark</item>
+        <item name="neumorph_shapeType">flat</item>
+        <item name="neumorph_shapeAppearance">@style/CustomShapeAppearance.Img</item>
+    </style>
+
+
+    <style name="ImageCaruselCard" parent="Widget">
+        <item name="android:padding">@dimen/design_custom_padding</item>
+        <item name="android:stateListAnimator">@animator/button_state_list_anim_neumorph</item>
+        <item name="neumorph_inset">1dp</item>
+        <item name="neumorph_shadowElevation">2dp</item>
+        <item name="neumorph_shadowColorLight">?colorShadowLight</item>
+        <item name="neumorph_shadowColorDark">?colorShadowDark</item>
+        <item name="neumorph_shapeType">flat</item>
+        <item name="neumorph_shapeAppearance">@style/CustomCardImgCarusel</item>
+    </style>
+
+    <!--=================================================================================-->
 
 
     <dimen name="design_settings_card_padding">6dp</dimen>
@@ -64,11 +133,72 @@
         <item name="android:padding">@dimen/design_settings_card_padding</item>
         <item name="android:stateListAnimator">@animator/button_state_list_anim_neumorph</item>
         <item name="neumorph_inset">@dimen/design_default_inset</item>
-        <item name="neumorph_shadowElevation">6dp</item>
+        <item name="neumorph_shadowElevation">2dp</item>
         <item name="neumorph_shadowColorLight">?colorShadowLight</item>
         <item name="neumorph_shadowColorDark">?colorShadowDark</item>
         <item name="neumorph_shapeType">flat</item>
         <item name="neumorph_shapeAppearance">@style/Custom.Neumorph.CardView</item>
     </style>
+
+
+    <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="NavigationDrawer" parent="AppTheme">
+        <item name="itemIconTint">@android:color/white</item>
+        <item name="itemTextColor">@android:color/white</item>
+        <item name="android:background">#00ffffff</item>
+    </style>
+
+    <!--Filter button start-->
+    <style name="Filter_button" parent="android:Widget">
+        <item name="android:padding">@dimen/design_settings_card_padding</item>
+        <item name="android:stateListAnimator">@animator/button_state_list_anim_neumorph</item>
+        <item name="neumorph_inset">@dimen/design_default_inset</item>
+        <item name="neumorph_shadowElevation">2dp</item>
+        <item name="neumorph_shadowColorLight">?colorShadowLight</item>
+        <item name="neumorph_shadowColorDark">?colorShadowDark</item>
+        <item name="neumorph_shapeType">flat</item>
+        <item name="neumorph_shapeAppearance">@style/Custom.Filter_button</item>
+    </style>
+
+    <style name="Custom.Filter_button" parent="">
+        <item name="neumorph_cornerFamily">rounded</item>
+        <item name="neumorph_cornerSize">@dimen/design_custom_Filter_button</item>
+    </style>
+
+    <dimen name="design_custom_Filter_button">8dp</dimen>
+
+    <!--Filter button end-->
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/bounce</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
+    <!--Profile style Start-->
+    <style name="CustomProfileCardView" parent="Widget">
+        <item name="android:padding">15dp</item>
+        <item name="android:stateListAnimator">@animator/button_state_list_anim_neumorph</item>
+        <item name="neumorph_inset">1dp</item>
+        <item name="neumorph_shadowElevation">0.5dp</item>
+        <item name="neumorph_shadowColorLight">?colorShadowLight</item>
+        <item name="neumorph_shadowColorDark">?colorShadowDark</item>
+        <item name="neumorph_shapeType">flat</item>
+        <item name="neumorph_shapeAppearance">@style/CustomShapeAppearance.Img</item>
+    </style>
+
+    <style name="CustomProfileCardView.Img" parent="">
+        <item name="neumorph_cornerFamily">rounded</item>
+        <item name="neumorph_cornerSize">@dimen/design_CustomProfileCardView_img</item>
+    </style>
+
+    <dimen name="design_CustomProfileCardView_img">12dp</dimen>
 
 </resources>

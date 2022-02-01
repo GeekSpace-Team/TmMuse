@@ -15,6 +15,7 @@ public class GenericTextWatcher implements TextWatcher {
         this.editText = editText;
         this.view = view;
     }
+
     @Override
     public void afterTextChanged(Editable editable) {
         String text = editable.toString();

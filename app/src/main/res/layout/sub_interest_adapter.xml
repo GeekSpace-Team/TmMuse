@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="118dp"
+    android:layout_height="wrap_content">
+
+
+    <soup.neumorphism.NeumorphCardView
+        android:id="@+id/sub_interest_card"
+        style="@style/Filter_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/sub_interest_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Gul Zaman"
+            android:textColor="@color/tex_color_btn_search"
+            android:textSize="12sp"
+            android:padding="5dp"/>
+
+
+    </soup.neumorphism.NeumorphCardView>
+</RelativeLayout>

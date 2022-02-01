@@ -1,29 +1,22 @@
 package geek.space.tmmuse.Activity.Intro_Page;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.TextView;
-
 import java.util.ArrayList;
 
-import geek.space.tmmuse.Adapter.Whats_new_list_adapter;
+import geek.space.tmmuse.Adapter.Whats_NewsPage.Whats_new_list_adapter;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.R;
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 import soup.neumorphism.NeumorphButton;
 
 public class Whats_New extends AppCompatActivity {
@@ -46,7 +39,7 @@ public class Whats_New extends AppCompatActivity {
         setAdapters();
         setListeners();
         setFons();
-
+        getLang();
 
     }
 
@@ -97,46 +90,8 @@ public class Whats_New extends AppCompatActivity {
         first.add("I accept the terms of personal data processing");
         first.add("I accept the terms of personal data processing");
         first.add("I accept the terms of personal data processing");
-        first.add("I accept the terms of personal data processing");
-        first.add("I accept the terms of personal data processing");
-        first.add("I accept the terms of personal data processing");
-        first.add("I accept the terms of personal data processing");
-        first.add("I accept the terms of personal data processing");
-        first.add("I accept the terms of personal data processing");
-        first.add("I accept the terms of personal data processing");
-        first.add("I accept the terms of personal data processing");
-        first.add("I accept the terms of personal data processing");
-        first.add("I accept the terms of personal data processing");
-        first.add("I accept the terms of personal data processing");
 
 
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
-        second.add("I accept the terms of personal data processing");
         second.add("I accept the terms of personal data processing");
         second.add("I accept the terms of personal data processing");
         second.add("I accept the terms of personal data processing");
@@ -144,8 +99,8 @@ public class Whats_New extends AppCompatActivity {
         second.add("I accept the terms of personal data processing");
     }
 
-
-
-
-
+    // НАстройка языкого панеля
+    public String getLang() {
+        return getSharedPreferences("mysettings", MODE_PRIVATE).getString("My_Lang", "");
+    }
 }

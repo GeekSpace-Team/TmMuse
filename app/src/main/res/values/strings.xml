@@ -33,12 +33,12 @@
     <string name="inbox"> Gelýän bukja </string>
     <string name="tm_muse_card"> TmMuse Card </string>
     <string name="get_card"> Kart alyň </string>
-    <string name="tm_muse_card_desc"> TmMuse kartasyny alyň we aşakdaky mahabat / teklipleri ulanyň. Şu ýere basyň </string>
+    <string name="tm_muse_card_desc"> TmMuse kartasyny alyň we aşakdaky mahabat  teklipleri ulanyň. Şu ýere basyň: <u><b>Kart alyň</b></u> </string>
     <string name="data_birth"> Doglan senesi: </string>
     <string name="gender"> Jyns </string>
     <string name="pass_inf"> Pasport maglumatlary: </string>
     <string name="job"> Iş: </string>
-    <string name="accept"> Şahsy maglumatlary gaýtadan işlemegiň şertlerini kabul edýärin </string>
+    <string name="accept"> <font color='#CD2791'> <u><b>Şahsy maglumatlary gaýtadan işlemegiň şertlerini</b></u></font> kabul edýärin </string>
     <string name="reciv_about_card"> Kart hakda maglumat alyň: </string>
     <string name="Send"> Ibermek </string>
     <string name="u_must_sign"> Ilki bilen ýazylmaly </string>
@@ -54,7 +54,7 @@
     <string name="slc_language"> Dil saýlaň </string>
     <string name="pay_attention"> Üns beriň! </string>
     <string name="pay_attention_desc"> "OK" -a bassaňyz, çykarsyňyz we ähli maglumatlaryňyz programmadan arassalanar! </string>
-    <string name="cancel"> elatyr </string>
+    <string name="cancel"> Ýatyr </string>
     <string name="ok"> Bolýar </string>
     <string name="top_keywords"> Iň esasy açar sözler </string>
     <string name="search_result"> Gözleg netijesi </string>
@@ -69,8 +69,62 @@
     <string name="hello_blank_fragment"> Salam boş bölek </string>
     <string name="email"> E-poçta: </string>
     <string name="your_message"> Habaryňyz </string>
-    <string name="after_call"> Haýyş iberenimizden soň, telefon belgiňize jaň edýäris. </string>
+    <string name="after_call"> Ibereniňizden soň, telefon belgiňize jaň ederis. </string>
     <string name="sel_lang"> Dil saýlaň </string>
+
+    <string name="open_weather_maps_app_id" translatable="false">00812ec5b87092305675827de0904bc2</string>
+    <string name="student">Talyp</string>
+    <string name="worker">Gulukçy</string>
+    <string name="school_stu">Okuwçy</string>
+    <string name="filt_shop">Seljermek we tertiplemek</string>
+    <string name="tags">Bellikler</string>
+    <string name="sort">Sort</string>
+    <string name="from_oldest">Iň gadymydan</string>
+    <string name="from_latest">Iň soňky</string>
+    <string name="filter">Seljermek</string>
+    <string name="wait_to_weather">Ýüklenýär....</string>
+    <string name="btn_text_open_sheet" translatable="false">Ouvrir la feuille</string>
+    <string name="btn_text_close_sheet" translatable="false">Fermer la fueille</string>
+    <string name="sheetbehavior" translatable="false">com.google.android.material.bottomsheet.BottomSheetBehavior</string>
+    <string name="tv_sheet_header" translatable="false">Choisir vos options</string>
+    <string name="btn_text_sheet1" translatable="false">Lancer </string>
+    <string name="btn_text_sheet2" translatable="false">Ouvrir </string>
+    <string name="btn_text_sheet3" translatable="false">Commencer </string>
+    <string name="code_inncorect"> Kod nädogry girizildi </string>
+    <string name="see_more"> Has giňişleýin serediň </string>
+    <string name="call"> Jaň </string>
+    <string name="map"> Karta </string>
+    <string name="insta">\@insta </string>
+    <string name="certificate"> Şahadatnama </string>
+    <string name="address"> Salgy </string>
+    <string name="past_an_plan_text"> Meýilnamanyň tekstini geçdi </string>
+    <string name="payment"> Töleg </string>
+    <string name="work_hours"> Iş sagatlary </string>
+    <string name="cuisine"> Aşhana </string>
+    <string name="deliver"> Getirmek </string>
+    <string name="average_check"> Ortaça barlag </string>
+    <string name="own_promotion"> Özüňi mahabatlandyrmak </string>
+    <string name="gallery"> Galereýa </string>
+    <string name="posts"> Postsazgylar </string>
+    <string name="bron_movie"> Bron filmi </string>
+    <string name="description"> Düşündiriş </string>
+    <string name="movie_time"> Kino Wagty </string>
+    <string name="vr_image"> VR "\n" Surat </string>
+    <string name="please_check_your_internet_connection"> Internet birikmäňizi barlaň </string>
+    <string name="top_keyword"> Iň esasy açar söz </string>
+    <string name="male"> erkek </string>
+    <string name="female"> aýal </string>
+    <string name="clear_history_all">Taryhy arassala</string>
+    <string name="search_history">Gözleg taryhy</string>
+    <string name="tm_muse_message">TM MUSE "\n" habary</string>
+    <string name="enter_informations">Enter informations:</string>
+    <string name="select_date_and_time">Select date and time:</string>
+    <string name="enter_count_off_tickets">Enter count off tickets:</string>
+    <string name="answer_buy_ticket">Do you want booking this movie?</string>
+    <string name="price">Price:</string>
+    <string name="buy_ticket_desc">You have to come to the cinema 30 minutes before the movie starts!</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 
 
 </resources>

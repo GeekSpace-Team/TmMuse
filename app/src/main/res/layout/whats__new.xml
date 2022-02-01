@@ -118,6 +118,7 @@
 
 
     <soup.neumorphism.NeumorphButton
+        style="@style/SettingsCardView"
         android:id="@+id/skip_btn"
         android:layout_width="match_parent"
         android:layout_height="65dp"

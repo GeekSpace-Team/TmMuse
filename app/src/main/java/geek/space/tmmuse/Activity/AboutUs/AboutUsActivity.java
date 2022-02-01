@@ -1,11 +1,11 @@
 package geek.space.tmmuse.Activity.AboutUs;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.R;
@@ -20,6 +20,7 @@ public class AboutUsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about_us);
         initComponents();
         setFonts();
+        getLang();
     }
 
     private void setFonts() {
@@ -36,5 +37,10 @@ public class AboutUsActivity extends AppCompatActivity {
     public void on_back_pressed(View view) {
         onBackPressed();
         finish();
+    }
+
+    // НАстройка языкого панеля
+    public String getLang() {
+        return getSharedPreferences("mysettings", MODE_PRIVATE).getString("My_Lang", "");
     }
 }

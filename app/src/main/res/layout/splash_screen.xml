@@ -14,6 +14,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_tm_muse_ico"/>
+        android:src="@drawable/ic_tm_muse_ico" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

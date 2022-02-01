@@ -63,8 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/margins_five"
-                android:background="@drawable/gradient_press"
-                app:neumorph_shapeType="pressed">
+                android:background="@drawable/gradient_press">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -228,7 +227,7 @@
                         android:textSize="14sp"
                         tools:ignore="Suspicious0dp"
                         android:layout_weight="1"
-                        android:lines="7"/>
+                        android:lines="7" />
 
                 </LinearLayout>
 
@@ -249,6 +248,7 @@
 
 
             <soup.neumorphism.NeumorphButton
+                style="@style/SettingsCardView"
                 android:id="@+id/send_btn"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"

@@ -32,7 +32,7 @@
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/ic_back"
                     app:tint="@color/text_color"
-                    android:onClick="on_back_pressed"/>
+                    android:onClick="on_back_pressed" />
 
                 <TextView
                     android:id="@+id/about_us_txt"

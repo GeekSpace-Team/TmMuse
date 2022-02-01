@@ -45,4 +45,28 @@ dependencies {
     // neumorphisim
     implementation 'com.github.fornewid:neumorphism:0.3.0'
 
+    implementation 'com.loopj.android:android-async-http:1.4.11'
+
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+
+    // IndikatorView
+    implementation 'com.tbuonomo:dotsindicator:4.2'
+
+    // 3d Touch
+    implementation 'com.github.shalskar:PeekAndPop:1.1.0'
+
+    //Rounded Img
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    //Blur Layout
+    implementation 'io.alterac.blurkit:blurkit:1.1.0'
+    implementation 'com.github.jgabrielfreitas:BlurImageView:1.0.1'
+
+    //volley
+    implementation 'com.android.volley:volley:1.2.1'
+
+    //readMoreTextView
+    implementation 'com.borjabravo:readmoretextview:2.1.0'
+
 }

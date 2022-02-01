@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Interest {
     private String title;
-    private ArrayList<SubInterest> subInterests=new ArrayList<>();
+    private ArrayList<SubInterest> subInterests;
 
     public Interest(String title, ArrayList<SubInterest> subInterests) {
         this.title = title;

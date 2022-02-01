@@ -1,22 +1,18 @@
 package geek.space.tmmuse.Activity.Intro_Page;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import geek.space.tmmuse.Activity.Sig_Up.Sig_Up_Activity;
 import geek.space.tmmuse.Common.Font.Font;
@@ -34,6 +30,8 @@ public class Perrmision_Activity extends AppCompatActivity {
             storage_txt, storage_desc_txt;
     private Context context = this;
     private NeumorphButton skip_btn, storage_allowed_btn, location_allowed_btn;
+    private String location_per;
+    private String storage_per;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +39,9 @@ public class Perrmision_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_perrmision);
 
         initComponents();
+        getLang();
         setFonts();
         setListeners();
-
 
     }
 
@@ -63,9 +61,15 @@ public class Perrmision_Activity extends AppCompatActivity {
         skip_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.setPressed(skip_btn, 2, R.color.aply_text_color, context);
-                finish();
-                startActivity(new Intent(getApplicationContext(), Sig_Up_Activity.class));
+                if (storage_per != null & location_per != null) {
+                    Utils.setPressed(skip_btn, 2, R.color.aply_text_color, context);
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), Sig_Up_Activity.class));
+                } else {
+                    Toast.makeText(context, "Please accept permissions", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
     }
@@ -111,6 +115,7 @@ public class Perrmision_Activity extends AppCompatActivity {
         if (b) {
             location_allowed_btn.setShapeType(2);
             location_allowed_btn.setTextColor(getResources().getColor(R.color.aply_text_color));
+            location_per = location_allowed_btn.getText().toString();
         } else {
             location_allowed_btn.setShapeType(0);
             location_allowed_btn.setTextColor(getResources().getColor(R.color.text_color));
@@ -147,12 +152,15 @@ public class Perrmision_Activity extends AppCompatActivity {
         if (b) {
             storage_allowed_btn.setShapeType(2);
             storage_allowed_btn.setTextColor(getResources().getColor(R.color.aply_text_color));
+            storage_per = storage_allowed_btn.getText().toString();
         } else {
             storage_allowed_btn.setShapeType(0);
             storage_allowed_btn.setTextColor(getResources().getColor(R.color.text_color));
         }
     }
 
-
-
+    // НАстройка языкого панеля
+    public String getLang() {
+        return getSharedPreferences("mysettings", MODE_PRIVATE).getString("My_Lang", "");
+    }
 }

@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -14,12 +16,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.Help.HelpActivity"></activity>
-        <activity android:name=".Activity.TermsOfUse.Terms_of_use" />
+        <activity android:name=".Activity.VRImage.VrImageActivity"></activity>
+        <activity android:name=".Activity.PostPreview.PostPreviewActivity" />
+        <activity
+            android:name=".Activity.SearchActivity.SearchActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activity.AllProductViews.AllProductViewsActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activity.GetCard.GetCardActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activity.Help.HelpActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Activity.TermsOfUse.Terms_of_use"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".Activity.AboutUs.AboutUsActivity" />
         <activity android:name=".Activity.Main_menu.Main_Menu" />
         <activity android:name=".Activity.Interest.Interest_Activity" />
-        <activity android:name=".Activity.Sig_Up.Sig_Up_Activity" />
+        <activity
+            android:name=".Activity.Sig_Up.Sig_Up_Activity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".Activity.Intro_Page.Perrmision_Activity" />
         <activity android:name=".Activity.Intro_Page.Whats_New" />
         <activity android:name=".Activity.Splash.Splash_Screen">
@@ -29,10 +48,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

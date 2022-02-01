@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.Interest.Interest_Activity">
+    tools:context=".Activity.Interest.Interest_Activity"
+    android:background="@drawable/card_gradient">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:nestedScrollingEnabled="true">
 
 
         <LinearLayout
@@ -41,17 +43,26 @@
                     android:layout_centerVertical="true"
                     android:layout_marginTop="25dp"
                     android:layout_marginRight="@dimen/margins"
+                    android:onClick="go_main_menu"
                     android:text="@string/next"
                     android:textColor="@color/aply_text_color"
-                    android:textSize="18sp"
-                    android:onClick="go_main_menu"/>
+                    android:textSize="18sp" />
 
             </RelativeLayout>
 
-            
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/interestRec"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/margins"
+                android:layout_marginRight="@dimen/margins"
+                android:nestedScrollingEnabled="false"/>
 
-
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"/>
 
         </LinearLayout>
 

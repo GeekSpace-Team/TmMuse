@@ -1,7 +1,5 @@
 package geek.space.tmmuse.Activity.Help;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.awt.font.TextAttribute;
+import androidx.appcompat.app.AppCompatActivity;
 
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
@@ -34,6 +32,7 @@ public class HelpActivity extends AppCompatActivity {
         initUnits();
         setFonts();
         setListener();
+        getLang();
     }
 
     private void sendEmailFunc() {
@@ -106,5 +105,9 @@ public class HelpActivity extends AppCompatActivity {
     public void on_back_pressed(View view) {
         onBackPressed();
         finish();
+    }
+    // НАстройка языкого панеля
+    public String getLang() {
+        return getSharedPreferences("mysettings", MODE_PRIVATE).getString("My_Lang", "");
     }
 }

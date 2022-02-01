@@ -3,9 +3,8 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
-    
-    
-    
+
+
     <color name="card_background">#E3EDF7</color>
     <color name="text_color">#31456A</color>
     <color name="aply_text_color">#CD2791</color>
@@ -13,5 +12,24 @@
 
     <color name="gradient_start">#D1DEEA</color>
     <color name="gradient_end">#ECF2F9</color>
+
+
+    <color name="gradient_start_card">#EEF5FA</color>
+    <color name="gradient_center_card">#DDE5F0</color>
+    <color name="gradient_end_card">#E6EFF7</color>
+
+
+    <color name="gradient_prom_start">#00F6F6F6</color>
+    <color name="gradient_prom_center">#D4FAFAFA</color>
+    <color name="gradient_prom_end">#E5F6F6F6</color>
+
+
+    <color name="popup_color">#EDF3FA</color>
+
+    <color name="popup_img_color">#2B3238</color>
+
+    <color name="tex_color_btn_search">#A7A9AC</color>
+
+    <color name="finger_up_color_ic">#FAFF10</color>
 
 </resources>
