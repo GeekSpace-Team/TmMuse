@@ -2,6 +2,8 @@ package geek.space.tmmuse.Activity.AllProductViews;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -30,17 +33,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.LayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
 
+import geek.space.tmmuse.Activity.PostPreview.PostPreviewActivity;
+import geek.space.tmmuse.Activity.VrImage.VrImageActivity;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneData_adapter;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneTimeAdapter;
 import geek.space.tmmuse.Adapter.FilimAdapter.MovieTimeAdapter;
 import geek.space.tmmuse.Adapter.PromotionsPage.PromotionAndOffersAdapter;
 import geek.space.tmmuse.Adapter.TestAdapterViewPager.TestAdapterViewPager;
 import geek.space.tmmuse.Common.Font.Font;
+import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Model.Banner.Banner;
 import geek.space.tmmuse.Model.Film.MovieTime;
 import geek.space.tmmuse.Model.PromotionAndOffers.PromotionAndOffers;
@@ -80,6 +92,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private ArrayList<TestModelViewPager> testModelViewPagers = new ArrayList<>();
     private TestAdapterViewPager testAdapterViewPager;
     private int dotsCount;
+    private RoundedImageView vr_img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -327,6 +340,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
         root_prom = findViewById(R.id.root_prom);
         bottomsheet = findViewById(R.id.bottomsheet);
         images_profile_rec = findViewById(R.id.images_profile_rec);
+        vr_img = findViewById(R.id.vr_img);
     }
 
     private void setListener() {
@@ -422,6 +436,14 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
             }
         });
+        findViewById(R.id.image_relative).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), VrImageActivity.class));
+            }
+        });
+
+
     }
 
     // НАстройка языкого панеля

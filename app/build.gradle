@@ -53,8 +53,9 @@ dependencies {
     // IndikatorView
     implementation 'com.tbuonomo:dotsindicator:4.2'
 
-    // 3d Touch
-    implementation 'com.github.shalskar:PeekAndPop:1.1.0'
+//   VR Image
+    implementation 'com.google.vr:sdk-base:1.160.0'
+    implementation 'com.google.vr:sdk-panowidget:1.170.0'
 
     //Rounded Img
     implementation 'com.makeramen:roundedimageview:2.3.0'
