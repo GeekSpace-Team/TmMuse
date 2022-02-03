@@ -32,14 +32,12 @@ import soup.neumorphism.NeumorphCardView;
 
 public class GetCardActivity extends AppCompatActivity {
 
-    private TextView help_txt, full_name_txt, number_txt, numberBefore, day_of_bth_txt, gender_txt,
-            passport_txt, email_txt, job_txt, reciv_about_card_txt;
+    private TextView help_txt, full_name_txt, number_txt, numberBefore, day_of_bth_txt, gender_txt, email_txt, reciv_about_card_txt;
     private RadioGroup gender_group, sms_or_email_group;
     private RadioButton male_btn, female_btn, sms_btn, email_btn;
     private EditText full_name_edit, number_edit, day_birth_edit, passport_edit, email_edit;
     private CheckBox accept_tex_box;
     private NeumorphButton send_btn;
-    private Spinner job_spinner;
     private List<String> job_lists;
     private String jynsy = "";
     private String take_info_card = "";
@@ -53,19 +51,10 @@ public class GetCardActivity extends AppCompatActivity {
         setListener();
         setFonts();
         getLang();
-        getJobListener();
 
     }
 
-    private void getJobListener() {
-        job_lists = new ArrayList<>();
-        job_lists.add(getResources().getString(R.string.student));
-        job_lists.add(getResources().getString(R.string.worker));
-        job_lists.add(getResources().getString(R.string.school_stu));
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, job_lists);
-        job_spinner.setAdapter(adapter);
-    }
 
     private void setListener() {
 
@@ -90,17 +79,6 @@ public class GetCardActivity extends AppCompatActivity {
             bsDialog.show();
 
 
-        });
-        job_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
         });
 
         male_btn.setOnCheckedChangeListener((compoundButton, b) -> {
@@ -160,7 +138,6 @@ public class GetCardActivity extends AppCompatActivity {
             String number_edit1 = number_edit.getText().toString();
             String day_birth_edit1 = day_birth_edit.getText().toString();
             String passport_edit1 = passport_edit.getText().toString();
-            String job_spinner1 = job_spinner.getSelectedItem().toString();
             String jynsy_user = jynsy;
             String info_card_ = take_info_card;
             Intent email = new Intent(Intent.ACTION_SEND);
@@ -169,7 +146,6 @@ public class GetCardActivity extends AppCompatActivity {
                     "\n" + "Telefon belgisi: " + "9936" + number_edit1 +
                     "\n" + "Doglan guni we ayy: " + day_birth_edit1 +
                     "\n" + "Passport belgisi: " + passport_edit1 +
-                    "\n" + "Isleyan wezipesi: " + job_spinner1 +
                     "\n" + "Jynsy: " + jynsy_user +
                     "\n" + "Poluceniye informaci o karte: " + info_card_);
             email.setType("message/rfc822");
@@ -189,9 +165,7 @@ public class GetCardActivity extends AppCompatActivity {
         numberBefore.setTypeface(Font.getInstance(getApplication()).getMontserrat_400());
         day_of_bth_txt.setTypeface(Font.getInstance(getApplication()).getMontserrat_400());
         gender_txt.setTypeface(Font.getInstance(getApplication()).getMontserrat_400());
-        passport_txt.setTypeface(Font.getInstance(getApplication()).getMontserrat_400());
         email_txt.setTypeface(Font.getInstance(getApplication()).getMontserrat_400());
-        job_txt.setTypeface(Font.getInstance(getApplication()).getMontserrat_400());
         reciv_about_card_txt.setTypeface(Font.getInstance(getApplication()).getMontserrat_400());
 
         female_btn.setTypeface(Font.getInstance(getApplication()).getMontserrat_400());
@@ -202,7 +176,6 @@ public class GetCardActivity extends AppCompatActivity {
         full_name_edit.setTypeface(Font.getInstance(getApplication()).getMontserrat_600());
         number_edit.setTypeface(Font.getInstance(getApplication()).getMontserrat_600());
         day_birth_edit.setTypeface(Font.getInstance(getApplication()).getMontserrat_600());
-        passport_edit.setTypeface(Font.getInstance(getApplication()).getMontserrat_600());
         email_edit.setTypeface(Font.getInstance(getApplication()).getMontserrat_600());
 
         email_edit.setTypeface(Font.getInstance(getApplication()).getMontserrat_600());
@@ -218,9 +191,7 @@ public class GetCardActivity extends AppCompatActivity {
         numberBefore = findViewById(R.id.numberBefore);
         day_of_bth_txt = findViewById(R.id.day_of_bth_txt);
         gender_txt = findViewById(R.id.gender_txt);
-        passport_txt = findViewById(R.id.passport_txt);
         email_txt = findViewById(R.id.email_txt);
-        job_txt = findViewById(R.id.job_txt);
         reciv_about_card_txt = findViewById(R.id.reciv_about_card_txt);
 
         gender_group = findViewById(R.id.gender_group);
@@ -234,12 +205,10 @@ public class GetCardActivity extends AppCompatActivity {
         full_name_edit = findViewById(R.id.full_name_edit);
         number_edit = findViewById(R.id.number_edit);
         day_birth_edit = findViewById(R.id.day_birth_edit);
-        passport_edit = findViewById(R.id.passport_edit);
         email_edit = findViewById(R.id.email_edit);
 
         accept_tex_box = findViewById(R.id.accept_tex_box);
         send_btn = findViewById(R.id.send_btn);
-        job_spinner = findViewById(R.id.job_spinner);
 
         male_card = findViewById(R.id.male_card);
         female_card = findViewById(R.id.female_card);

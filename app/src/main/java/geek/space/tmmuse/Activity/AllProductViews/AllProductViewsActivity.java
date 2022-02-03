@@ -3,9 +3,9 @@ package geek.space.tmmuse.Activity.AllProductViews;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -33,18 +32,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.LayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
 
-import geek.space.tmmuse.Activity.PostPreview.PostPreviewActivity;
 import geek.space.tmmuse.Activity.VrImage.VrImageActivity;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneData_adapter;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneTimeAdapter;
@@ -52,8 +45,6 @@ import geek.space.tmmuse.Adapter.FilimAdapter.MovieTimeAdapter;
 import geek.space.tmmuse.Adapter.PromotionsPage.PromotionAndOffersAdapter;
 import geek.space.tmmuse.Adapter.TestAdapterViewPager.TestAdapterViewPager;
 import geek.space.tmmuse.Common.Font.Font;
-import geek.space.tmmuse.Common.Utils;
-import geek.space.tmmuse.Model.Banner.Banner;
 import geek.space.tmmuse.Model.Film.MovieTime;
 import geek.space.tmmuse.Model.PromotionAndOffers.PromotionAndOffers;
 import geek.space.tmmuse.Model.TestModelViewPager.TestModelViewPager;
@@ -90,7 +81,6 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private String count_tickets;
     private int string_to_int;
     private ArrayList<TestModelViewPager> testModelViewPagers = new ArrayList<>();
-    private TestAdapterViewPager testAdapterViewPager;
     private int dotsCount;
     private RoundedImageView vr_img;
 
@@ -99,6 +89,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_product_views);
         initViews();
+        makeStatusbarTransparent();
         setListener();
         setFont();
         getLang();
@@ -112,7 +103,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private void setProfileImgAdapter() {
         LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         images_profile_rec.setLayoutManager(layoutManager);
-        images_profile_rec.setAdapter(new TestAdapterViewPager(this, testModelViewPagers, all_views_viewPager));
+        images_profile_rec.setAdapter(new TestAdapterViewPager(this, testModelViewPagers, all_views_viewPager, dots_indicator));
 
     }
 
@@ -161,7 +152,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
         send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (string_to_int <= 0999.9 || count_tickets_ed_text.equals("") || count_tickets_ed_text == null) {
+                if (string_to_int <= 0 || count_tickets_ed_text.equals("") || count_tickets_ed_text == null) {
                     Toast.makeText(AllProductViewsActivity.this, "Please enter how many tickets you want", Toast.LENGTH_SHORT).show();
                 } else {
                     showTicketsAcceptDialog();
@@ -291,6 +282,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+
         view = findViewById(R.id.bottomsheet);
         sliderContainer = findViewById(R.id.sliderContainer);
         movie_time_rec = findViewById(R.id.movie_time_rec);
@@ -355,7 +347,9 @@ public class AllProductViewsActivity extends AppCompatActivity {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+
                 } else if (newState == BottomSheetBehavior.STATE_HALF_EXPANDED) {
+
                 }
             }
 
@@ -377,7 +371,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
                     view_Stick.setVisibility(View.INVISIBLE);
                     onback_img.setVisibility(View.VISIBLE);
                     share_img.setVisibility(View.VISIBLE);
-                    view_bottom_rel.setBackground(getResources().getDrawable(R.drawable.card_gradient));
+                    view_bottom_rel.setBackgroundColor(getResources().getColor(R.color.card_background));
                 } else if (oldOffSet >= 0.80f) {
                     sliderContainer.setBackgroundColor(Color.parseColor("#A6000000"));
                     view_bottom_rel.setBackground(getResources().getDrawable(R.drawable.bottom_sheet_language_back));
@@ -407,7 +401,6 @@ public class AllProductViewsActivity extends AppCompatActivity {
                     prom_scroll.stopNestedScroll();
                     view_bottom_rel.setBackground(getResources().getDrawable(R.drawable.bottom_sheet_language_back));
                 } else if (oldOffSet < 0.50f) {
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
                     view_Stick.setVisibility(View.VISIBLE);
                     view_bottom_rel.setBackground(getResources().getDrawable(R.drawable.bottom_sheet_language_back));
                     onback_img.setVisibility(View.INVISIBLE);
@@ -444,6 +437,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
         });
 
 
+
     }
 
     // НАстройка языкого панеля
@@ -454,5 +448,20 @@ public class AllProductViewsActivity extends AppCompatActivity {
     public void onBack(View view) {
         onBackPressed();
         finish();
+    }
+
+
+    private void makeStatusbarTransparent() {
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
+
     }
 }

@@ -43,7 +43,7 @@ public class TestViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.img_carusel_adapter, null);
+        View view = layoutInflater.inflate(R.layout.profile_image_carusel_adapter, null);
         TestModelViewPager testModelViewPager = testModelViewPagers.get(position);
         assert view != null;
         final RoundedImageView imageView = (RoundedImageView) view

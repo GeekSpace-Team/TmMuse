@@ -141,7 +141,7 @@
                             android:id="@+id/images_profile_rec"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:nestedScrollingEnabled="true"
+                            android:nestedScrollingEnabled="false"
                             android:overScrollMode="never"
                             android:visibility="visible"
                             android:layout_toEndOf="@id/image_relative"/>

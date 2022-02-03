@@ -244,50 +244,6 @@
             </RadioGroup>
 
             <TextView
-                android:id="@+id/passport_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="20dp"
-                android:text="@string/pass_inf"
-                android:textColor="@color/text_color"
-                android:textSize="16sp" />
-
-            <soup.neumorphism.NeumorphCardView
-                style="@style/CustomShapeAppearance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/gradient_press"
-                app:neumorph_shapeType="pressed">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="14dp">
-
-                    <EditText
-                        android:id="@+id/passport_edit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@android:color/transparent"
-                        android:gravity="center_vertical"
-                        android:hint="I-AS 000000"
-                        android:inputType="text"
-                        android:textColor="@color/text_color"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-            </soup.neumorphism.NeumorphCardView>
-
-            <TextView
                 android:id="@+id/email_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -331,61 +287,6 @@
 
             </soup.neumorphism.NeumorphCardView>
 
-            <TextView
-                android:id="@+id/job_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="20dp"
-                android:text="@string/job"
-                android:textColor="@color/text_color"
-                android:textSize="16sp" />
-
-            <soup.neumorphism.NeumorphCardView
-                style="@style/CustomShapeAppearance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/gradient_press"
-                app:neumorph_shapeType="pressed">
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="14dp">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:id="@+id/job_spinner" />
-                    <!--                    <TextView-->
-                    <!--                        android:id="@+id/job_edit"-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_gravity="center_vertical"-->
-                    <!--                        android:layout_marginLeft="8dp"-->
-                    <!--                        android:layout_marginRight="8dp"-->
-                    <!--                        android:background="@android:color/transparent"-->
-                    <!--                        android:gravity="center_vertical"-->
-                    <!--                        android:text="@string/student"-->
-                    <!--                        android:textColor="@color/text_color"-->
-                    <!--                        android:textSize="14sp" />-->
-
-                    <!--                    <ImageView-->
-                    <!--                        android:id="@+id/job_scroll_img"-->
-                    <!--                        android:layout_width="25dp"-->
-                    <!--                        android:layout_height="25dp"-->
-                    <!--                        android:layout_alignParentEnd="true"-->
-                    <!--                        android:contentDescription="@string/get_card"-->
-                    <!--                        android:src="@drawable/ic_down"-->
-                    <!--                        android:tint="@color/text_color" />-->
-
-                </RelativeLayout>
-
-            </soup.neumorphism.NeumorphCardView>
-
 
             <CheckBox
                 android:id="@+id/accept_tex_box"
@@ -421,7 +322,7 @@
                         android:id="@+id/sms_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="sms" />
+                        android:text="@string/tm_muse_message" />
 
                 </soup.neumorphism.NeumorphCardView>
 

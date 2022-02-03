@@ -31,7 +31,6 @@ import geek.space.tmmuse.R;
 public class PostPreviewActivity extends AppCompatActivity {
 
     private TextView look_txt_counts, promotion_tit_txt, prom_desc_text, like_count_txt, dis_like_count_txt;
-    private Button more_btn;
     private RoundedImageView promotion_img;
     private ImageView close_promotion_img;
     private ImageView back_img_promotion;
@@ -49,12 +48,6 @@ public class PostPreviewActivity extends AppCompatActivity {
     }
 
     private void setListener() {
-        more_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), AllProductViewsActivity.class));
-            }
-        });
         close_promotion_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,16 +85,12 @@ public class PostPreviewActivity extends AppCompatActivity {
         look_txt_counts.setTypeface(Font.getInstance(this).getMontserrat_500());
         promotion_tit_txt.setTypeface(Font.getInstance(this).getMontserrat_800());
         prom_desc_text.setTypeface(Font.getInstance(this).getMontserrat_500());
-        more_btn.setTypeface(Font.getInstance(this).getMontserrat_500());
     }
 
     private void initComponents() {
         look_txt_counts = findViewById(R.id.look_txt_counts);
         promotion_tit_txt = findViewById(R.id.promotion_tit_txt);
         prom_desc_text = findViewById(R.id.prom_desc_text);
-        like_count_txt = findViewById(R.id.like_count_txt);
-        dis_like_count_txt = findViewById(R.id.dis_like_count_txt);
-        more_btn = findViewById(R.id.more_btn);
         promotion_img = findViewById(R.id.promotion_img);
         back_img_promotion = findViewById(R.id.back_img_promotion);
         close_promotion_img = findViewById(R.id.close_promotion_img);

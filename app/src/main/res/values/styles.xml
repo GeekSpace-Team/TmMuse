@@ -201,4 +201,29 @@
 
     <dimen name="design_CustomProfileCardView_img">12dp</dimen>
 
+
+
+
+    <!--Post Preview start-->
+    <dimen name="design_default_corner_custom_radius_Post_Preview">8dp</dimen>
+
+    <style name="CustomShapeAppearance.Post_Preview" parent="">
+        <item name="neumorph_cornerFamily">rounded</item>
+        <item name="neumorph_cornerSize">@dimen/design_default_corner_custom_radius_Post_Preview</item>
+    </style>
+
+    <style name="Post_Preview" parent="Widget">
+        <item name="android:padding">@dimen/design_custom_padding</item>
+        <item name="android:stateListAnimator">@animator/button_state_list_anim_neumorph</item>
+        <item name="neumorph_inset">@dimen/design_default_inset</item>
+        <item name="neumorph_shadowElevation">6dp</item>
+        <item name="neumorph_shadowColorLight">#262B30</item>
+        <item name="neumorph_shadowColorDark">#0F1113</item>
+        <item name="neumorph_shapeType">flat</item>
+        <item name="neumorph_shapeAppearance">@style/CustomShapeAppearance.Post_Preview</item>
+    </style>
+
+
+    <!--Post Preview end-->
+
 </resources>

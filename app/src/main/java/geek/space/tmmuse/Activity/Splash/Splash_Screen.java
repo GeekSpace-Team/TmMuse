@@ -36,15 +36,12 @@ public class Splash_Screen extends AppCompatActivity {
         setContentView(R.layout.splash_screen);
 
 
-        removeCallbacks = new Runnable() {
-            // Run next activity after 3 sec. We create in this function if user first time
-            @Override
-            public void run() {
-                Intent mainIntent = new Intent(Splash_Screen.this, Main_Menu.class);
-                Splash_Screen.this.startActivity(mainIntent);
+        // Run next activity after 3 sec. We create in this function if user first time
+        removeCallbacks = () -> {
+            Intent mainIntent = new Intent(Splash_Screen.this, Main_Menu.class);
+            Splash_Screen.this.startActivity(mainIntent);
 
-                finish();
-            }
+            finish();
         };
         handler1 = new Handler();
         handler1.postDelayed(removeCallbacks, SPLASH_DISPLAY_LENGTH);

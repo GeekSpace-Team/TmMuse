@@ -12,6 +12,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
 
@@ -23,12 +25,15 @@ public class TestAdapterViewPager extends RecyclerView.Adapter<TestAdapterViewPa
     private ArrayList<TestModelViewPager> testModelViewPagers;
     private ViewPager viewPager;
     private boolean isFirst=true;
+    private WormDotsIndicator dots_indicator;
 
-    public TestAdapterViewPager(Context context, ArrayList<TestModelViewPager> testModelViewPagers, ViewPager viewPager) {
+    public TestAdapterViewPager(Context context, ArrayList<TestModelViewPager> testModelViewPagers, ViewPager viewPager, WormDotsIndicator dots_indicator) {
         this.context = context;
         this.testModelViewPagers = testModelViewPagers;
         this.viewPager = viewPager;
+        this.dots_indicator = dots_indicator;
         viewPager.setAdapter(new TestViewPagerAdapter(context, testModelViewPagers));
+        dots_indicator.setViewPager(viewPager);
     }
 
     @NonNull
