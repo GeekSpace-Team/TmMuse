@@ -1,22 +1,35 @@
 package geek.space.tmmuse.Activity.Main_menu;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
@@ -49,6 +62,11 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
     private TextView no_connection_txt;
     private ImageView reload_app_img;
     private RelativeLayout connection_is_not_ok_rel, connection_is_ok_rel;
+    private boolean isFirst = true;
+    private Dialog popup_in_start;
+    private String testParisImg = "https://mayel.ru/wp-content/uploads/2017/06/paris-3296269_1920.jpg";
+    private View view;
+    private final int CLOSE_POPUP = 5000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,18 +74,77 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.main__menu);
         INSTANCE = this;
         intiComponents();
+        showPopup();
         setListeners();
         setFont();
         getLang();
         InternetConnectionFunction();
     }
 
+    private void showPopup() {
+        if (isFirst) {
+            popup_in_start.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.popup_in_start_app, null, false);
+            popup_in_start.setContentView(view);
+
+
+            TextView popup_tit_txt, popup_desc_text;
+            RoundedImageView popup_img;
+            ImageView back_img_popup, close_popup_img;
+            popup_img = popup_in_start.findViewById(R.id.popup_img);
+            back_img_popup = popup_in_start.findViewById(R.id.back_img_popup);
+            close_popup_img = popup_in_start.findViewById(R.id.close_popup_img);
+            popup_tit_txt = popup_in_start.findViewById(R.id.popup_tit_txt);
+            popup_desc_text = popup_in_start.findViewById(R.id.popup_desc_text);
+
+
+            popup_desc_text.setTypeface(Font.getInstance(this).getMontserrat_400());
+            popup_tit_txt.setTypeface(Font.getInstance(this).getMontserrat_800());
+            close_popup_img.setOnClickListener(view -> popup_in_start.dismiss());
+            Glide.with(context).load(testParisImg).into(popup_img);
+            Glide.with(this).asBitmap().listener(new RequestListener<Bitmap>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                    Bitmap blur = Utils.blurRenderScript(resource, 20, Main_Menu.this);
+                    back_img_popup.setImageBitmap(blur);
+                    return true;
+                }
+            }).load(testParisImg).into(back_img_popup);
+
+            final Window window = popup_in_start.getWindow();
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+            window.setBackgroundDrawableResource(R.drawable.card_gradient);
+            window.setGravity(Gravity.CENTER);
+            popup_in_start.show();
+
+
+            final Handler handler = new Handler();
+            final Runnable runnable = () -> {
+                if (popup_in_start.isShowing()) {
+                    popup_in_start.dismiss();
+                }
+            };
+
+            popup_in_start.setOnDismissListener(dialog -> handler.removeCallbacks(runnable));
+
+            handler.postDelayed(runnable, CLOSE_POPUP);
+
+            isFirst = false;
+        }
+    }
+
     private void setFont() {
         no_connection_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
     }
 
-    public static void setVisibilityBottomNavigation(FragmentActivity activity,int isVisible){
-        NeumorphCardView bottomNavigationView=activity.findViewById(R.id.bottom_menu);
+    public static void setVisibilityBottomNavigation(FragmentActivity activity, int isVisible) {
+        NeumorphCardView bottomNavigationView = activity.findViewById(R.id.bottom_menu);
         bottomNavigationView.setVisibility(isVisible);
     }
 
@@ -102,16 +179,17 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
         connection_is_ok_rel = findViewById(R.id.connection_is_ok_rel);
         no_connection_txt = findViewById(R.id.no_connection_txt);
         openFragment(0);
+        popup_in_start = new Dialog(this);
     }
 
     @Override
     public void onBackPressed() {
-        try{
-            if(Profiles.draw_profile.isDrawerOpen(GravityCompat.END)){
+        try {
+            if (Profiles.draw_profile.isDrawerOpen(GravityCompat.END)) {
                 Profiles.draw_profile.closeDrawer(GravityCompat.END);
                 return;
             }
-        } catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         SettingsFragment settingsFragment = (SettingsFragment) getSupportFragmentManager().findFragmentByTag(SettingsFragment.class.getSimpleName());
@@ -144,7 +222,6 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
             fivesFragment = new SettingsFragment();
             Utils.removeShow(new SettingsFragment(), SettingsFragment.class.getSimpleName(), getSupportFragmentManager(), R.id.menu_frame);
         }
-
 
 
     }
@@ -238,8 +315,8 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
         return false;
     }
 
-    public void InternetConnectionFunction(){
-        if (isNetworkAvailable(this)){
+    public void InternetConnectionFunction() {
+        if (isNetworkAvailable(this)) {
             connection_is_ok_rel.setVisibility(View.VISIBLE);
             connection_is_not_ok_rel.setVisibility(View.INVISIBLE);
         } else {

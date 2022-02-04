@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView.LayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
@@ -42,6 +43,7 @@ import geek.space.tmmuse.Activity.VrImage.VrImageActivity;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneData_adapter;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneTimeAdapter;
 import geek.space.tmmuse.Adapter.FilimAdapter.MovieTimeAdapter;
+import geek.space.tmmuse.Adapter.GalleryAdapter.GalleryAdapter;
 import geek.space.tmmuse.Adapter.PromotionsPage.PromotionAndOffersAdapter;
 import geek.space.tmmuse.Adapter.TestAdapterViewPager.TestAdapterViewPager;
 import geek.space.tmmuse.Common.Font.Font;
@@ -73,7 +75,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private String profileId = "", imageUrl = "";
     private ArrayList<PromotionAndOffers> promotionAndOffers = new ArrayList<>();
     private PromotionAndOffersAdapter promotionAndOffersAdapter;
-    private RecyclerView post_rec, movie_time_rec, images_profile_rec;
+    private RecyclerView post_rec, movie_time_rec, images_profile_rec, gallery_rec;
     private ScrollView prom_scroll;
     private FrameLayout root_prom;
     private NestedScrollView bottomsheet;
@@ -98,6 +100,13 @@ public class AllProductViewsActivity extends AppCompatActivity {
         setMovieTimes();
         setProfileImagesList();
         setProfileImgAdapter();
+        setGalleryAdapter();
+    }
+
+    private void setGalleryAdapter() {
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+        gallery_rec.setLayoutManager(mLayoutManager);
+        gallery_rec.setAdapter(new GalleryAdapter(this, testModelViewPagers));
     }
 
     private void setProfileImgAdapter() {
@@ -123,7 +132,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.brone_filim_dialog, null, false);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         dialog.setContentView(view);
 
         EditText count_tickets_ed_text = dialog.findViewById(R.id.count_tickets_ed_text);
@@ -184,6 +193,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setContentView(view);
+
         NeumorphButton no_btn = dialog.findViewById(R.id.no_btn);
         no_btn.setOnClickListener(view -> dialog.dismiss());
         NeumorphButton yes_btn = dialog.findViewById(R.id.yes_btn);
@@ -333,6 +343,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
         bottomsheet = findViewById(R.id.bottomsheet);
         images_profile_rec = findViewById(R.id.images_profile_rec);
         vr_img = findViewById(R.id.vr_img);
+        gallery_rec = findViewById(R.id.gallery_rec);
     }
 
     private void setListener() {
@@ -343,6 +354,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
                 showCustomDialog();
             }
         });
+
         bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
@@ -429,6 +441,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
             }
         });
+
         findViewById(R.id.image_relative).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -436,6 +449,72 @@ public class AllProductViewsActivity extends AppCompatActivity {
             }
         });
 
+        certificate_layout.setOnClickListener(view -> {
+            Context context = AllProductViewsActivity.this;
+            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(AllProductViewsActivity.this,
+                    R.style.CustomBottomSheetDialogTheme);
+            View bottomSheetDialogView = LayoutInflater.from(AllProductViewsActivity.this)
+                    .inflate(R.layout.cartificate_bottom_sheet,
+                            view.findViewById(R.id.bottom_sheet_certificate));
+
+            TextView certificate_text, write_cert_txt, close_bottom_txt;
+            EditText certificate_ed_text;
+            NeumorphButton send_btn;
+
+            close_bottom_txt = bottomSheetDialogView.findViewById(R.id.close_bottom_txt);
+            certificate_ed_text = bottomSheetDialogView.findViewById(R.id.certificate_ed_text);
+            certificate_text = bottomSheetDialogView.findViewById(R.id.certificate_text);
+            write_cert_txt = bottomSheetDialogView.findViewById(R.id.write_cert_txt);
+            send_btn = bottomSheetDialogView.findViewById(R.id.send_btn);
+
+            certificate_ed_text.setTypeface(Font.getInstance(context).getMontserrat_800());
+            certificate_text.setTypeface(Font.getInstance(context).getMontserrat_700());
+            write_cert_txt.setTypeface(Font.getInstance(context).getMontserrat_400());
+            close_bottom_txt.setTypeface(Font.getInstance(context).getMontserrat_600());
+            send_btn.setTypeface(Font.getInstance(context).getMontserrat_700());
+
+            close_bottom_txt.setOnClickListener(view1 -> bottomSheetDialog.dismiss());
+
+
+            bottomSheetDialog.setContentView(bottomSheetDialogView);
+            bottomSheetDialog.show();
+        });
+
+        promo_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = AllProductViewsActivity.this;
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(AllProductViewsActivity.this,
+                        R.style.CustomBottomSheetDialogTheme);
+                View bottomSheetDialogView = LayoutInflater.from(AllProductViewsActivity.this)
+                        .inflate(R.layout.promocode_bottom_sheet,
+                                view.findViewById(R.id.bottom_sheet_promo));
+
+                TextView promo_text, your_promo_txt, code_number_txt, close_bottom_txt;
+
+                promo_text = bottomSheetDialogView.findViewById(R.id.promo_text);
+                your_promo_txt = bottomSheetDialogView.findViewById(R.id.your_promo_txt);
+                code_number_txt = bottomSheetDialogView.findViewById(R.id.code_number_txt);
+                close_bottom_txt = bottomSheetDialogView.findViewById(R.id.close_bottom_txt);
+
+                your_promo_txt.setTypeface(Font.getInstance(context).getMontserrat_800());
+                promo_text.setTypeface(Font.getInstance(context).getMontserrat_700());
+                code_number_txt.setTypeface(Font.getInstance(context).getMontserrat_700());
+                close_bottom_txt.setTypeface(Font.getInstance(context).getMontserrat_600());
+
+                close_bottom_txt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        bottomSheetDialog.dismiss();
+                    }
+                });
+
+                bottomSheetDialog.setContentView(bottomSheetDialogView);
+                bottomSheetDialog.show();
+
+
+            }
+        });
 
 
     }

@@ -95,7 +95,7 @@
     <string name="call"> Jaň </string>
     <string name="map"> Karta </string>
     <string name="insta">\@insta </string>
-    <string name="certificate"> Şahadatnama </string>
+    <string name="certificate"> Sertifikat </string>
     <string name="address"> Salgy </string>
     <string name="past_an_plan_text"> Meýilnamanyň tekstini geçdi </string>
     <string name="payment"> Töleg </string>
@@ -125,6 +125,11 @@
     <string name="buy_ticket_desc">You have to come to the cinema 30 minutes before the movie starts!</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="visit_page">Visit page</string>
+    <string name="enter_amount_of_certificate">Enter amount of certificate:</string>
+    <string name="your_promo_code">Your promo code:</string>
+    <string name="promo_code">Promo code</string>
+    <string name="select_phone_number">Select phone number</string>
 
 
 </resources>

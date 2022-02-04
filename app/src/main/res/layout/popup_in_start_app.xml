@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2B3238"
-    tools:context=".Activity.PostPreview.PostPreviewActivity">
+    tools:context=".Activity.PostPreview.PostPreviewActivity"
+    android:id="@+id/setting_fontsize">
 
 
     <ImageView
-        android:id="@+id/back_img_promotion"
+        android:id="@+id/back_img_popup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
@@ -40,36 +41,19 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
                     android:padding="15dp">
 
                     <ImageView
-                        android:id="@+id/ic_eye"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_eye"
-                        android:tint="#7F8FA7" />
-
-                    <TextView
-                        android:id="@+id/look_txt_counts"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="8dp"
-                        android:layout_toEndOf="@id/ic_eye"
-                        android:text="100 Views"
-                        android:textColor="#7F8FA7"
-                        android:textSize="14sp" />
-
-                    <ImageView
-                        android:id="@+id/close_promotion_img"
-                        android:layout_width="17dp"
-                        android:layout_height="17dp"
+                        android:id="@+id/close_popup_img"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/ic_close_promotion"
-                        android:tint="#7F8FA7" />
+                        android:tint="@android:color/white"
+                        android:background="@drawable/close_popup_back"
+                        android:padding="9dp"
+                        android:layout_marginStart="20dp"/>
 
                 </RelativeLayout>
 
@@ -80,7 +64,7 @@
                     android:layout_marginEnd="@dimen/margins">
 
                     <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/promotion_img"
+                        android:id="@+id/popup_img"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
@@ -88,99 +72,21 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp">
-
-                    <soup.neumorphism.NeumorphCardView
-                        android:id="@+id/fig_up_card"
-                        style="@style/Post_Preview"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:padding="25dp"
-                        app:neumorph_backgroundColor="#2B3238">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_fig_up" />
-
-                    </soup.neumorphism.NeumorphCardView>
-
-                    <soup.neumorphism.NeumorphCardView
-                        android:id="@+id/fig_down_card"
-                        style="@style/Post_Preview"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:padding="25dp"
-                        app:neumorph_backgroundColor="#2B3238">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_fig_down" />
-
-                    </soup.neumorphism.NeumorphCardView>
-
-                    <soup.neumorphism.NeumorphCardView
-                        android:id="@+id/fig_download_card"
-                        style="@style/Post_Preview"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:padding="25dp"
-                        app:neumorph_backgroundColor="#2B3238">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_share" />
-
-                    </soup.neumorphism.NeumorphCardView>
-
-                    <soup.neumorphism.NeumorphCardView
-                        android:id="@+id/fig_insta_card"
-                        style="@style/Post_Preview"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:padding="25dp"
-                        app:neumorph_backgroundColor="#2B3238">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_instagram" />
-
-                    </soup.neumorphism.NeumorphCardView>
-
-
-                </LinearLayout>
 
 
                 <TextView
-                    android:id="@+id/promotion_tit_txt"
+                    android:id="@+id/popup_tit_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:textColor="#FFF"
-                    android:textSize="29sp" />
+                    android:textSize="29sp"
+                    android:text="About Paris!"/>
 
                 <TextView
-                    android:id="@+id/prom_desc_text"
+                    android:id="@+id/popup_desc_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -189,7 +95,22 @@
                     android:layout_marginEnd="@dimen/margins"
                     android:gravity="center_horizontal"
                     android:textColor="#FFF"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:text="Paris (French pronunciation: ​[paʁi] (audio speaker iconlisten)) is the capital and most populous city of France, with an estimated population of 2,165,423 residents as of 1 January 2022 in an area of more than 105 square kilometres (41 square miles).[3] Since the 17th century, Paris has been one of Europe's major centres of finance, diplomacy, commerce, fashion, gastronomy, science, and arts."/>
+
+                <Button
+                    android:id="@+id/more_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="60dp"
+                    android:background="@drawable/promotios_back_btn"
+                    android:gravity="center"
+                    android:text="@string/visit_page"
+                    android:textColor="#FFF" />
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"

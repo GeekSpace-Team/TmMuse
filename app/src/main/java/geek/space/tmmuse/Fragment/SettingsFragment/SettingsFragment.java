@@ -1,14 +1,19 @@
 package geek.space.tmmuse.Fragment.SettingsFragment;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -149,6 +154,36 @@ public class SettingsFragment extends Fragment {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             Main_Menu.fivesFragment = userProfileFragment;
             Utils.hideAdd(userProfileFragment, userProfileFragment.getClass().getSimpleName(), fragmentManager, R.id.menu_frame);
+        });
+
+        logout_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog dialog = new Dialog(context);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.log_out_popup, null, false);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                dialog.setContentView(view);
+
+                TextView pay_attention, pay_attention_desc, cancel_txt, aply_txt;
+                pay_attention = dialog.findViewById(R.id.pay_attention);
+                pay_attention_desc = dialog.findViewById(R.id.pay_attention_desc);
+                cancel_txt = dialog.findViewById(R.id.cancel_txt);
+                aply_txt = dialog.findViewById(R.id.aply_txt);
+
+                pay_attention.setTypeface(Font.getInstance(context).getMontserrat_800());
+                pay_attention_desc.setTypeface(Font.getInstance(context).getMontserrat_400());
+                cancel_txt.setTypeface(Font.getInstance(context).getMontserrat_600());
+                aply_txt.setTypeface(Font.getInstance(context).getMontserrat_600());
+
+                cancel_txt.setOnClickListener(view1 -> dialog.dismiss());
+
+                final Window window = dialog.getWindow();
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                window.setGravity(Gravity.CENTER);
+                dialog.show();
+            }
         });
 
     }

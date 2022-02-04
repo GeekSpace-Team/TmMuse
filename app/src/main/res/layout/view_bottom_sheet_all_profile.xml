@@ -55,7 +55,7 @@
                         android:layout_height="5dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
-                        android:background="#7F8FA7"
+                        android:background="@drawable/view_stick_back"
                         android:visibility="visible" />
                 </RelativeLayout>
 
@@ -100,51 +100,60 @@
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:overScrollMode="never"
                     android:fillViewport="true"
+                    android:overScrollMode="never"
                     android:scrollbars="none">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
 
-
-                        <RelativeLayout
-                            android:id="@+id/image_relative"
-                            android:layout_width="106dp"
-                            android:layout_height="80dp"
-                            android:background="@drawable/vr_image_layout_back">
-
-                            <com.makeramen.roundedimageview.RoundedImageView
-                                android:id="@+id/vr_img"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:padding="2dp"
-                                android:scaleType="fitXY"
-                                tools:ignore="TooDeepLayout" />
-
-                            <TextView
-                                android:id="@+id/vr_image_txt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
-                                android:layout_centerVertical="true"
-                                android:gravity="center"
-                                android:text="@string/vr_image"
-                                android:textColor="#000"
-                                android:textSize="16sp" />
-
-
-                        </RelativeLayout>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/images_profile_rec"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:nestedScrollingEnabled="false"
-                            android:overScrollMode="never"
-                            android:visibility="visible"
-                            android:layout_toEndOf="@id/image_relative"/>
+                            android:layout_height="wrap_content">
+
+                            <RelativeLayout
+                                android:id="@+id/image_relative"
+                                android:layout_width="106dp"
+                                android:layout_height="80dp"
+                                android:background="@drawable/vr_image_layout_back">
+
+                                <com.makeramen.roundedimageview.RoundedImageView
+                                    android:id="@+id/vr_img"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:padding="2dp"
+                                    android:scaleType="fitXY"
+                                    tools:ignore="TooDeepLayout" />
+
+                                <TextView
+                                    android:id="@+id/vr_image_txt"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:gravity="center"
+                                    android:text="@string/vr_image"
+                                    android:textColor="#000"
+                                    android:textSize="16sp" />
+
+
+                            </RelativeLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/images_profile_rec"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@id/image_relative"
+                                android:nestedScrollingEnabled="false"
+                                android:overScrollMode="never"
+                                android:visibility="visible"
+                                android:layout_weight="1"/>
+
+                        </LinearLayout>
+
+
 
 
                     </RelativeLayout>
@@ -341,7 +350,8 @@
                     android:id="@+id/film_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <include layout="@layout/filim_products" />
 
@@ -349,12 +359,11 @@
 
                 <!--Certificate Layout-->
                 <LinearLayout
-                    android:id="@+id/certificate_layout"
+                    android:id="@+id/certificate_promo_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:visibility="gone">
+                    android:padding="10dp">
 
                     <include layout="@layout/certificate_products" />
 
@@ -376,8 +385,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:orientation="vertical">
 
 
                     <include layout="@layout/all_profile_gallery" />
