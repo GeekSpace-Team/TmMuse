@@ -1,18 +1,15 @@
-package geek.space.tmmuse.Adapter.TestAdapterViewPager;
+package geek.space.tmmuse.Adapter.ZoomImageAdapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -23,13 +20,13 @@ import geek.space.tmmuse.Activity.ZoomImageProfile.ZoomImageActivity;
 import geek.space.tmmuse.Model.TestModelViewPager.TestModelViewPager;
 import geek.space.tmmuse.R;
 
-public class TestViewPagerAdapter extends PagerAdapter {
+public class ZoomViewPagerAdapter extends PagerAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
     private ArrayList<TestModelViewPager> testModelViewPagers;
 
-    public TestViewPagerAdapter(Context context, ArrayList<TestModelViewPager> testModelViewPagers) {
+    public ZoomViewPagerAdapter(Context context, ArrayList<TestModelViewPager> testModelViewPagers, RecyclerView zoom_img_rec) {
         this.context = context;
         this.testModelViewPagers = testModelViewPagers;
         layoutInflater = LayoutInflater.from(context);
@@ -54,15 +51,6 @@ public class TestViewPagerAdapter extends PagerAdapter {
                 .into(imageView);
 
         container.addView(view, 0);
-
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ZoomImageActivity.images=testModelViewPagers;
-                Intent intent=new Intent(context,ZoomImageActivity.class);
-                context.startActivity(intent);
-            }
-        });
 
         return view;
     }
