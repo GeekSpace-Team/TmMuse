@@ -44,10 +44,12 @@ import geek.space.tmmuse.Adapter.FilimAdapter.BroneData_adapter;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneTimeAdapter;
 import geek.space.tmmuse.Adapter.FilimAdapter.MovieTimeAdapter;
 import geek.space.tmmuse.Adapter.GalleryAdapter.GalleryAdapter;
+import geek.space.tmmuse.Adapter.ProfilePhoneAdapter.ProfilePhoneAdapter;
 import geek.space.tmmuse.Adapter.PromotionsPage.PromotionAndOffersAdapter;
 import geek.space.tmmuse.Adapter.TestAdapterViewPager.TestAdapterViewPager;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Model.Film.MovieTime;
+import geek.space.tmmuse.Model.ProfilePhone.ProfilePhone;
 import geek.space.tmmuse.Model.PromotionAndOffers.PromotionAndOffers;
 import geek.space.tmmuse.Model.TestModelViewPager.TestModelViewPager;
 import geek.space.tmmuse.R;
@@ -69,7 +71,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
             deliver_desc_txt, cuisen_txt, average_check_txt, own_promotion_desc_txt, tm_muse_card_prod_txt,
             ard_prod_desc_txt, gallery_txt, post_txt, name_profile_txt, product_text_count_up, payment_txt, promotion_txt,
             deliver_txt, cuisine_desc_txt, average_check_desc_txt, tm_muse_card_prod_desc_txt;
-    private LinearLayout certificate_layout, promo_layout, images_layout, all_views_info_layout;
+    private LinearLayout certificate_layout, promo_layout, images_layout, all_views_info_layout, call_layout_products;
     private View view_Stick;
     private ImageView onback_img, share_img;
     private String profileId = "", imageUrl = "";
@@ -85,6 +87,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private ArrayList<TestModelViewPager> testModelViewPagers = new ArrayList<>();
     private int dotsCount;
     private RoundedImageView vr_img;
+    private ArrayList<ProfilePhone> profilePhones = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +104,12 @@ public class AllProductViewsActivity extends AppCompatActivity {
         setProfileImagesList();
         setProfileImgAdapter();
         setGalleryAdapter();
+        setProfilePhoneList();
+    }
+    private void setProfilePhoneList() {
+        profilePhones.clear();
+        profilePhones.add(new ProfilePhone(1, "99365853833"));
+        profilePhones.add(new ProfilePhone(1, "99365698450"));
     }
 
     private void setGalleryAdapter() {
@@ -296,6 +305,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
         view = findViewById(R.id.bottomsheet);
         sliderContainer = findViewById(R.id.sliderContainer);
         movie_time_rec = findViewById(R.id.movie_time_rec);
+        call_layout_products = findViewById(R.id.call_layout_products);
         bottomSheetBehavior = BottomSheetBehavior.from(view);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
         all_views_viewPager = findViewById(R.id.all_views_viewPager);
@@ -513,6 +523,26 @@ public class AllProductViewsActivity extends AppCompatActivity {
                 bottomSheetDialog.show();
 
 
+            }
+        });
+
+        call_layout_products.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = AllProductViewsActivity.this;
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(AllProductViewsActivity.this,
+                        R.style.CustomBottomSheetDialogTheme);
+                View bottomSheetDialogView = LayoutInflater.from(AllProductViewsActivity.this)
+                        .inflate(R.layout.phone_bottom_sheet,
+                                view.findViewById(R.id.phone_bottom));
+                RecyclerView phone_number_rec;
+                phone_number_rec = bottomSheetDialogView.findViewById(R.id.phone_number_rec);
+                LayoutManager layoutManager = new LinearLayoutManager(AllProductViewsActivity.this);
+                phone_number_rec.setLayoutManager(layoutManager);
+                phone_number_rec.setAdapter(new ProfilePhoneAdapter(AllProductViewsActivity.this, profilePhones));
+
+                bottomSheetDialog.setContentView(bottomSheetDialogView);
+                bottomSheetDialog.show();
             }
         });
 
