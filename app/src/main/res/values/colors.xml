@@ -32,4 +32,8 @@
 
     <color name="finger_up_color_ic">#FAFF10</color>
 
+    <color name="zoom_image_unClickable">#BFFFFFFF</color>
+    <color name="white">#FFF</color>
+    <color name="black">#000</color>
+
 </resources>

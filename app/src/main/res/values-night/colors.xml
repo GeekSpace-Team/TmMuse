@@ -25,4 +25,9 @@
 
     <color name="popup_color">#2B3238</color>
 
+    <color name="zoom_image_unClickable">#BF000000</color>
+
+    <color name="white">#000</color>
+    <color name="black">#FFF</color>
+
 </resources>

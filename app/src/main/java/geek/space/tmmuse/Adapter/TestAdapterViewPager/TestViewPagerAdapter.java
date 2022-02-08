@@ -19,7 +19,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 
-import geek.space.tmmuse.Activity.ZoomImageProfile.ZoomImageActivity;
+import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Model.TestModelViewPager.TestModelViewPager;
 import geek.space.tmmuse.R;
 
@@ -58,9 +58,11 @@ public class TestViewPagerAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ZoomImageActivity.images=testModelViewPagers;
-                Intent intent=new Intent(context,ZoomImageActivity.class);
-                context.startActivity(intent);
+                ArrayList<String> imgs=new ArrayList<>();
+                for(TestModelViewPager m:testModelViewPagers){
+                    imgs.add(m.getImg_url());
+                }
+                Utils.showImageViewer(context, imgs, imgs);
             }
         });
 

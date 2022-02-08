@@ -1,5 +1,8 @@
 package geek.space.tmmuse.Common;
 
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,18 +12,31 @@ import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
+
+import com.bumptech.glide.Glide;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
+import geek.space.tmmuse.Adapter.ZoomImageAdapter.ImageViewerAdapter;
 import geek.space.tmmuse.Fragment.ProfileFragment.Profiles;
 import geek.space.tmmuse.R;
 import soup.neumorphism.NeumorphButton;
@@ -154,5 +170,89 @@ public class Utils {
         //Set RGB pixels.
         result.setPixels(pixels, 0, result.getWidth(), 0, 0, result.getWidth(), result.getHeight());
         return result;
+    }
+
+// ViewPage scrolling with RecyclerView
+    public static void showImageViewer(Context context, ArrayList<String> images, ArrayList<String> largeImages) {
+        Dialog dialog = new Dialog(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.image_viewer, null, false);
+        dialog.setContentView(view);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.CENTER);
+//        window.getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        ViewPager pager = dialog.findViewById(R.id.pager);
+        ImageView back=dialog.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        ImageViewerAdapter adapter = new ImageViewerAdapter(largeImages, context);
+        pager.setAdapter(adapter);
+
+
+
+        LinearLayout linear = dialog.findViewById(R.id.linear);
+        HorizontalScrollView horizontalScrollView=dialog.findViewById(R.id.rec);
+
+        if(images.size()<2){
+            horizontalScrollView.setVisibility(View.GONE);
+        }
+
+
+
+        for (int i=0;i<images.size();i++) {
+            String img = images.get(i);
+            View selector = LayoutInflater.from(context).inflate(R.layout.image_selector, null, false);
+            ImageView image = selector.findViewById(R.id.image);
+            LinearLayout unselect = selector.findViewById(R.id.unselect);
+            if(i==0){
+                unselect.setVisibility(View.GONE);
+            }
+            Glide.with(context)
+                    .load(img)
+                    .into(image);
+            int finalI = i;
+            selector.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    pager.setCurrentItem(finalI);
+                }
+            });
+            linear.addView(selector);
+        }
+        int[] old = {0};
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                View unselectView = linear.getChildAt(position);
+                LinearLayout unselect = unselectView.findViewById(R.id.unselect);
+                LinearLayout oldUnselectView = linear.getChildAt(old[0]).findViewById(R.id.unselect);
+                oldUnselectView.setVisibility(View.VISIBLE);
+                old[0] = position;
+                unselect.setVisibility(View.GONE);
+                horizontalScrollView.scrollTo(unselectView.getLeft(),unselectView.getTop());
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+
+        dialog.setCancelable(true);
+        window.setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+        dialog.show();
     }
 }
