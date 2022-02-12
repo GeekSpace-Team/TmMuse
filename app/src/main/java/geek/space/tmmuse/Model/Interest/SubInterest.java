@@ -2,11 +2,13 @@ package geek.space.tmmuse.Model.Interest;
 
 public class SubInterest {
     private Integer id;
-    private String interest;
+    private String titleTM;
+    private String titleRU;
 
-    public SubInterest(Integer id, String interest) {
+    public SubInterest(Integer id, String titleTM, String titleRU) {
         this.id = id;
-        this.interest = interest;
+        this.titleTM = titleTM;
+        this.titleRU = titleRU;
     }
 
     public Integer getId() {
@@ -17,11 +19,19 @@ public class SubInterest {
         this.id = id;
     }
 
-    public String getInterest() {
-        return interest;
+    public String getTitleTM() {
+        return titleTM;
     }
 
-    public void setInterest(String interest) {
-        this.interest = interest;
+    public void setTitleTM(String titleTM) {
+        this.titleTM = titleTM;
+    }
+
+    public String getTitleRU() {
+        return titleRU;
+    }
+
+    public void setTitleRU(String titleRU) {
+        this.titleRU = titleRU;
     }
 }

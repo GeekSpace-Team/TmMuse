@@ -1,26 +1,38 @@
 package geek.space.tmmuse.Model.PromotionAndOffers;
 
+import java.util.ArrayList;
+
 public class PromotionAndOffers {
     private int id;
-    private String percent_text;
-    private String offers_name;
-    private String offers_img;
-    private String offers_desc;
+    private String titleTM;
+    private String titleRU;
+    private String descriptionTM;
+    private String descriptionRU;
+    private String image;
+    private String promotion;
+    private String view_count;
+    private String like;
+    private String dislike;
+    private int profile_id;
+    private String instagram;
+    private ArrayList<Numbers> numbers = new ArrayList<>();
 
-    public PromotionAndOffers(int id, String percent_text, String offers_name, String offers_img, String offers_desc) {
+    public PromotionAndOffers(int id, String titleTM, String titleRU, String descriptionTM, String descriptionRU,
+                              String image, String promotion, String view_count, String like, String dislike,
+                              int profile_id, String instagram, ArrayList<Numbers> numbers) {
         this.id = id;
-        this.percent_text = percent_text;
-        this.offers_name = offers_name;
-        this.offers_img = offers_img;
-        this.offers_desc = offers_desc;
-    }
-
-    public String getOffers_desc() {
-        return offers_desc;
-    }
-
-    public void setOffers_desc(String offers_desc) {
-        this.offers_desc = offers_desc;
+        this.titleTM = titleTM;
+        this.titleRU = titleRU;
+        this.descriptionTM = descriptionTM;
+        this.descriptionRU = descriptionRU;
+        this.image = image;
+        this.promotion = promotion;
+        this.view_count = view_count;
+        this.like = like;
+        this.dislike = dislike;
+        this.profile_id = profile_id;
+        this.instagram = instagram;
+        this.numbers = numbers;
     }
 
     public int getId() {
@@ -28,30 +40,102 @@ public class PromotionAndOffers {
     }
 
     public void setId(int id) {
-        id = id;
+        this.id = id;
     }
 
-    public String getPercent_text() {
-        return percent_text;
+    public String getTitleTM() {
+        return titleTM;
     }
 
-    public void setPercent_text(String percent_text) {
-        this.percent_text = percent_text;
+    public void setTitleTM(String titleTM) {
+        this.titleTM = titleTM;
     }
 
-    public String getOffers_name() {
-        return offers_name;
+    public String getTitleRU() {
+        return titleRU;
     }
 
-    public void setOffers_name(String offers_name) {
-        this.offers_name = offers_name;
+    public void setTitleRU(String titleRU) {
+        this.titleRU = titleRU;
     }
 
-    public String getOffers_img() {
-        return offers_img;
+    public String getDescriptionTM() {
+        return descriptionTM;
     }
 
-    public void setOffers_img(String offers_img) {
-        this.offers_img = offers_img;
+    public void setDescriptionTM(String descriptionTM) {
+        this.descriptionTM = descriptionTM;
+    }
+
+    public String getDescriptionRU() {
+        return descriptionRU;
+    }
+
+    public void setDescriptionRU(String descriptionRU) {
+        this.descriptionRU = descriptionRU;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(String promotion) {
+        this.promotion = promotion;
+    }
+
+    public String getView_count() {
+        return view_count;
+    }
+
+    public void setView_count(String view_count) {
+        this.view_count = view_count;
+    }
+
+    public String getLike() {
+        return like;
+    }
+
+    public void setLike(String like) {
+        this.like = like;
+    }
+
+    public String getDislike() {
+        return dislike;
+    }
+
+    public void setDislike(String dislike) {
+        this.dislike = dislike;
+    }
+
+    public int getProfile_id() {
+        return profile_id;
+    }
+
+    public void setProfile_id(int profile_id) {
+        this.profile_id = profile_id;
+    }
+
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
+    }
+
+    public ArrayList<Numbers> getNumbers() {
+        return numbers;
+    }
+
+    public void setNumbers(ArrayList<Numbers> numbers) {
+        this.numbers = numbers;
     }
 }

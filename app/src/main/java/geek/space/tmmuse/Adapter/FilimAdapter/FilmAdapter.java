@@ -18,7 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import geek.space.tmmuse.Activity.AllProductViews.AllProductViewsActivity;
+import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Common.Font.Font;
+import geek.space.tmmuse.Common.SharedPref;
+import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Model.Film.Film;
 import geek.space.tmmuse.R;
 import soup.neumorphism.NeumorphCardView;
@@ -43,15 +46,19 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Film film = filmList.get(position);
-        holder.category_film.setText(film.getFilm_desc());
-        holder.name_film.setText(film.getFilm_name());
-        Glide.with(context).load(film.getFilm_IMG()).into(holder.films_img);
+        holder.category_film.setText(film.getShort_descTM());
+        holder.name_film.setText(film.getNameTM());
+        if(Utils.getLanguage(context).equals("ru")){
+            holder.category_film.setText(film.getShort_descRU());
+            holder.name_film.setText(film.getNameRU());
+        }
+        Glide.with(context).load(Constant.BASE_URL_IMAGE+film.getSmall_image()).into(holder.films_img);
         holder.film_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, AllProductViewsActivity.class);
-                intent.putExtra("id", getItemId(position));
-                intent.putExtra("image",film.getFilm_IMG());
+                intent.putExtra("id", film.getId()+"");
+                intent.putExtra("image",Constant.BASE_URL+film.getSmall_image());
                 context.startActivity(intent);
             }
         });

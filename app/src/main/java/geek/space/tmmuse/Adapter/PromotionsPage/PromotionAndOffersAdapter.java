@@ -15,8 +15,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +31,9 @@ import java.util.ArrayList;
 import geek.space.tmmuse.Activity.AllProductViews.AllProductViewsActivity;
 import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
 import geek.space.tmmuse.Activity.PostPreview.PostPreviewActivity;
+import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Common.Font.Font;
+import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Model.PromotionAndOffers.PromotionAndOffers;
 import geek.space.tmmuse.R;
 import soup.neumorphism.NeumorphButton;
@@ -38,17 +42,13 @@ import soup.neumorphism.NeumorphCardView;
 public class PromotionAndOffersAdapter extends RecyclerView.Adapter<PromotionAndOffersAdapter.ViewHolder> {
     private Context context;
     private ArrayList<PromotionAndOffers> promotionAndOffers = new ArrayList<>();
-    private ScrollView scroll_view;
     private FrameLayout frameLayout;
-    private FragmentActivity fragmentActivity;
     private String title = "", desc = "", img = "";
     private TextView desc_text;
 
-    public PromotionAndOffersAdapter(Context context, ArrayList<PromotionAndOffers> promotionAndOffers, ScrollView scroll_view, FrameLayout frameLayout) {
+    public PromotionAndOffersAdapter(Context context, ArrayList<PromotionAndOffers> promotionAndOffers) {
         this.context = context;
         this.promotionAndOffers = promotionAndOffers;
-        this.scroll_view = scroll_view;
-        this.frameLayout = frameLayout;
     }
 
     @NonNull
@@ -63,9 +63,12 @@ public class PromotionAndOffersAdapter extends RecyclerView.Adapter<PromotionAnd
 
         PromotionAndOffers promotion = promotionAndOffers.get(position);
 
-        holder.percent_btn.setText(promotion.getPercent_text());
-        holder.name_prom_offer_txt.setText(promotion.getOffers_name());
-        Glide.with(context).load(promotion.getOffers_img()).into(holder.prom_offer_img);
+        holder.percent_btn.setText(promotion.getPromotion());
+        holder.name_prom_offer_txt.setText(promotion.getTitleTM());
+        if (Utils.getLanguage(context).equals("ru")){
+            holder.name_prom_offer_txt.setText(promotion.getTitleRU());
+        }
+        Glide.with(context).load(Constant.BASE_URL_IMAGE + promotion.getImage()).into(holder.prom_offer_img);
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -78,13 +81,19 @@ public class PromotionAndOffersAdapter extends RecyclerView.Adapter<PromotionAnd
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, PostPreviewActivity.class);
-                intent.putExtra("IMG", promotion.getOffers_img() + "");
-                intent.putExtra("TITLE", promotion.getOffers_name() + "");
-                intent.putExtra("DESC", promotion.getOffers_desc() + "");
+                intent.putExtra("IMG", Constant.BASE_URL_IMAGE + promotion.getImage() + "");
+                intent.putExtra("TITLE", promotion.getDescriptionTM() + "");
+                intent.putExtra("DESC", promotion.getDescriptionTM() + "");
+                if (Utils.getLanguage(context).equals("ru")){
+                    intent.putExtra("TITLE", promotion.getDescriptionRU() + "");
+                    intent.putExtra("DESC", promotion.getDescriptionRU() + "");
+                }
                 context.startActivity(intent);
 
             }
         });
+
+
 
 
     }
@@ -99,21 +108,29 @@ public class PromotionAndOffersAdapter extends RecyclerView.Adapter<PromotionAnd
 
         TextView prom_name_txt = dialog.findViewById(R.id.prom_name_txt);
         ReadMoreTextView desc_text = dialog.findViewById(R.id.desc_text);
-        prom_name_txt.setText(promotion.getOffers_name());
-        desc_text.setText(promotion.getOffers_desc());
+        prom_name_txt.setText(promotion.getTitleTM());
+        desc_text.setText(promotion.getTitleTM());
+        if (Utils.getLanguage(context).equals("ru")){
+            prom_name_txt.setText(promotion.getTitleRU());
+            desc_text.setText(promotion.getTitleRU());
+        }
         desc_text.setOnClickListener(view -> {
             Intent intent = new Intent(context, PostPreviewActivity.class);
-            intent.putExtra("IMG", promotion.getOffers_img() + "");
-            intent.putExtra("TITLE", promotion.getOffers_name() + "");
-            intent.putExtra("DESC", promotion.getOffers_desc() + "");
+            intent.putExtra("IMG", Constant.BASE_URL_IMAGE + promotion.getImage() + "");
+            intent.putExtra("TITLE", promotion.getTitleTM() + "");
+            intent.putExtra("DESC", promotion.getDescriptionTM() + "");
+            if (Utils.getLanguage(context).equals("ru")){
+                intent.putExtra("TITLE", promotion.getDescriptionRU() + "");
+                intent.putExtra("DESC", promotion.getDescriptionRU() + "");
+            }
             context.startActivity(intent);
             dialog.dismiss();
             Main_Menu.get().getBlurLayout().setVisibility(View.GONE);
         });
         TextView prom_precent_text = dialog.findViewById(R.id.prom_precent_text);
-        prom_precent_text.setText(promotion.getPercent_text());
+        prom_precent_text.setText(promotion.getPromotion());
         ImageView prom_img = dialog.findViewById(R.id.prom_img);
-        Glide.with(context).load(promotion.getOffers_img()).into(prom_img);
+        Glide.with(context).load(Constant.BASE_URL_IMAGE + promotion.getImage()).into(prom_img);
 
         dialog.setOnCancelListener(dialogInterface -> Main_Menu.get().getBlurLayout().setVisibility(View.GONE));
         dialog.setOnShowListener(dialogInterface -> Main_Menu.get().getBlurLayout().setVisibility(View.VISIBLE));

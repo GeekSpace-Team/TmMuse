@@ -40,6 +40,7 @@ import geek.space.tmmuse.Fragment.MessageFragment.MessageFragment;
 import geek.space.tmmuse.Fragment.OpenMessage.OpenMessageFragment;
 import geek.space.tmmuse.Fragment.ProfileFragment.Profiles;
 import geek.space.tmmuse.Fragment.ProfileFragment.UserProfileFragment;
+import geek.space.tmmuse.Fragment.PromotionsOffersFragment.PromotionsOffersFragment;
 import geek.space.tmmuse.Fragment.SettingsFragment.SettingsFragment;
 import geek.space.tmmuse.R;
 import io.alterac.blurkit.BlurLayout;
@@ -66,7 +67,7 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
     private Dialog popup_in_start;
     private String testParisImg = "https://mayel.ru/wp-content/uploads/2017/06/paris-3296269_1920.jpg";
     private View view;
-    private final int CLOSE_POPUP = 5000;
+    private final int CLOSE_POPUP = 15000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -223,6 +224,11 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
             Utils.removeShow(new SettingsFragment(), SettingsFragment.class.getSimpleName(), getSupportFragmentManager(), R.id.menu_frame);
         }
 
+        HomeFragment homeFragment1 = (HomeFragment) getSupportFragmentManager().findFragmentByTag(HomeFragment.class.getSimpleName());
+        if (homeFragment1 != null && homeFragment1.isVisible()) {
+            firstFragment = new PromotionsOffersFragment();
+            Utils.removeShow(new PromotionsOffersFragment(), PromotionsOffersFragment.class.getSimpleName(), getSupportFragmentManager(), R.id.menu_frame);
+        }
 
     }
 

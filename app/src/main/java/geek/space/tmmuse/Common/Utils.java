@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.StrictMode;
 import android.renderscript.Allocation;
@@ -44,14 +45,12 @@ import soup.neumorphism.NeumorphImageView;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static geek.space.tmmuse.Common.SharedPref.APP_PREFERENCES;
 
 public class Utils {
     Context context;
     SharedPref sharedPref = new SharedPref(context);
 
-    public static String getLanguage(Context context) {
-        return "tm";
-    }
 
     public static void setPressed(NeumorphButton btn, int type, int color, Context context) {
         btn.setShapeType(type);
@@ -254,5 +253,22 @@ public class Utils {
         dialog.setCancelable(true);
         window.setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
         dialog.show();
+    }
+
+    public static String getLanguage(Context myContext) {
+        SharedPreferences mySharedPref=myContext.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        return mySharedPref.getString("My_Lang", "");
+    }
+
+    public static void setSharePreference (Context context, String name, String value){
+        SharedPreferences.Editor editor = context.getSharedPreferences(name, MODE_PRIVATE).edit();
+        editor.putString(name, value);
+        editor.apply();
+    }
+
+    public static String getSharePreferences(Context context, String name){
+        SharedPreferences preferences = context.getSharedPreferences(name, MODE_PRIVATE);
+        String value = preferences.getString(name, "");
+        return value;
     }
 }

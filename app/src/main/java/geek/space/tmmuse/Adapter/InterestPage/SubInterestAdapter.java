@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import geek.space.tmmuse.Activity.Interest.Interest_Activity;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.ToggleableRadioButton;
+import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Model.Interest.SubInterest;
 import geek.space.tmmuse.R;
 import soup.neumorphism.NeumorphCardView;
@@ -39,7 +40,10 @@ public class SubInterestAdapter extends RecyclerView.Adapter<SubInterestAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.sub_interest_btn.setText(subInterests.get(position).getInterest());
+        holder.sub_interest_btn.setText(subInterests.get(position).getTitleTM());
+        if (Utils.getLanguage(context).equals("ru")){
+            holder.sub_interest_btn.setText(subInterests.get(position).getTitleRU());
+        }
         recyclerView.getId();
         holder.sub_interest_btn.setOnClickListener(new View.OnClickListener() {
             @Override

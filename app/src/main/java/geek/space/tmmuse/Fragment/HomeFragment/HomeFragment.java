@@ -1,7 +1,6 @@
 package geek.space.tmmuse.Fragment.HomeFragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -16,6 +15,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,17 +39,23 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import geek.space.tmmuse.Activity.SearchActivity.SearchActivity;
+import geek.space.tmmuse.API.ApiClient;
+import geek.space.tmmuse.API.ApiInterface;
+import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
 import geek.space.tmmuse.Adapter.Banner.ImgCaruselAdapter;
 import geek.space.tmmuse.Adapter.FilimAdapter.FilmAdapter;
 import geek.space.tmmuse.Adapter.PromotionsPage.PromotionAndOffersAdapter;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.SharedPref;
+import geek.space.tmmuse.Common.Utils;
+import geek.space.tmmuse.Fragment.PromotionsOffersFragment.PromotionsOffersFragment;
 import geek.space.tmmuse.Model.Banner.Banner;
 import geek.space.tmmuse.Model.Film.Film;
+import geek.space.tmmuse.Model.Home.Home;
 import geek.space.tmmuse.Model.PromotionAndOffers.PromotionAndOffers;
 import geek.space.tmmuse.R;
-import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+import retrofit2.Call;
+import retrofit2.Callback;
 import soup.neumorphism.NeumorphImageButton;
 
 import static android.content.ContentValues.TAG;
@@ -58,7 +64,7 @@ public class HomeFragment extends Fragment {
 
     private View view;
     private Context context;
-    private TextView weather_tp;
+    private TextView weather_tp, all_promotions_txt;
     private TextView weather_desc, nw_film_txt, promotions_txt;
     private RequestQueue requestQueue;
     private ImageView weather_ic;
@@ -81,6 +87,9 @@ public class HomeFragment extends Fragment {
     private ArrayList<PromotionAndOffers> promotionAndOffers = new ArrayList<>();
     private ScrollView scroll;
     private FrameLayout frameLayout;
+    private ApiInterface apiInterface;
+    private Integer page = 1;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,32 +106,56 @@ public class HomeFragment extends Fragment {
         setFonts();
         getTemp();
         setListener();
-        setBannersList();
-        setBanners();
-        setFilmList();
-        setFilm();
-        setPromotionsAndOffers();
-        setPromotionsAndOffersAdapter();
+        request(page);
 
         return view;
+    }
+
+    private void request(int i) {
+        apiInterface = ApiClient.getClient()
+                .create(ApiInterface.class);
+        Call<Home> call = apiInterface.getHome(i);
+
+        call.enqueue(new Callback<Home>() {
+            @Override
+            public void onResponse(Call<Home> call, retrofit2.Response<Home> response) {
+                if (response.isSuccessful()) {
+                    Home res = response.body();
+                    if (page == 1) {
+                        filmList = res.getBody().getNew_movies();
+                        banners = res.getBody().getBanners();
+                        promotionAndOffers = res.getBody().getPromotionAndOffers();
+                        setBanners();
+                        setFilm();
+                        setPromotionsAndOffersAdapter();
+                    } else {
+
+                        promotionAndOffers.addAll(res.getBody().getPromotionAndOffers());
+                    }
+                } else {
+                    Log.e("Code", response.code() + "");
+                    Log.e("Error", response.errorBody().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Home> call, Throwable t) {
+                Log.e("Error", t.getMessage());
+            }
+        });
     }
 
     private void setPromotionsAndOffersAdapter() {
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(context, 2);
         rec_promotions.setLayoutManager(mLayoutManager);
-        promotionAndOffersAdapter = new PromotionAndOffersAdapter(context, promotionAndOffers, scroll, frameLayout);
+        promotionAndOffersAdapter = new PromotionAndOffersAdapter(context, promotionAndOffers);
         rec_promotions.setAdapter(promotionAndOffersAdapter);
+        rec_promotions.setHasFixedSize(true);
+        rec_promotions.setNestedScrollingEnabled(false);
 
     }
 
     private void setPromotionsAndOffers() {
-        promotionAndOffers.clear();
-        promotionAndOffers.add(new PromotionAndOffers(1, " 20%", "Turkmen kofe", "https://turkmenportal.com/images/uploads/catalog/2867eea7fc42123de62c998b4c74937c.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sodales tellus at dolor commodo, ut pellentesque augue pretium. Fusce laoreet orci vel gravida rhoncus. Donec ornare dignissim quam, at ultrices magna vestibulum eget. Nullam at eleifend metus, eu fringilla ante. Fusce pellentesque egestas interdum. Etiam laoreet consectetur blandit. Aliquam commodo libero et justo lacinia, ac aliquet metus fermentum."));
-        promotionAndOffers.add(new PromotionAndOffers(1, " 30%", "Turkmen kofe", "https://lotta-tm.com/images/blogs/ammar1.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sodales tellus at dolor commodo, ut pellentesque augue pretium. Fusce laoreet orci vel gravida rhoncus. Donec ornare dignissim quam, at ultrices magna vestibulum eget. Nullam at eleifend metus, eu fringilla ante. Fusce pellentesque egestas interdum. Etiam laoreet consectetur blandit. Aliquam commodo libero et justo lacinia, ac aliquet metus fermentum."));
-        promotionAndOffers.add(new PromotionAndOffers(1, " 40%", "Turkmen kofe", "https://lotta-tm.com/images/blogs/ammar1.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sodales tellus at dolor commodo, ut pellentesque augue pretium. Fusce laoreet orci vel gravida rhoncus. Donec ornare dignissim quam, at ultrices magna vestibulum eget. Nullam at eleifend metus, eu fringilla ante. Fusce pellentesque egestas interdum. Etiam laoreet consectetur blandit. Aliquam commodo libero et justo lacinia, ac aliquet metus fermentum."));
-        promotionAndOffers.add(new PromotionAndOffers(1, " 10%", "Turkmen kofe", "https://avatars.mds.yandex.net/get-altay/1881820/2a0000016de58bee7e6f8174f773ef64ac50/XXL", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sodales tellus at dolor commodo, ut pellentesque augue pretium. Fusce laoreet orci vel gravida rhoncus. Donec ornare dignissim quam, at ultrices magna vestibulum eget. Nullam at eleifend metus, eu fringilla ante. Fusce pellentesque egestas interdum. Etiam laoreet consectetur blandit. Aliquam commodo libero et justo lacinia, ac aliquet metus fermentum."));
-        promotionAndOffers.add(new PromotionAndOffers(1, " 50%", "Turkmen kofe", "https://avatars.mds.yandex.net/get-altay/1881820/2a0000016de58bee7e6f8174f773ef64ac50/XXL", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sodales tellus at dolor commodo, ut pellentesque augue pretium. Fusce laoreet orci vel gravida rhoncus. Donec ornare dignissim quam, at ultrices magna vestibulum eget. Nullam at eleifend metus, eu fringilla ante. Fusce pellentesque egestas interdum. Etiam laoreet consectetur blandit. Aliquam commodo libero et justo lacinia, ac aliquet metus fermentum."));
-        promotionAndOffers.add(new PromotionAndOffers(1, " 60%", "Turkmen kofe", "https://avatars.mds.yandex.net/get-altay/1881820/2a0000016de58bee7e6f8174f773ef64ac50/XXL", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sodales tellus at dolor commodo, ut pellentesque augue pretium. Fusce laoreet orci vel gravida rhoncus. Donec ornare dignissim quam, at ultrices magna vestibulum eget. Nullam at eleifend metus, eu fringilla ante. Fusce pellentesque egestas interdum. Etiam laoreet consectetur blandit. Aliquam commodo libero et justo lacinia, ac aliquet metus fermentum."));
     }
 
     private void setFilm() {
@@ -135,28 +168,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void setFilmList() {
-        filmList.clear();
-        filmList.add(new Film(1, "Вечные", "(2021)", "https://kinogo.la/uploads/cache/9/e/1/9/d/d/8/5/5/1636220930-1201942141-vechnye-KINOGO_BY-200x300.jpg", "", "", "", "", "", "", "", "", "", "", "", ""));
-        filmList.add(new Film(1, "Зверопой 2", "(2021)", "https://kinogo.la/uploads/cache/3/5/d/a/b/5/3/7/8/1638386254-1617628670-zveropoy-2-KINOGO_BY-200x300.jpg", "", "", "", "", "", "", "", "", "", "", "", ""));
-        filmList.add(new Film(1, "Обитель зла: Раккун-Сити", "(2021)", "https://kinogo.la/uploads/cache/e/e/e/9/0/d/d/8/d/1636113090-875492897-obitel-zla-rakkun-siti-KINOGO_BY-200x300.jpg", "", "", "", "", "", "", "", "", "", "", "", ""));
-        filmList.add(new Film(1, "Поколение Вояджер", "(2021)", "https://kinogo.la/uploads/cache/2/3/b/2/a/d/1/1/2/1641603587_b4af278d9dfa-200x300.jpg", "", "", "", "", "", "", "", "", "", "", "", ""));
-        filmList.add(new Film(1, "Последняя дуэль", "(2021)", "https://kinogo.la/uploads/cache/d/e/a/6/0/c/b/6/2/1634725023-846939322-poslednyaya-duel-KINOGO_BY-200x300.jpg", "", "", "", "", "", "", "", "", "", "", "", ""));
-        filmList.add(new Film(1, "Охотники за привидениями:", "Наследники (2021)", "https://kinogo.la/uploads/cache/2/6/b/d/8/3/3/5/8/1637527753-1954578497-ohotniki-za-privideniyami-nasledniki-KINOGO_BY-200x300.jpg", "", "", "", "", "", "", "", "", "", "", "", ""));
-        filmList.add(new Film(1, "Чиновник", "(2021)", "https://kinogo.la/uploads/cache/6/f/9/4/e/a/b/2/d/1641296343-1995734972-chinovnik-KINOGO_BY-200x300.jpg", "", "", "", "", "", "", "", "", "", "", "", ""));
-        filmList.add(new Film(1, "Гарри Поттер 20 лет спустя:", "Возвращение в Хогвартс (2022)", "https://kinogo.la/uploads/cache/8/3/6/f/7/8/2/c/b/1641068251-330978045-garri-potter-20-let-spustya-vozvraschenie-v-hogvarts-KINOGO_BY-200x300.jpg", "", "", "", "", "", "", "", "", "", "", "", ""));
-        filmList.add(new Film(1, "Честный развод", "(2021)", "https://kinogo.la/uploads/cache/e/2/0/8/8/d/0/e/a/1641047722-2115311697-chestnyy-razvod-KINOGO_BY-200x300.jpg", "", "", "", "", "", "", "", "", "", "", "", ""));
-
-
     }
 
     private void setBannersList() {
-        banners.clear();
-        banners.add(new Banner(1, "https://turkmenportal.com/images/uploads/catalog/2867eea7fc42123de62c998b4c74937c.jpg", null, null));
-        banners.add(new Banner(2, "https://media-cdn.tripadvisor.com/media/photo-s/08/0c/7f/a8/2.jpg", null, null));
-        banners.add(new Banner(3, "https://lotta-tm.com/images/blogs/ammar1.jpg", "https://lotta-tm.com/images/blogs/ammar1.jpg", null));
-        banners.add(new Banner(4, "https://avatars.mds.yandex.net/get-altay/1881820/2a0000016de58bee7e6f8174f773ef64ac50/XXL", "https://lotta-tm.com/images/blogs/ammar1.jpg", null));
-        banners.add(new Banner(5, "https://avatars.mds.yandex.net/get-altay/1881820/2a0000016de58bee7e6f8174f773ef64ac50/XXL", null, null));
-        banners.add(new Banner(6, "https://lotta-tm.com/images/blogs/ammar1.jpg", "https://avatars.mds.yandex.net/get-altay/1881820/2a0000016de58bee7e6f8174f773ef64ac50/XXL", null));
     }
 
 
@@ -181,10 +195,18 @@ public class HomeFragment extends Fragment {
 
             }
         });
-        OverScrollDecoratorHelper.setUpOverScroll(scroll);
-        search_btn.setOnClickListener(view -> startActivity(new Intent(context, SearchActivity.class)));
-        timer.scheduleAtFixedRate(new MyTimerTask(), 5000, 5000);
+        all_promotions_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PromotionsOffersFragment promotionsOffersFragment = new PromotionsOffersFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                Main_Menu.firstFragment = promotionsOffersFragment;
+                Utils.hideAdd(promotionsOffersFragment, promotionsOffersFragment.getClass().getSimpleName(), fragmentManager, R.id.menu_frame);
+            }
+        });
+
     }
+
 
     private void setBanners() {
         imgCaruselAdapter = new ImgCaruselAdapter(context, banners, img_carusel_view_pager);
@@ -213,6 +235,7 @@ public class HomeFragment extends Fragment {
         scroll = view.findViewById(R.id.scroll);
         frameLayout = view.findViewById(R.id.root);
         search_btn = view.findViewById(R.id.search_btn);
+        all_promotions_txt = view.findViewById(R.id.all_promotions_txt);
 
 
     }
@@ -308,15 +331,15 @@ public class HomeFragment extends Fragment {
     public class MyTimerTask extends TimerTask {
         @Override
         public void run() {
-            if (getActivity() == null){
+            if (getActivity() == null || banners == null) {
                 return;
             }
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    img_carusel_view_pager.setCurrentItem((img_carusel_view_pager.getCurrentItem() + 1) % banners.size());
-                }
-            });
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    img_carusel_view_pager.setCurrentItem((img_carusel_view_pager.getCurrentItem() + 1) % banners.size());
+//                }
+//            });
         }
     }
 }

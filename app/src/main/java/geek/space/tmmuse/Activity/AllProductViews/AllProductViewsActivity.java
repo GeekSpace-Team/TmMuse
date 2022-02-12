@@ -250,20 +250,13 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private void setPromotionsAdapter() {
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         post_rec.setLayoutManager(mLayoutManager);
-        promotionAndOffersAdapter = new PromotionAndOffersAdapter(this, promotionAndOffers, prom_scroll, root_prom);
-        post_rec.setAdapter(promotionAndOffersAdapter);
+//        promotionAndOffersAdapter = new PromotionAndOffersAdapter(this, promotionAndOffers, prom_scroll, root_prom);
+//        post_rec.setAdapter(promotionAndOffersAdapter);
     }
 
     private void setPromotionsList() {
         promotionAndOffers.clear();
-        promotionAndOffers.add(new PromotionAndOffers(1, " 20%", "Turkmen kofe", "https://turkmenportal.com/images/uploads/catalog/2867eea7fc42123de62c998b4c74937c.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sodales tellus at dolor commodo, ut pellentesque augue pretium. Fusce laoreet orci vel gravida rhoncus. Donec ornare dignissim quam, at ultrices magna vestibulum eget. Nullam at eleifend metus, eu fringilla ante. Fusce pellentesque egestas interdum. Etiam laoreet consectetur blandit. Aliquam commodo libero et justo lacinia, ac aliquet metus fermentum."));
-        promotionAndOffers.add(new PromotionAndOffers(1, " 30%", "Turkmen kofe", "https://lotta-tm.com/images/blogs/ammar1.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sodales tellus at dolor commodo, ut pellentesque augue pretium. Fusce laoreet orci vel gravida rhoncus. Donec ornare dignissim quam, at ultrices magna vestibulum eget. Nullam at eleifend metus, eu fringilla ante. Fusce pellentesque egestas interdum. Etiam laoreet consectetur blandit. Aliquam commodo libero et justo lacinia, ac aliquet metus fermentum."));
-        promotionAndOffers.add(new PromotionAndOffers(1, " 40%", "Turkmen kofe", "https://lotta-tm.com/images/blogs/ammar1.jpg", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sodales tellus at dolor commodo, ut pellentesque augue pretium. Fusce laoreet orci vel gravida rhoncus. Donec ornare dignissim quam, at ultrices magna vestibulum eget. Nullam at eleifend metus, eu fringilla ante. Fusce pellentesque egestas interdum. Etiam laoreet consectetur blandit. Aliquam commodo libero et justo lacinia, ac aliquet metus fermentum."));
-        promotionAndOffers.add(new PromotionAndOffers(1, " 10%", "Turkmen kofe", "https://avatars.mds.yandex.net/get-altay/1881820/2a0000016de58bee7e6f8174f773ef64ac50/XXL", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sodales tellus at dolor commodo, ut pellentesque augue pretium. Fusce laoreet orci vel gravida rhoncus. Donec ornare dignissim quam, at ultrices magna vestibulum eget. Nullam at eleifend metus, eu fringilla ante. Fusce pellentesque egestas interdum. Etiam laoreet consectetur blandit. Aliquam commodo libero et justo lacinia, ac aliquet metus fermentum."));
-        promotionAndOffers.add(new PromotionAndOffers(1, " 50%", "Turkmen kofe", "https://avatars.mds.yandex.net/get-altay/1881820/2a0000016de58bee7e6f8174f773ef64ac50/XXL", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sodales tellus at dolor commodo, ut pellentesque augue pretium. Fusce laoreet orci vel gravida rhoncus. Donec ornare dignissim quam, at ultrices magna vestibulum eget. Nullam at eleifend metus, eu fringilla ante. Fusce pellentesque egestas interdum. Etiam laoreet consectetur blandit. Aliquam commodo libero et justo lacinia, ac aliquet metus fermentum."));
-        promotionAndOffers.add(new PromotionAndOffers(1, " 60%", "Turkmen kofe", "https://avatars.mds.yandex.net/get-altay/1881820/2a0000016de58bee7e6f8174f773ef64ac50/XXL", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sodales tellus at dolor commodo, ut pellentesque augue pretium. Fusce laoreet orci vel gravida rhoncus. Donec ornare dignissim quam, at ultrices magna vestibulum eget. Nullam at eleifend metus, eu fringilla ante. Fusce pellentesque egestas interdum. Etiam laoreet consectetur blandit. Aliquam commodo libero et justo lacinia, ac aliquet metus fermentum."));
-
-    }
+        }
 
     private void setFont() {
         name_profile_txt.setTypeface(Font.getInstance(this).getMontserrat_800());

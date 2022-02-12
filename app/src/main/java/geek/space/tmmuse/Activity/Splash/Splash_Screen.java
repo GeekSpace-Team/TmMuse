@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import geek.space.tmmuse.Activity.Intro_Page.Perrmision_Activity;
 import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
+import geek.space.tmmuse.Activity.Sig_Up.Sig_Up_Activity;
 import geek.space.tmmuse.Common.SharedPref;
 import geek.space.tmmuse.R;
 
@@ -38,7 +39,7 @@ public class Splash_Screen extends AppCompatActivity {
 
         // Run next activity after 3 sec. We create in this function if user first time
         removeCallbacks = () -> {
-            Intent mainIntent = new Intent(Splash_Screen.this, Main_Menu.class);
+            Intent mainIntent = new Intent(Splash_Screen.this, Sig_Up_Activity.class);
             Splash_Screen.this.startActivity(mainIntent);
 
             finish();

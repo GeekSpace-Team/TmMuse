@@ -4,14 +4,24 @@ public class Banner {
     private int id;
     private String image;
     private String link;
+    private String order;
     private Integer profile_id;
 
 
-    public Banner(int id, String image, String link, Integer profile_id) {
+    public Banner(int id, String image, String link, Integer profile_id, String order) {
         this.id = id;
         this.image = image;
         this.link = link;
         this.profile_id = profile_id;
+        this.order = order;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
     }
 
     public int getId() {

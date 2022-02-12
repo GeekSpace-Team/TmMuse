@@ -18,6 +18,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import java.util.ArrayList;
 
 import geek.space.tmmuse.Activity.AllProductViews.AllProductViewsActivity;
+import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Model.Banner.Banner;
 import geek.space.tmmuse.R;
 
@@ -66,7 +67,7 @@ public class ImgCaruselAdapter extends PagerAdapter {
             }
         });
         Glide.with(context)
-                .load(banner.getImage())
+                .load(Constant.BASE_URL_IMAGE+banner.getImage())
                 .into(imageView);
 
         container.addView(view, 0);

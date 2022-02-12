@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.Interest.Interest_Activity"
-    android:background="@drawable/card_gradient">
+    android:background="@drawable/card_gradient"
+    tools:context=".Activity.Interest.Interest_Activity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:nestedScrollingEnabled="true">
+        android:nestedScrollingEnabled="true"
+        android:overScrollMode="never">
 
 
         <LinearLayout
@@ -46,7 +46,18 @@
                     android:onClick="go_main_menu"
                     android:text="@string/next"
                     android:textColor="@color/aply_text_color"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:visibility="visible"/>
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="@dimen/margins"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -54,15 +65,15 @@
                 android:id="@+id/interestRec"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:overScrollMode="never"
-                android:layout_weight="1"
                 android:layout_marginLeft="@dimen/margins"
                 android:layout_marginRight="@dimen/margins"
-                android:nestedScrollingEnabled="false"/>
+                android:layout_weight="1"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"/>
+                android:layout_height="70dp" />
 
         </LinearLayout>
 

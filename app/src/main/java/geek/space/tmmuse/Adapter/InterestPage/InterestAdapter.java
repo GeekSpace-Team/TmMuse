@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import geek.space.tmmuse.Common.Font.Font;
+import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Model.Interest.Interest;
 import geek.space.tmmuse.Model.Interest.SubInterest;
 import geek.space.tmmuse.R;
@@ -35,13 +36,21 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.interest_name.setText(interests.get(position).getTitle());
+        holder.setIsRecyclable(false);
+        holder.interest_name.setText(interests.get(position).getTitleTM());
+        if(Utils.getLanguage(context).equals("ru")){
+            holder.interest_name.setText(interests.get(position).getTitleRU());
+        }
         LinearLayoutManager linearLayoutManager = new GridLayoutManager(
                 holder.rec.getContext(),
                 3);
-        linearLayoutManager.setInitialPrefetchItemCount(interests.get(position).getSubInterests().size());
-        holder.rec.setLayoutManager(linearLayoutManager);
-        holder.rec.setAdapter(new SubInterestAdapter(interests.get(position).getSubInterests(), context, holder.rec));
+        if(interests.get(position).getItem()!=null) {
+            linearLayoutManager.setInitialPrefetchItemCount(interests.get(position).getItem().size());
+            holder.rec.setLayoutManager(linearLayoutManager);
+            holder.rec.setAdapter(new SubInterestAdapter(interests.get(position).getItem(), context, holder.rec));
+        } else{
+            holder.itemView.setVisibility(View.GONE);
+        }
     }
 
     @Override
