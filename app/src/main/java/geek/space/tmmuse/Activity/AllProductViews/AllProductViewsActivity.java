@@ -123,41 +123,42 @@ public class AllProductViewsActivity extends AppCompatActivity {
                     AllProfile profile = response.body().getBody().getProfiles();
                     name_profile_txt.setText(profile.getNameTM());
                     allProfileImageAdapter();
-                    product_text_count_up.setText(profile.getLike() + "");
-                    product_text_count_down.setText(profile.getDislike() + "");
+                    if (profile.getLike() != null && profile.getDislike() != null) {
+                        product_text_count_up.setText(profile.getLike() + "");
+                        product_text_count_down.setText(profile.getDislike() + "");
+                    }
                     if (response.body().getBody().getPhone_numbers() != null) {
                         profilePhones = response.body().getBody().getPhone_numbers();
                     }
-                    if (response.body().getBody().getProfiles().getInstagram()!=null){
-                        if(profile.getInstagram().isEmpty()){
-                        instagram_layout.setVisibility(View.GONE);
+                    if (response.body().getBody().getProfiles().getInstagram() != null) {
+                        if (profile.getInstagram().isEmpty()) {
+                            instagram_layout.setVisibility(View.GONE);
                         }
                     }
-                    if (response.body().getBody().getProfiles().getSite()!=null){
-                        if(profile.getSite().isEmpty()){
-                        site_layout.setVisibility(View.GONE);
+                    if (response.body().getBody().getProfiles().getSite() != null) {
+                        if (profile.getSite().isEmpty()) {
+                            site_layout.setVisibility(View.GONE);
                         }
                     }
-                    if (response.body().getBody().getProfiles().getLocation()!=null){
-                        if(profile.getLocation().isEmpty()){
+                    if (response.body().getBody().getProfiles().getLocation() != null) {
+                        if (profile.getLocation().isEmpty()) {
                             location_layout.setVisibility(View.GONE);
                         }
                     }
 
-                    if (response.body().getBody().getProfiles().getIs_certificate()!=null){
-                        if(profile.getLocation().isEmpty()){
+                    if (response.body().getBody().getProfiles().getIs_certificate() != null) {
+                        if (profile.getLocation().isEmpty()) {
                             certificate_layout.setVisibility(View.GONE);
                         }
                     }
 
-                    if (response.body().getBody().getProfiles().getIs_promo()!=null){
-                        if(profile.getLocation().isEmpty()){
+                    if (response.body().getBody().getProfiles().getIs_promo() != null) {
+                        if (profile.getLocation().isEmpty()) {
                             promo_layout.setVisibility(View.GONE);
                         }
                     }
-                    if (profile.getCategory_id()!=null){
+                    if (profile.getCategory_id() != null) {
                         if (profile.getCategory_id() == 2) {
-                            film_address_desc_txt.
                         }
                     }
 
@@ -302,7 +303,6 @@ public class AllProductViewsActivity extends AppCompatActivity {
         instagram_layout = findViewById(R.id.instagram_layout);
         site_layout = findViewById(R.id.site_layout);
         location_layout = findViewById(R.id.location_layout);
-        movie_time_rec = findViewById(R.id.movie_time_rec);
         call_layout_products = findViewById(R.id.call_layout_products);
         bottomSheetBehavior = BottomSheetBehavior.from(view);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
@@ -317,30 +317,20 @@ public class AllProductViewsActivity extends AppCompatActivity {
         promo_txt = findViewById(R.id.promo_txt);
         address_txt = findViewById(R.id.address_txt);
         address_desc_txt = findViewById(R.id.address_desc_txt);
-        Payment_desc_txt = findViewById(R.id.Payment_desc_txt);
-        clock_txt = findViewById(R.id.clock_txt);
-        clock_desc_txt = findViewById(R.id.clock_desc_txt);
         deliver_desc_txt = findViewById(R.id.deliver_desc_txt);
-        cuisen_txt = findViewById(R.id.cuisen_txt);
         average_check_txt = findViewById(R.id.average_check_txt);
         own_promotion_desc_txt = findViewById(R.id.own_promotion_desc_txt);
-        tm_muse_card_prod_txt = findViewById(R.id.tm_muse_card_prod_txt);
-        ard_prod_desc_txt = findViewById(R.id.tm_muse_card_prod_desc_txt);
         gallery_txt = findViewById(R.id.gallery_txt);
         post_txt = findViewById(R.id.post_txt);
         name_profile_txt = findViewById(R.id.name_profile_txt);
         product_text_count_up = findViewById(R.id.product_text_count_up);
         deliver_txt = findViewById(R.id.deliver_txt);
         promo_txt = findViewById(R.id.promo_txt);
-        promotion_txt = findViewById(R.id.promotion_txt);
         certificate_layout = findViewById(R.id.certificate_layout);
         promo_layout = findViewById(R.id.promo_layout);
         payment_txt = findViewById(R.id.payment_txt);
-        cuisine_desc_txt = findViewById(R.id.cuisine_desc_txt);
         average_check_desc_txt = findViewById(R.id.average_check_desc_txt);
-        tm_muse_card_prod_desc_txt = findViewById(R.id.tm_muse_card_prod_desc_txt);
         images_layout = findViewById(R.id.images_layout);
-        all_views_info_layout = findViewById(R.id.all_views_info_layout);
         view_Stick = findViewById(R.id.view_Stick);
         view_bottom_rel = findViewById(R.id.view_bottom_rel);
         onback_img = findViewById(R.id.onback_img);
@@ -356,7 +346,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
     private void setListener() {
 
-        findViewById(R.id.bronMovie).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.brone_movie_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showCustomDialog();
