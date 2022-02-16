@@ -71,15 +71,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margins"
-                android:layout_marginRight="@dimen/margins"
-                android:background="@drawable/pressed_bg">
+                android:layout_marginRight="@dimen/margins">
 
                 <soup.neumorphism.NeumorphCardView
                     style="@style/CustomShapeAppearance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/gradient_press"
                     app:neumorph_shapeType="pressed">
 
                     <LinearLayout
@@ -126,8 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margins"
-                android:layout_marginRight="@dimen/margins"
-                android:background="@drawable/pressed_bg">
+                android:layout_marginRight="@dimen/margins">
 
 
                 <soup.neumorphism.NeumorphCardView
@@ -135,7 +132,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/gradient_press"
                     app:neumorph_shapeType="pressed">
 
 
@@ -219,8 +215,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margins"
                     android:layout_marginRight="@dimen/margins"
-                    android:layout_weight="1"
-                    android:background="@drawable/pressed_bg">
+                    android:layout_weight="1">
 
                     <soup.neumorphism.NeumorphCardView
                         style="@style/CustomShapeAppearance"
@@ -252,8 +247,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margins"
                     android:layout_marginRight="@dimen/margins"
-                    android:layout_weight="1"
-                    android:background="@drawable/pressed_bg">
+                    android:layout_weight="1">
 
                     <soup.neumorphism.NeumorphCardView
                         style="@style/CustomShapeAppearance"
@@ -285,8 +279,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margins"
                     android:layout_marginRight="@dimen/margins"
-                    android:layout_weight="1"
-                    android:background="@drawable/pressed_bg">
+                    android:layout_weight="1">
 
                     <soup.neumorphism.NeumorphCardView
                         style="@style/CustomShapeAppearance"
@@ -317,8 +310,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margins"
                     android:layout_marginRight="@dimen/margins"
-                    android:layout_weight="1"
-                    android:background="@drawable/pressed_bg">
+                    android:layout_weight="1">
 
                     <soup.neumorphism.NeumorphCardView
                         style="@style/CustomShapeAppearance"

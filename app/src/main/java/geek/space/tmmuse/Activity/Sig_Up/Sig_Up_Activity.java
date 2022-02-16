@@ -18,6 +18,7 @@ import com.google.android.material.snackbar.Snackbar;
 import geek.space.tmmuse.API.ApiClient;
 import geek.space.tmmuse.API.ApiInterface;
 import geek.space.tmmuse.Activity.Interest.Interest_Activity;
+import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Model.UserRegister.CheckUserCode;
@@ -48,6 +49,10 @@ public class Sig_Up_Activity extends AppCompatActivity {
         getCodePhoneNumber();
         setListener();
         getLang();
+
+        if(getIntent().getStringExtra("type").equals("1")){
+            skip_txt.setVisibility(View.GONE);
+        }
     }
 
     private void setListener() {
@@ -72,8 +77,11 @@ public class Sig_Up_Activity extends AppCompatActivity {
                             if (response.body().getBody() != null) {
                                 Utils.setSharePreference(context, "token", response.body().getBody().getToken());
                                 Utils.setSharePreference(context,"user_id",response.body().getBody().getId()+"");
+                                Utils.setSharePreference(context, "full_name", response.body().getBody().getFullname());
+                                Utils.setSharePreference(context, "phone_number", response.body().getBody().getPhone_number());
 //                                Toast.makeText(context, Utils.getSharePreferences(context,"token"), Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), Interest_Activity.class));
+                                startActivity(new Intent(getApplicationContext(), Interest_Activity.class).putExtra("type",
+                                        getIntent().getStringExtra("type")));
                                 finish();
                             } else {
                                 Toast.makeText(context, "Nadogry kod girizildi", Toast.LENGTH_SHORT).show();
@@ -91,7 +99,7 @@ public class Sig_Up_Activity extends AppCompatActivity {
             }
         });
         skip_txt.setOnClickListener(view -> {
-            startActivity(new Intent(getApplicationContext(), Interest_Activity.class));
+            startActivity(new Intent(getApplicationContext(), Main_Menu.class));
             finish();
         });
         number_edit.addTextChangedListener(new TextWatcher() {

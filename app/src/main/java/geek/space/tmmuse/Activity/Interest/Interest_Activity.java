@@ -114,7 +114,8 @@ public class Interest_Activity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body()!=null){
                     progressBar.setVisibility(View.GONE);
                     next_txt.setVisibility(View.VISIBLE);
-                    startActivity(new Intent(getApplicationContext(), Main_Menu.class));
+                    if (getIntent().getStringExtra("type").equals("0"))
+                        startActivity(new Intent(getApplicationContext(), Main_Menu.class));
                     finish();
                 } else {
                     Toast.makeText(Interest_Activity.this, "Yalnyslyk yuze cykdy", Toast.LENGTH_SHORT).show();

@@ -1,6 +1,9 @@
 package geek.space.tmmuse.API;
 
-import geek.space.tmmuse.Common.Utils;
+import geek.space.tmmuse.Model.AboutUs.Constant;
+import geek.space.tmmuse.Model.AllProfile.GetProfileTiny;
+import geek.space.tmmuse.Model.AllProfile.ResponseAllProfile;
+import geek.space.tmmuse.Model.AllProfile.GetProfile;
 import geek.space.tmmuse.Model.Home.Home;
 import geek.space.tmmuse.Model.Interest.GetInterest;
 import geek.space.tmmuse.Model.Interest.PostInterest;
@@ -32,5 +35,15 @@ public interface ApiInterface {
     @POST("add-user-interest")
     Call<UserGetRegister> add_user_interest(@Body PostInterest postInterest,
                                          @Header("Authorization") String token);
+
+    @GET("/get-constant?")
+    Call<Constant> get_constant(@Query("type") String string);
+
+    @POST("/get-profile")
+    Call<ResponseAllProfile> get_profile(@Body GetProfile getProfile);
+
+    @GET("get-profile-tiny?")
+    Call<GetProfileTiny> get_profile_tiny(@Query("profile_id") String profile_id);
+
 
 }

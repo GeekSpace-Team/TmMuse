@@ -64,7 +64,7 @@ public class Perrmision_Activity extends AppCompatActivity {
                 if (storage_per != null & location_per != null) {
                     Utils.setPressed(skip_btn, 2, R.color.aply_text_color, context);
                     finish();
-                    startActivity(new Intent(getApplicationContext(), Sig_Up_Activity.class));
+                    startActivity(new Intent(getApplicationContext(), Sig_Up_Activity.class).putExtra("type","0"));
                 } else {
                     Toast.makeText(context, "Please accept permissions", Toast.LENGTH_SHORT).show();
                 }

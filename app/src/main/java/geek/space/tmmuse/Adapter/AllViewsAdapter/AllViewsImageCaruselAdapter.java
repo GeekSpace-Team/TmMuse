@@ -44,7 +44,7 @@ public class AllViewsImageCaruselAdapter extends PagerAdapter {
                 .findViewById(R.id.iv_carousel_image);
 
         Glide.with(context)
-                .load(banner.getImg_profile())
+                .load(banner.getImage().getLarge_image())
                 .into(imageView);
 
         container.addView(view, 0);

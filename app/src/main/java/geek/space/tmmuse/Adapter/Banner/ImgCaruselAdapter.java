@@ -53,21 +53,25 @@ public class ImgCaruselAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (banner.getLink() != null){
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_VIEW);
-                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                    intent.setData(Uri.parse(banner.getLink()));
-                    context.startActivity(intent);
-                } else {
-                    context.startActivity(new Intent(context, AllProductViewsActivity.class));
+                try {
+                    if (banner.getLink() != null) {
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);
+                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                        intent.setData(Uri.parse(banner.getLink()));
+                        context.startActivity(intent);
+                    } else {
+                        context.startActivity(new Intent(context, AllProductViewsActivity.class));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
 
             }
         });
         Glide.with(context)
-                .load(Constant.BASE_URL_IMAGE+banner.getImage())
+                .load(Constant.BASE_URL_IMAGE + banner.getImage())
                 .into(imageView);
 
         container.addView(view, 0);

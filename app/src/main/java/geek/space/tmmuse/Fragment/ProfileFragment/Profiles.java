@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
@@ -22,13 +24,20 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
+import geek.space.tmmuse.API.ApiClient;
+import geek.space.tmmuse.API.ApiInterface;
 import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
 import geek.space.tmmuse.Adapter.AllProdileAdapters.AllProdfileAdapters;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Fragment.CategoryFragment.CategoryFragment;
 import geek.space.tmmuse.Model.AllProfile.AllProfile;
+import geek.space.tmmuse.Model.AllProfile.ResponseAllProfile;
+import geek.space.tmmuse.Model.AllProfile.GetProfile;
 import geek.space.tmmuse.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Profiles extends Fragment {
@@ -36,20 +45,29 @@ public class Profiles extends Fragment {
     private View view;
     private Context context;
     public String categoryName;
-    public Integer categoryID;
+    public static ArrayList<Integer> categoryID;
     private TextView profile_name, filter_txt;
     private ImageView filter_img, back_to_card;
     public static DrawerLayout draw_profile;
     private NavigationView navigation_filter;
     private RecyclerView profile_rec;
-
-    private ArrayList<AllProfile> allProfiles = new ArrayList<>();
+    private ApiInterface apiInterface;
+    public static ArrayList<AllProfile> allProfiles = new ArrayList<>();
     private AllProdfileAdapters allProdfileAdapters;
+    public static ArrayList<Integer> tags=new ArrayList<>();
+    public static Integer limit = 4;
+    public static Integer page = 1;
+    private static Profiles INSTANCE;
+    private ProgressBar progress_bar;
+    public static Boolean isLoading=false;
+    public static Integer sort=0;
+    public static Boolean loadMore=true;
+
 
     private int animation = R.anim.layout_animation;
 
 
-    public Profiles(String categoryName, Integer categoryID) {
+    public Profiles(String categoryName, ArrayList<Integer> categoryID) {
         this.categoryName = categoryName;
         this.categoryID = categoryID;
 
@@ -66,15 +84,78 @@ public class Profiles extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_profiles, container, false);
         context = getContext();
+        INSTANCE=this;
         initComponents();
         setListener();
         setFonts();
+        setProfileListRequest(page, context, progress_bar);
         navigatioDrawerSet();
-        setProfileList();
-        setProfileAdapter();
         profile_name.setText(categoryName);
 
         return view;
+    }
+
+    public static Profiles get(){
+        return INSTANCE;
+    }
+
+    public RecyclerView getRec(){
+        return profile_rec;
+    }
+
+    public FragmentManager getMyFragmentManager(){
+        return getFragmentManager();
+    }
+
+    public ProgressBar getProgress_bar(){
+        return progress_bar;
+    }
+
+    public static void setProfileListRequest(Integer page,Context context, ProgressBar progressBar ) {
+
+        ApiInterface apiInterface = ApiClient.getClient()
+                .create(ApiInterface.class);
+        GetProfile getProfile = new GetProfile(categoryID, sort, tags, limit, page);
+        Call<ResponseAllProfile> allProfileCall = apiInterface.get_profile(getProfile);
+        isLoading = true;
+        progressBar.setVisibility(View.VISIBLE);
+        allProfileCall.enqueue(new Callback<ResponseAllProfile>() {
+            @Override
+            public void onResponse(Call<ResponseAllProfile> call, Response<ResponseAllProfile> response) {
+                if (response.isSuccessful() && response.body()!=null){
+                    ProfileFilterFragment.tags_btns.clear();
+                    ProfileFilterFragment.tags_btns=response.body().getBody().getTags();
+                    if(response.body().getBody()==null){
+                        isLoading=false;
+                        loadMore=false;
+                    }
+                    if (page == 1){
+                        allProfiles = response.body().getBody().getProfiles();
+                        setProfileAdapter(context, Profiles.get().getRec(), response.body().getBody().getProfiles());
+                    } else {
+                        allProfiles.addAll(response.body().getBody().getProfiles());
+                    }
+
+                    try {
+                        Profiles.get().getMyFragmentManager().beginTransaction().
+                                replace(R.id.frame_filter_layout, new ProfileFilterFragment(), ProfileFilterFragment.class.getSimpleName()).commit();
+                    } catch (IllegalStateException ex) {
+                        ex.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(context, "Yalnyslyk", Toast.LENGTH_SHORT).show();
+                }
+                isLoading = false;
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseAllProfile> call, Throwable t) {
+                Toast.makeText(context, "Internedinizi barlan", Toast.LENGTH_SHORT).show();
+                isLoading=false;
+                progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void setFonts() {
@@ -82,126 +163,16 @@ public class Profiles extends Fragment {
         filter_txt.setTypeface(Font.getInstance(context).getMontserrat_600());
     }
 
-    private void setProfileAdapter() {
+    public static void setProfileAdapter(Context context,RecyclerView recyclerView,ArrayList<AllProfile> allProfiles) {
         LinearLayoutManager layoutManager
-                = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-        profile_rec.setLayoutManager(layoutManager);
-        if (categoryID == 1) {
-            allProdfileAdapters = new AllProdfileAdapters(context, allProfiles);
-            profile_rec.setAdapter(allProdfileAdapters);
-        } else if (categoryID == 2) {
-            allProdfileAdapters = new AllProdfileAdapters(context, allProfiles);
-            profile_rec.setAdapter(allProdfileAdapters);
-        } else if (categoryID == 3) {
-            allProdfileAdapters = new AllProdfileAdapters(context, allProfiles);
-            profile_rec.setAdapter(allProdfileAdapters);
-        } else if (categoryID == 4) {
-            allProdfileAdapters = new AllProdfileAdapters(context, allProfiles);
-            profile_rec.setAdapter(allProdfileAdapters);
-        } else if (categoryID == 5) {
-            allProdfileAdapters = new AllProdfileAdapters(context, allProfiles);
-            profile_rec.setAdapter(allProdfileAdapters);
-        } else if (categoryID == 6) {
-            allProdfileAdapters = new AllProdfileAdapters(context, allProfiles);
-            profile_rec.setAdapter(allProdfileAdapters);
-        }
+                = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        AllProdfileAdapters allProdfileAdapters = new AllProdfileAdapters(context, allProfiles);
+        recyclerView.setAdapter(allProdfileAdapters);
 
     }
 
-    private void setProfileList() {
-        allProfiles.add(new AllProfile(AllProfile.LayoutOne, 1, "String name_profile", "String desc_profile", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "String address_desc", "String work_time_desc", "String payment_desc", "String delivery_desc",
-                "String cuisine_desc", "String average_check_desc", "String own_promotion_desc", "String tm_muse_card_desc",
-                "String finger_up_count", "String finger_down_count", "String instagram", "String website",
-                "String location", "String img_banner"));
 
-        allProfiles.add(new AllProfile(AllProfile.LayoutOne, 1, "String name_profile", "String desc_profile", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "String address_desc", "String work_time_desc", "String payment_desc", "String delivery_desc",
-                "String cuisine_desc", "String average_check_desc", "String own_promotion_desc", "String tm_muse_card_desc",
-                "String finger_up_count", "String finger_down_count", "String instagram", "String website",
-                "String location", "String img_banner"));
-
-        allProfiles.add(new AllProfile(AllProfile.LayoutOne, 1, "String name_profile", "String desc_profile", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "String address_desc", "String work_time_desc", "String payment_desc", "String delivery_desc",
-                "String cuisine_desc", "String average_check_desc", "String own_promotion_desc", "String tm_muse_card_desc",
-                "String finger_up_count", "String finger_down_count", "String instagram", "String website",
-                "String location", "String img_banner"));
-
-        allProfiles.add(new AllProfile(AllProfile.LayoutOne, 1, "String name_profile", "String desc_profile", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "String address_desc", "String work_time_desc", "String payment_desc", "String delivery_desc",
-                "String cuisine_desc", "String average_check_desc", "String own_promotion_desc", "String tm_muse_card_desc",
-                "String finger_up_count", "String finger_down_count", "String instagram", "String website",
-                "String location", "String img_banner"));
-
-        allProfiles.add(new AllProfile(AllProfile.LayoutOne, 1, "String name_profile", "String desc_profile", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "String address_desc", "String work_time_desc", "String payment_desc", "String delivery_desc",
-                "String cuisine_desc", "String average_check_desc", "String own_promotion_desc", "String tm_muse_card_desc",
-                "String finger_up_count", "String finger_down_count", "String instagram", "String website",
-                "String location", "String img_banner"));
-        allProfiles.add(new AllProfile(AllProfile.LayoutTwo, 2, "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg"));
-
-        allProfiles.add(new AllProfile(AllProfile.LayoutOne, 1, "String name_profile", "String desc_profile", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "String address_desc", "String work_time_desc", "String payment_desc", "String delivery_desc",
-                "String cuisine_desc", "String average_check_desc", "String own_promotion_desc", "String tm_muse_card_desc",
-                "String finger_up_count", "String finger_down_count", "String instagram", "String website",
-                "String location", "String img_banner"));
-
-        allProfiles.add(new AllProfile(AllProfile.LayoutOne, 1, "String name_profile", "String desc_profile", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "String address_desc", "String work_time_desc", "String payment_desc", "String delivery_desc",
-                "String cuisine_desc", "String average_check_desc", "String own_promotion_desc", "String tm_muse_card_desc",
-                "String finger_up_count", "String finger_down_count", "String instagram", "String website",
-                "String location", "String img_banner"));
-
-        allProfiles.add(new AllProfile(AllProfile.LayoutOne, 1, "String name_profile", "String desc_profile", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "String address_desc", "String work_time_desc", "String payment_desc", "String delivery_desc",
-                "String cuisine_desc", "String average_check_desc", "String own_promotion_desc", "String tm_muse_card_desc",
-                "String finger_up_count", "String finger_down_count", "String instagram", "String website",
-                "String location", "String img_banner"));
-
-        allProfiles.add(new AllProfile(AllProfile.LayoutOne, 1, "String name_profile", "String desc_profile", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "String address_desc", "String work_time_desc", "String payment_desc", "String delivery_desc",
-                "String cuisine_desc", "String average_check_desc", "String own_promotion_desc", "String tm_muse_card_desc",
-                "String finger_up_count", "String finger_down_count", "String instagram", "String website",
-                "String location", "String img_banner"));
-
-        allProfiles.add(new AllProfile(AllProfile.LayoutOne, 1, "String name_profile", "String desc_profile", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "String address_desc", "String work_time_desc", "String payment_desc", "String delivery_desc",
-                "String cuisine_desc", "String average_check_desc", "String own_promotion_desc", "String tm_muse_card_desc",
-                "String finger_up_count", "String finger_down_count", "String instagram", "String website",
-                "String location", "String img_banner"));
-
-        allProfiles.add(new AllProfile(AllProfile.LayoutOne, 1, "String name_profile", "String desc_profile", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "String address_desc", "String work_time_desc", "String payment_desc", "String delivery_desc",
-                "String cuisine_desc", "String average_check_desc", "String own_promotion_desc", "String tm_muse_card_desc",
-                "String finger_up_count", "String finger_down_count", "String instagram", "String website",
-                "String location", "String img_banner"));
-
-        allProfiles.add(new AllProfile(AllProfile.LayoutOne, 1, "String name_profile", "String desc_profile", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "String address_desc", "String work_time_desc", "String payment_desc", "String delivery_desc",
-                "String cuisine_desc", "String average_check_desc", "String own_promotion_desc", "String tm_muse_card_desc",
-                "String finger_up_count", "String finger_down_count", "String instagram", "String website",
-                "String location", "String img_banner"));
-
-        allProfiles.add(new AllProfile(AllProfile.LayoutOne, 1, "String name_profile", "String desc_profile", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "String address_desc", "String work_time_desc", "String payment_desc", "String delivery_desc",
-                "String cuisine_desc", "String average_check_desc", "String own_promotion_desc", "String tm_muse_card_desc",
-                "String finger_up_count", "String finger_down_count", "String instagram", "String website",
-                "String location", "String img_banner"));
-
-        allProfiles.add(new AllProfile(AllProfile.LayoutOne, 1, "String name_profile", "String desc_profile", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "String address_desc", "String work_time_desc", "String payment_desc", "String delivery_desc",
-                "String cuisine_desc", "String average_check_desc", "String own_promotion_desc", "String tm_muse_card_desc",
-                "String finger_up_count", "String finger_down_count", "String instagram", "String website",
-                "String location", "String img_banner"));
-
-        allProfiles.add(new AllProfile(AllProfile.LayoutOne, 1, "String name_profile", "String desc_profile", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "String address_desc", "String work_time_desc", "String payment_desc", "String delivery_desc",
-                "String cuisine_desc", "String average_check_desc", "String own_promotion_desc", "String tm_muse_card_desc",
-                "String finger_up_count", "String finger_down_count", "String instagram", "String website",
-                "String location", "String img_banner"));
-//        allProfiles.add(new AllProfile(AllProfile.LayoutTwo, 2, "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg"));
-
-    }
 
     private void navigatioDrawerSet() {
 
@@ -217,12 +188,7 @@ public class Profiles extends Fragment {
                 }
             }
         });
-        try {
-            getFragmentManager().beginTransaction().
-                    replace(R.id.frame_filter_layout, new ProfileFilterFragment(), ProfileFilterFragment.class.getSimpleName()).commit();
-        } catch (IllegalStateException ex) {
-            ex.printStackTrace();
-        }
+
     }
 
     private void setListener() {
@@ -257,11 +223,23 @@ public class Profiles extends Fragment {
                 Utils.removeShow(CategoryFragment, CategoryFragment.getClass().getSimpleName(), fragmentManager, R.id.menu_frame);
             }
         });
+        profile_rec.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerView.canScrollVertically(1)){
+                    if (!isLoading && loadMore){
+                        loadMore();
+                    }
+                }
+            }
+        });
     }
 
     private void initComponents() {
         profile_name = view.findViewById(R.id.profile_name);
         filter_img = view.findViewById(R.id.filter_img);
+        progress_bar = view.findViewById(R.id.progress_bar);
 
         draw_profile = view.findViewById(R.id.draw_profile);
         draw_profile.setScrimColor(getResources().getColor(android.R.color.transparent));
@@ -275,5 +253,20 @@ public class Profiles extends Fragment {
         LayoutAnimationController animationController = AnimationUtils.loadLayoutAnimation(context, animation);
         profile_rec.setLayoutAnimation(animationController);
 
+    }
+
+    private void loadMore() {
+        page++;
+        setProfileListRequest(page, context, progress_bar);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        tags.clear();
+        categoryID.clear();
+        sort=0;
+        page=1;
     }
 }

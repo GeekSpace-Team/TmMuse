@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.R;
@@ -69,24 +71,34 @@ public class CategoryFragment extends Fragment {
     }
 
     public void gotoProfile(View view) {
+        ArrayList<Integer> category = new ArrayList<>();
         switch (view.getId()) {
             case R.id.afish_card:
-                Utils.gotoProfiles(getResources().getString(R.string.afisha), 1, getFragmentManager());
+                category.clear();
+                category.add(1);
+                category.add(2);
+                Utils.gotoProfiles(getResources().getString(R.string.afisha), category, getFragmentManager());
                 break;
             case R.id.interesting_card:
-                Utils.gotoProfiles(getResources().getString(R.string.interesting), 2, getFragmentManager());
+                category.clear();
+                category.add(3);
+                Utils.gotoProfiles(getResources().getString(R.string.interesting), category, getFragmentManager());
                 break;
             case R.id.caf_res_card:
-                Utils.gotoProfiles(getResources().getString(R.string.cafe_res), 3, getFragmentManager());
+                category.clear();
+                category.add(4);
+                Utils.gotoProfiles(getResources().getString(R.string.cafe_res), category, getFragmentManager());
                 break;
             case R.id.shop_card:
-                Utils.gotoProfiles(getResources().getString(R.string.shops), 4, getFragmentManager());
+                category.clear();
+                category.add(5);
+                Utils.gotoProfiles(getResources().getString(R.string.shops), category, getFragmentManager());
                 break;
             case R.id.beauty_sport_card:
-                Utils.gotoProfiles(getResources().getString(R.string.beauty_sport), 5, getFragmentManager());
-                break;
-            case R.id.news_card:
-                Utils.gotoProfiles(getResources().getString(R.string.news), 6, getFragmentManager());
+                category.clear();
+                category.add(6);
+                category.add(7);
+                Utils.gotoProfiles(getResources().getString(R.string.beauty_sport), category, getFragmentManager());
                 break;
 
         }

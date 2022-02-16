@@ -47,7 +47,7 @@ public class SearchKeyWordAdapter extends RecyclerView.Adapter<SearchKeyWordAdap
                 holder.search_key_word_btn.setTextColor(context.getResources().getColor(R.color.aply_text_color));
                 holder.search_key_word_btn.setShapeType(1);
 
-                if(oldSearchKeyWordButton != null){
+                if(oldSearchKeyWordButton == null){
                     oldSearchKeyWordButton.setTextColor(context.getResources().getColor(R.color.tex_color_btn_search));
                     oldSearchKeyWordButton.setShapeType(0);
                 }

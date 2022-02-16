@@ -8,8 +8,9 @@ public class Ads {
     private String image;
     private Integer profile_id;
     private Boolean is_main;
+    private String site_url;
 
-    public Ads(Integer id, String nameTM, String nameRU, String comment_of_admin, String image, Integer profile_id, Boolean is_main) {
+    public Ads(Integer id, String nameTM, String nameRU, String comment_of_admin, String image, Integer profile_id, Boolean is_main, String site_url) {
         this.id = id;
         this.nameTM = nameTM;
         this.nameRU = nameRU;
@@ -17,6 +18,7 @@ public class Ads {
         this.image = image;
         this.profile_id = profile_id;
         this.is_main = is_main;
+        this.site_url = site_url;
     }
 
     public Integer getId() {
@@ -73,6 +75,14 @@ public class Ads {
 
     public void setIs_main(Boolean is_main) {
         this.is_main = is_main;
+    }
+
+    public String getSite_url() {
+        return site_url;
+    }
+
+    public void setSite_url(String site_url) {
+        this.site_url = site_url;
     }
 }
 

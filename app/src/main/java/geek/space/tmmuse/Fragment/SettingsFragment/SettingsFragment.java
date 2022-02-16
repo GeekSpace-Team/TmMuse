@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
@@ -28,9 +29,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import java.util.Locale;
 
 import geek.space.tmmuse.Activity.AboutUs.AboutUsActivity;
-import geek.space.tmmuse.Activity.Help.HelpActivity;
 import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
-import geek.space.tmmuse.Activity.TermsOfUse.Terms_of_use;
+import geek.space.tmmuse.Activity.Sig_Up.Sig_Up_Activity;
 import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.SharedPref;
@@ -76,11 +76,14 @@ public class SettingsFragment extends Fragment {
 
 
     private void setListener() {
-        about_us_card.setOnClickListener(view -> startActivity(new Intent(context, AboutUsActivity.class)));
+        about_us_card.setOnClickListener(view -> startActivity(new Intent(context, AboutUsActivity.class)
+                .putExtra("page_type", "about")));
 
-        terms_use_card.setOnClickListener(view -> startActivity(new Intent(context, Terms_of_use.class)));
+        terms_use_card.setOnClickListener(view -> startActivity(new Intent(context, AboutUsActivity.class)
+                .putExtra("page_type", "privacy")));
 
-        help_card.setOnClickListener(view -> startActivity(new Intent(context, HelpActivity.class)));
+        help_card.setOnClickListener(view -> startActivity(new Intent(context, AboutUsActivity.class)
+                .putExtra("page_type", "help")));
 
         language_card.setOnClickListener(view -> {
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.CustomBottomSheetDialogTheme);
@@ -150,10 +153,15 @@ public class SettingsFragment extends Fragment {
         });
 
         profile_card.setOnClickListener(view -> {
-            UserProfileFragment userProfileFragment = new UserProfileFragment();
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            Main_Menu.fivesFragment = userProfileFragment;
-            Utils.hideAdd(userProfileFragment, userProfileFragment.getClass().getSimpleName(), fragmentManager, R.id.menu_frame);
+            if (Utils.getSharePreferences(context, "token").equals("")) {
+                startActivity(new Intent(context, Sig_Up_Activity.class).putExtra("type","1"));
+            } else {
+                UserProfileFragment userProfileFragment = new UserProfileFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                Main_Menu.fivesFragment = userProfileFragment;
+                Utils.hideAdd(userProfileFragment, userProfileFragment.getClass().getSimpleName(), fragmentManager, R.id.menu_frame);
+            }
+
         });
 
         logout_txt.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +179,13 @@ public class SettingsFragment extends Fragment {
                 pay_attention_desc = dialog.findViewById(R.id.pay_attention_desc);
                 cancel_txt = dialog.findViewById(R.id.cancel_txt);
                 aply_txt = dialog.findViewById(R.id.aply_txt);
+                aply_txt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Utils.setSharePreference(context, "token", "");
+                        dialog.dismiss();
+                    }
+                });
 
                 pay_attention.setTypeface(Font.getInstance(context).getMontserrat_800());
                 pay_attention_desc.setTypeface(Font.getInstance(context).getMontserrat_400());

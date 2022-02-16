@@ -20,6 +20,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import java.util.ArrayList;
 
 import geek.space.tmmuse.Common.Utils;
+import geek.space.tmmuse.Model.AllProfile.ImgProfile;
 import geek.space.tmmuse.Model.TestModelViewPager.TestModelViewPager;
 import geek.space.tmmuse.R;
 
@@ -27,17 +28,17 @@ public class TestViewPagerAdapter extends PagerAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private ArrayList<TestModelViewPager> testModelViewPagers;
+    private ArrayList<ImgProfile> imgProfiles;
 
-    public TestViewPagerAdapter(Context context, ArrayList<TestModelViewPager> testModelViewPagers) {
+    public TestViewPagerAdapter(Context context, ArrayList<ImgProfile> imgProfiles) {
         this.context = context;
-        this.testModelViewPagers = testModelViewPagers;
+        this.imgProfiles = imgProfiles;
         layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return testModelViewPagers.size();
+        return imgProfiles.size();
     }
 
     @NonNull
@@ -45,12 +46,12 @@ public class TestViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.profile_image_carusel_adapter, null);
-        TestModelViewPager testModelViewPager = testModelViewPagers.get(position);
+        ImgProfile imgProfile = imgProfiles.get(position);
         assert view != null;
         final RoundedImageView imageView = (RoundedImageView) view
                 .findViewById(R.id.iv_carousel_image);
         Glide.with(context)
-                .load(testModelViewPager.getImg_url())
+                .load(imgProfile.getLarge_image())
                 .into(imageView);
 
         container.addView(view, 0);
@@ -59,8 +60,8 @@ public class TestViewPagerAdapter extends PagerAdapter {
             @Override
             public void onClick(View view) {
                 ArrayList<String> imgs=new ArrayList<>();
-                for(TestModelViewPager m:testModelViewPagers){
-                    imgs.add(m.getImg_url());
+                for(ImgProfile m:imgProfiles){
+                    imgs.add(m.getLarge_image());
                 }
                 Utils.showImageViewer(context, imgs, imgs);
             }

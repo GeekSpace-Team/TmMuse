@@ -1,173 +1,137 @@
 package geek.space.tmmuse.Model.AllProfile;
 
+import java.util.ArrayList;
+
 public class AllProfile {
-    public static final int LayoutOne = 0;
-    public static final int LayoutTwo = 1;
-    private int viewType;
 
-    private int id;
-    private String name_profile;
-    private String desc_profile;
-    private String img_profile;
-    private String address_desc;
-    private String work_time_desc;
-    private String payment_desc;
-    private String delivery_desc;
-    private String cuisine_desc;
-    private String average_check_desc;
-    private String own_promotion_desc;
-    private String tm_muse_card_desc;
-    private String finger_up_count;
-    private String finger_down_count;
+    private Integer id;
+    private String nameTM;
+    private String nameRU;
+    private String short_descTM;
+    private String short_descRU;
+    private Integer like;
+    private Integer dislike;
     private String instagram;
-    private String website;
+    private String site;
+    private Integer status;
+    private Integer is_VIP;
+    private ImgProfile image;
+    private ArrayList<NumbersProfile> phone_numbers = new ArrayList<>();
+    private Boolean is_promotion;
+    private Integer promotion_status;
     private String location;
+    private String address;
+    private String work_hours;
+    private String delivery;
+    private String cousineTM;
+    private String cousineRU;
+    private String average_check;
+    private Boolean is_active_card;
+    private Integer tm_muse_card;
+    private Boolean is_certificate;
+    private Boolean is_promo;
+    private Integer category_id;
+    private Integer view_count;
+    private Integer promo_count;
+    private String descriptionTM;
+    private String descriptionRU;
+    private Integer order_in_list;
+    private String free_time;
+    private Boolean is_cash;
+    private Boolean is_terminal;
 
-    public AllProfile(int viewType, int id, String name_profile, String desc_profile, String img_profile,
-                      String address_desc, String work_time_desc, String payment_desc, String delivery_desc,
-                      String cuisine_desc, String average_check_desc, String own_promotion_desc, String tm_muse_card_desc,
-                      String finger_up_count, String finger_down_count, String instagram, String website,
-                      String location, String img_banner) {
-
-        this.viewType = viewType;
+    public AllProfile(Integer id, String nameTM, String nameRU, String short_descTM, String short_descRU, Integer like, Integer dislike, String instagram, String site, Integer status, Integer is_VIP, ImgProfile image, ArrayList<NumbersProfile> phone_numbers, Boolean is_promotion, Integer promotion_status, String location, String address, String work_hours, String delivery, String cousineTM, String cousineRU, String average_check, Boolean is_active_card, Integer tm_muse_card, Boolean is_certificate, Boolean is_promo, Integer category_id, Integer view_count, Integer promo_count, String descriptionTM, String descriptionRU, Integer order_in_list, String free_time, Boolean is_cash, Boolean is_terminal) {
         this.id = id;
-        this.name_profile = name_profile;
-        this.desc_profile = desc_profile;
-        this.img_profile = img_profile;
-        this.address_desc = address_desc;
-        this.work_time_desc = work_time_desc;
-        this.payment_desc = payment_desc;
-        this.delivery_desc = delivery_desc;
-        this.average_check_desc = average_check_desc;
-        this.own_promotion_desc = own_promotion_desc;
-        this.tm_muse_card_desc = tm_muse_card_desc;
-        this.finger_up_count = finger_up_count;
-        this.finger_down_count = finger_down_count;
+        this.nameTM = nameTM;
+        this.nameRU = nameRU;
+        this.short_descTM = short_descTM;
+        this.short_descRU = short_descRU;
+        this.like = like;
+        this.dislike = dislike;
         this.instagram = instagram;
-        this.website = website;
+        this.site = site;
+        this.status = status;
+        this.is_VIP = is_VIP;
+        this.image = image;
+        this.phone_numbers = phone_numbers;
+        this.is_promotion = is_promotion;
+        this.promotion_status = promotion_status;
         this.location = location;
-        this.img_banner = img_banner;
-        this.cuisine_desc = cuisine_desc;
+        this.address = address;
+        this.work_hours = work_hours;
+        this.delivery = delivery;
+        this.cousineTM = cousineTM;
+        this.cousineRU = cousineRU;
+        this.average_check = average_check;
+        this.is_active_card = is_active_card;
+        this.tm_muse_card = tm_muse_card;
+        this.is_certificate = is_certificate;
+        this.is_promo = is_promo;
+        this.category_id = category_id;
+        this.view_count = view_count;
+        this.promo_count = promo_count;
+        this.descriptionTM = descriptionTM;
+        this.descriptionRU = descriptionRU;
+        this.order_in_list = order_in_list;
+        this.free_time = free_time;
+        this.is_cash = is_cash;
+        this.is_terminal = is_terminal;
     }
 
-    public String getCuisine_desc() {
-        return cuisine_desc;
-    }
-
-    public void setCuisine_desc(String cuisine_desc) {
-        this.cuisine_desc = cuisine_desc;
-    }
-
-    public int getViewType() {
-        return viewType;
-    }
-
-    public void setViewType(int viewType) {
-        this.viewType = viewType;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getName_profile() {
-        return name_profile;
+    public String getNameTM() {
+        return nameTM;
     }
 
-    public void setName_profile(String name_profile) {
-        this.name_profile = name_profile;
+    public void setNameTM(String nameTM) {
+        this.nameTM = nameTM;
     }
 
-    public String getDesc_profile() {
-        return desc_profile;
+    public String getNameRU() {
+        return nameRU;
     }
 
-    public void setDesc_profile(String desc_profile) {
-        this.desc_profile = desc_profile;
+    public void setNameRU(String nameRU) {
+        this.nameRU = nameRU;
     }
 
-    public String getImg_profile() {
-        return img_profile;
+    public String getShort_descTM() {
+        return short_descTM;
     }
 
-    public void setImg_profile(String img_profile) {
-        this.img_profile = img_profile;
+    public void setShort_descTM(String short_descTM) {
+        this.short_descTM = short_descTM;
     }
 
-    public String getAddress_desc() {
-        return address_desc;
+    public String getShort_descRU() {
+        return short_descRU;
     }
 
-    public void setAddress_desc(String address_desc) {
-        this.address_desc = address_desc;
+    public void setShort_descRU(String short_descRU) {
+        this.short_descRU = short_descRU;
     }
 
-    public String getWork_time_desc() {
-        return work_time_desc;
+    public Integer getLike() {
+        return like;
     }
 
-    public void setWork_time_desc(String work_time_desc) {
-        this.work_time_desc = work_time_desc;
+    public void setLike(Integer like) {
+        this.like = like;
     }
 
-    public String getPayment_desc() {
-        return payment_desc;
+    public Integer getDislike() {
+        return dislike;
     }
 
-    public void setPayment_desc(String payment_desc) {
-        this.payment_desc = payment_desc;
-    }
-
-    public String getDelivery_desc() {
-        return delivery_desc;
-    }
-
-    public void setDelivery_desc(String delivery_desc) {
-        this.delivery_desc = delivery_desc;
-    }
-
-    public String getAverage_check_desc() {
-        return average_check_desc;
-    }
-
-    public void setAverage_check_desc(String average_check_desc) {
-        this.average_check_desc = average_check_desc;
-    }
-
-    public String getOwn_promotion_desc() {
-        return own_promotion_desc;
-    }
-
-    public void setOwn_promotion_desc(String own_promotion_desc) {
-        this.own_promotion_desc = own_promotion_desc;
-    }
-
-    public String getTm_muse_card_desc() {
-        return tm_muse_card_desc;
-    }
-
-    public void setTm_muse_card_desc(String tm_muse_card_desc) {
-        this.tm_muse_card_desc = tm_muse_card_desc;
-    }
-
-    public String getFinger_up_count() {
-        return finger_up_count;
-    }
-
-    public void setFinger_up_count(String finger_up_count) {
-        this.finger_up_count = finger_up_count;
-    }
-
-    public String getFinger_down_count() {
-        return finger_down_count;
-    }
-
-    public void setFinger_down_count(String finger_down_count) {
-        this.finger_down_count = finger_down_count;
+    public void setDislike(Integer dislike) {
+        this.dislike = dislike;
     }
 
     public String getInstagram() {
@@ -178,12 +142,60 @@ public class AllProfile {
         this.instagram = instagram;
     }
 
-    public String getWebsite() {
-        return website;
+    public String getSite() {
+        return site;
     }
 
-    public void setWebsite(String website) {
-        this.website = website;
+    public void setSite(String site) {
+        this.site = site;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getIs_VIP() {
+        return is_VIP;
+    }
+
+    public void setIs_VIP(Integer is_VIP) {
+        this.is_VIP = is_VIP;
+    }
+
+    public ImgProfile getImage() {
+        return image;
+    }
+
+    public void setImage(ImgProfile image) {
+        this.image = image;
+    }
+
+    public ArrayList<NumbersProfile> getPhone_numbers() {
+        return phone_numbers;
+    }
+
+    public void setPhone_numbers(ArrayList<NumbersProfile> phone_numbers) {
+        this.phone_numbers = phone_numbers;
+    }
+
+    public Boolean getIs_promotion() {
+        return is_promotion;
+    }
+
+    public void setIs_promotion(Boolean is_promotion) {
+        this.is_promotion = is_promotion;
+    }
+
+    public Integer getPromotion_status() {
+        return promotion_status;
+    }
+
+    public void setPromotion_status(Integer promotion_status) {
+        this.promotion_status = promotion_status;
     }
 
     public String getLocation() {
@@ -194,21 +206,155 @@ public class AllProfile {
         this.location = location;
     }
 
-    private String img_banner;
-
-    public AllProfile(int viewType, int id, String img_banner) {
-        this.img_banner = img_banner;
-        this.id = id;
-        this.viewType = viewType;
+    public String getAddress() {
+        return address;
     }
 
-    public String getImg_banner() {
-        return img_banner;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public void setImg_banner(String img_banner) {
-        this.img_banner = img_banner;
+    public String getWork_hours() {
+        return work_hours;
     }
 
+    public void setWork_hours(String work_hours) {
+        this.work_hours = work_hours;
+    }
 
+    public String getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(String delivery) {
+        this.delivery = delivery;
+    }
+
+    public String getCousineTM() {
+        return cousineTM;
+    }
+
+    public void setCousineTM(String cousineTM) {
+        this.cousineTM = cousineTM;
+    }
+
+    public String getCousineRU() {
+        return cousineRU;
+    }
+
+    public void setCousineRU(String cousineRU) {
+        this.cousineRU = cousineRU;
+    }
+
+    public String getAverage_check() {
+        return average_check;
+    }
+
+    public void setAverage_check(String average_check) {
+        this.average_check = average_check;
+    }
+
+    public Boolean getIs_active_card() {
+        return is_active_card;
+    }
+
+    public void setIs_active_card(Boolean is_active_card) {
+        this.is_active_card = is_active_card;
+    }
+
+    public Integer getTm_muse_card() {
+        return tm_muse_card;
+    }
+
+    public void setTm_muse_card(Integer tm_muse_card) {
+        this.tm_muse_card = tm_muse_card;
+    }
+
+    public Boolean getIs_certificate() {
+        return is_certificate;
+    }
+
+    public void setIs_certificate(Boolean is_certificate) {
+        this.is_certificate = is_certificate;
+    }
+
+    public Boolean getIs_promo() {
+        return is_promo;
+    }
+
+    public void setIs_promo(Boolean is_promo) {
+        this.is_promo = is_promo;
+    }
+
+    public Integer getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(Integer category_id) {
+        this.category_id = category_id;
+    }
+
+    public Integer getView_count() {
+        return view_count;
+    }
+
+    public void setView_count(Integer view_count) {
+        this.view_count = view_count;
+    }
+
+    public Integer getPromo_count() {
+        return promo_count;
+    }
+
+    public void setPromo_count(Integer promo_count) {
+        this.promo_count = promo_count;
+    }
+
+    public String getDescriptionTM() {
+        return descriptionTM;
+    }
+
+    public void setDescriptionTM(String descriptionTM) {
+        this.descriptionTM = descriptionTM;
+    }
+
+    public String getDescriptionRU() {
+        return descriptionRU;
+    }
+
+    public void setDescriptionRU(String descriptionRU) {
+        this.descriptionRU = descriptionRU;
+    }
+
+    public Integer getOrder_in_list() {
+        return order_in_list;
+    }
+
+    public void setOrder_in_list(Integer order_in_list) {
+        this.order_in_list = order_in_list;
+    }
+
+    public String getFree_time() {
+        return free_time;
+    }
+
+    public void setFree_time(String free_time) {
+        this.free_time = free_time;
+    }
+
+    public Boolean getIs_cash() {
+        return is_cash;
+    }
+
+    public void setIs_cash(Boolean is_cash) {
+        this.is_cash = is_cash;
+    }
+
+    public Boolean getIs_terminal() {
+        return is_terminal;
+    }
+
+    public void setIs_terminal(Boolean is_terminal) {
+        this.is_terminal = is_terminal;
+    }
 }

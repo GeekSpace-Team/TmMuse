@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
@@ -20,6 +21,7 @@ public class UserProfileFragment extends Fragment {
     private View view;
     private Context context;
     private ImageView go_back_img;
+    private EditText full_name_edit, number_edit;
 
     public UserProfileFragment() {
     }
@@ -49,9 +51,13 @@ public class UserProfileFragment extends Fragment {
                 Utils.removeShow(settingsFragment, settingsFragment.getClass().getSimpleName(), fragmentManager, R.id.menu_frame);
             }
         });
+        number_edit.setText(Utils.getSharePreferences(context, "phone_number"));
+        full_name_edit.setText(Utils.getSharePreferences(context, "full_name"));
     }
 
     private void initComponents() {
         go_back_img = view.findViewById(R.id.go_back_img);
+        number_edit = view.findViewById(R.id.number_edit);
+        full_name_edit = view.findViewById(R.id.full_name_edit);
     }
 }

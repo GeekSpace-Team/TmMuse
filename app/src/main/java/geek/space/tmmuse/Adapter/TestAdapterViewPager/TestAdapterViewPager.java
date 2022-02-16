@@ -17,22 +17,23 @@ import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
 
+import geek.space.tmmuse.Model.AllProfile.ImgProfile;
 import geek.space.tmmuse.Model.TestModelViewPager.TestModelViewPager;
 import geek.space.tmmuse.R;
 
 public class TestAdapterViewPager extends RecyclerView.Adapter<TestAdapterViewPager.ViewHolder> {
     private Context context;
-    private ArrayList<TestModelViewPager> testModelViewPagers;
+    private ArrayList<ImgProfile> imgProfiles;
     private ViewPager viewPager;
     private boolean isFirst=true;
     private WormDotsIndicator dots_indicator;
 
-    public TestAdapterViewPager(Context context, ArrayList<TestModelViewPager> testModelViewPagers, ViewPager viewPager, WormDotsIndicator dots_indicator) {
+    public TestAdapterViewPager(Context context, ArrayList<ImgProfile> imgProfiles, ViewPager viewPager, WormDotsIndicator dots_indicator) {
         this.context = context;
-        this.testModelViewPagers = testModelViewPagers;
+        this.imgProfiles = imgProfiles;
         this.viewPager = viewPager;
         this.dots_indicator = dots_indicator;
-        viewPager.setAdapter(new TestViewPagerAdapter(context, testModelViewPagers));
+        viewPager.setAdapter(new TestViewPagerAdapter(context, imgProfiles));
         dots_indicator.setViewPager(viewPager);
     }
 
@@ -46,10 +47,10 @@ public class TestAdapterViewPager extends RecyclerView.Adapter<TestAdapterViewPa
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.setIsRecyclable(false);
-        TestModelViewPager testModelViewPager = testModelViewPagers.get(position);
+        ImgProfile imgProfile = imgProfiles.get(position);
         if(isFirst){
-            Glide.with(context).load(testModelViewPager.getImg_url()).into(holder.product_img);
-            viewPager.setAdapter(new TestViewPagerAdapter(context, testModelViewPagers));
+            Glide.with(context).load(imgProfile.getLarge_image()).into(holder.product_img);
+            viewPager.setAdapter(new TestViewPagerAdapter(context, imgProfiles));
             isFirst=false;
         }
         holder.product_img.setOnClickListener(new View.OnClickListener() {
@@ -58,12 +59,12 @@ public class TestAdapterViewPager extends RecyclerView.Adapter<TestAdapterViewPa
                 viewPager.setCurrentItem(position);
             }
         });
-        Glide.with(context).load(testModelViewPager.getImg_url()).into(holder.product_img);
+        Glide.with(context).load(imgProfile.getLarge_image()).into(holder.product_img);
     }
 
     @Override
     public int getItemCount() {
-        return testModelViewPagers.size();
+        return imgProfiles.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

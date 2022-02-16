@@ -6,12 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_alignParentEnd="true"
-    android:background="@drawable/card_gradient"
+
     tools:context=".Fragment.ProfileFragment.Profiles">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/card_gradient"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -28,11 +29,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
+                android:scrollbars="none"
                 android:stateListAnimator="@null"
                 app:contentScrim="@android:color/transparent"
                 app:elevation="0dp"
-                app:layout_scrollFlags="scroll|enterAlways"
-                android:scrollbars="none">
+                app:layout_scrollFlags="scroll|enterAlways">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -90,7 +91,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/margins"
             android:layout_marginRight="@dimen/margins"
             android:orientation="vertical"
@@ -101,12 +102,16 @@
                 android:id="@+id/profile_rec"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:overScrollMode="never"/>
+                android:layout_weight="90"
+                android:overScrollMode="never" />
 
-            <RelativeLayout
+            <ProgressBar
+                android:id="@+id/progress_bar"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="10"
+                android:visibility="gone" />
 
         </LinearLayout>
 

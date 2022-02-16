@@ -1,27 +1,37 @@
 package geek.space.tmmuse.Model.Tags_Filter_Btn;
 
 public class Tags_Btn {
-    private int id;
-    private String tag_name;
+    private Integer id;
+    private String tagTM;
+    private String tagRU;
 
-    public Tags_Btn(int id, String tag_name) {
+    public Tags_Btn(Integer id, String tagTM, String tagRU) {
         this.id = id;
-        this.tag_name = tag_name;
+        this.tagTM = tagTM;
+        this.tagRU = tagRU;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getTag_name() {
-        return tag_name;
+    public String getTagTM() {
+        return tagTM;
     }
 
-    public void setTag_name(String tag_name) {
-        this.tag_name = tag_name;
+    public void setTagTM(String tagTM) {
+        this.tagTM = tagTM;
+    }
+
+    public String getTagRU() {
+        return tagRU;
+    }
+
+    public void setTagRU(String tagRU) {
+        this.tagRU = tagRU;
     }
 }

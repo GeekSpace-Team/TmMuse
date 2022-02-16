@@ -1,12 +1,12 @@
-package geek.space.tmmuse.Model.ProfilePhone;
+package geek.space.tmmuse.Model.AllProfile;
 
 public class ProfilePhone {
     private int id;
-    private String number_profile;
+    private String phone_number;
 
-    public ProfilePhone(int id, String number_profile) {
+    public ProfilePhone(int id, String phone_number) {
         this.id = id;
-        this.number_profile = number_profile;
+        this.phone_number = phone_number;
     }
 
     public int getId() {
@@ -18,10 +18,10 @@ public class ProfilePhone {
     }
 
     public String getNumber_profile() {
-        return number_profile;
+        return phone_number;
     }
 
     public void setNumber_profile(String number_profile) {
-        this.number_profile = number_profile;
+        this.phone_number = number_profile;
     }
 }

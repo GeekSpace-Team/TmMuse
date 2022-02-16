@@ -51,7 +51,6 @@ public class Utils {
     Context context;
     SharedPref sharedPref = new SharedPref(context);
 
-
     public static void setPressed(NeumorphButton btn, int type, int color, Context context) {
         btn.setShapeType(type);
         btn.setTextColor(context.getResources().getColor(color));
@@ -119,7 +118,7 @@ public class Utils {
         activity.finish();
     }
 
-    public static void gotoProfiles(String categoryName, Integer categoryId, FragmentManager fragmentManager) {
+    public static void gotoProfiles(String categoryName, ArrayList<Integer> categoryId, FragmentManager fragmentManager) {
         Profiles profiles = new Profiles(categoryName, categoryId);
         Main_Menu.secondFragment = profiles;
         Utils.hideAdd(profiles, profiles.getClass().getSimpleName(), fragmentManager, R.id.menu_frame);

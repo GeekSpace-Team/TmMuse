@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import geek.space.tmmuse.Common.Font.Font;
-import geek.space.tmmuse.Model.ProfilePhone.ProfilePhone;
+import geek.space.tmmuse.Model.AllProfile.ProfilePhone;
 import geek.space.tmmuse.R;
 import soup.neumorphism.NeumorphButton;
 

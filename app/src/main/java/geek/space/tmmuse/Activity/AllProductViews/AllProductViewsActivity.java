@@ -26,7 +26,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.LayoutManager;
@@ -39,20 +38,26 @@ import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
 
+import geek.space.tmmuse.API.ApiClient;
+import geek.space.tmmuse.API.ApiInterface;
 import geek.space.tmmuse.Activity.VrImage.VrImageActivity;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneData_adapter;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneTimeAdapter;
-import geek.space.tmmuse.Adapter.FilimAdapter.MovieTimeAdapter;
-import geek.space.tmmuse.Adapter.GalleryAdapter.GalleryAdapter;
 import geek.space.tmmuse.Adapter.ProfilePhoneAdapter.ProfilePhoneAdapter;
 import geek.space.tmmuse.Adapter.PromotionsPage.PromotionAndOffersAdapter;
 import geek.space.tmmuse.Adapter.TestAdapterViewPager.TestAdapterViewPager;
 import geek.space.tmmuse.Common.Font.Font;
+import geek.space.tmmuse.Model.AllProfile.AllProfile;
+import geek.space.tmmuse.Model.AllProfile.GetProfileTiny;
+import geek.space.tmmuse.Model.AllProfile.ImgProfile;
+import geek.space.tmmuse.Model.AllProfile.ProfilePhone;
 import geek.space.tmmuse.Model.Film.MovieTime;
-import geek.space.tmmuse.Model.ProfilePhone.ProfilePhone;
 import geek.space.tmmuse.Model.PromotionAndOffers.PromotionAndOffers;
 import geek.space.tmmuse.Model.TestModelViewPager.TestModelViewPager;
 import geek.space.tmmuse.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import soup.neumorphism.NeumorphButton;
 
 public class AllProductViewsActivity extends AppCompatActivity {
@@ -71,7 +76,8 @@ public class AllProductViewsActivity extends AppCompatActivity {
             deliver_desc_txt, cuisen_txt, average_check_txt, own_promotion_desc_txt, tm_muse_card_prod_txt,
             ard_prod_desc_txt, gallery_txt, post_txt, name_profile_txt, product_text_count_up, payment_txt, promotion_txt,
             deliver_txt, cuisine_desc_txt, average_check_desc_txt, tm_muse_card_prod_desc_txt;
-    private LinearLayout certificate_layout, promo_layout, images_layout, all_views_info_layout, call_layout_products;
+    private LinearLayout certificate_layout, promo_layout, images_layout, all_views_info_layout, call_layout_products, instagram_layout,
+            site_layout, location_layout;
     private View view_Stick;
     private ImageView onback_img, share_img;
     private String profileId = "", imageUrl = "";
@@ -88,6 +94,10 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private int dotsCount;
     private RoundedImageView vr_img;
     private ArrayList<ProfilePhone> profilePhones = new ArrayList<>();
+    private ApiInterface apiInterface;
+    private ArrayList<AllProfile> allProfiles = new ArrayList<>();
+    private TestAdapterViewPager imagesAdapter;
+    private ArrayList<ImgProfile> imgProfiles = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,45 +105,71 @@ public class AllProductViewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_all_product_views);
         initViews();
         makeStatusbarTransparent();
-        setListener();
         setFont();
         getLang();
-        setPromotionsList();
-        setPromotionsAdapter();
-        setMovieTimes();
-        setProfileImagesList();
-        setProfileImgAdapter();
-        setGalleryAdapter();
-        setProfilePhoneList();
-    }
-    private void setProfilePhoneList() {
-        profilePhones.clear();
-        profilePhones.add(new ProfilePhone(1, "99365853833"));
-        profilePhones.add(new ProfilePhone(1, "99365698450"));
+        setAllProfileList();
     }
 
-    private void setGalleryAdapter() {
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
-        gallery_rec.setLayoutManager(mLayoutManager);
-        gallery_rec.setAdapter(new GalleryAdapter(this, testModelViewPagers));
-    }
+    private void setAllProfileList() {
+        Intent intent = getIntent();
+        String id = intent.getStringExtra("ID");
+        apiInterface = ApiClient.getClient()
+                .create(ApiInterface.class);
+        Call<GetProfileTiny> getProfileTinyCall = apiInterface.get_profile_tiny(id);
+        getProfileTinyCall.enqueue(new Callback<GetProfileTiny>() {
+            @Override
+            public void onResponse(Call<GetProfileTiny> call, Response<GetProfileTiny> response) {
+                if (response.isSuccessful() || response != null) {
+                    AllProfile profile = response.body().getBody().getProfiles();
+                    name_profile_txt.setText(profile.getNameTM());
+                    allProfileImageAdapter();
+                    product_text_count_up.setText(profile.getLike() + "");
+                    product_text_count_down.setText(profile.getDislike() + "");
+                    if (response.body().getBody().getPhone_numbers() != null) {
+                        profilePhones = response.body().getBody().getPhone_numbers();
+                    }
+                    if (response.body().getBody().getProfiles().getInstagram()!=null){
+                        if(profile.getInstagram().isEmpty()){
+                        instagram_layout.setVisibility(View.GONE);
+                        }
+                    }
+                    if (response.body().getBody().getProfiles().getSite()!=null){
+                        if(profile.getSite().isEmpty()){
+                        site_layout.setVisibility(View.GONE);
+                        }
+                    }
+                    if (response.body().getBody().getProfiles().getLocation()!=null){
+                        if(profile.getLocation().isEmpty()){
+                            location_layout.setVisibility(View.GONE);
+                        }
+                    }
 
-    private void setProfileImgAdapter() {
-        LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-        images_profile_rec.setLayoutManager(layoutManager);
-        images_profile_rec.setAdapter(new TestAdapterViewPager(this, testModelViewPagers, all_views_viewPager, dots_indicator));
+                    if (response.body().getBody().getProfiles().getIs_certificate()!=null){
+                        if(profile.getLocation().isEmpty()){
+                            certificate_layout.setVisibility(View.GONE);
+                        }
+                    }
 
-    }
+                    if (response.body().getBody().getProfiles().getIs_promo()!=null){
+                        if(profile.getLocation().isEmpty()){
+                            promo_layout.setVisibility(View.GONE);
+                        }
+                    }
+                    if (profile.getCategory_id()!=null){
+                        if (profile.getCategory_id() == 2) {
+                            film_address_desc_txt.
+                        }
+                    }
 
-    private void setProfileImagesList() {
-        testModelViewPagers.clear();
-        testModelViewPagers.add(new TestModelViewPager(1, "https://turkmenportal.com/images/uploads/catalog/2867eea7fc42123de62c998b4c74937c.jpg"));
-        testModelViewPagers.add(new TestModelViewPager(2, "https://media-cdn.tripadvisor.com/media/photo-s/08/0c/7f/a8/2.jpg"));
-        testModelViewPagers.add(new TestModelViewPager(3, "https://lotta-tm.com/images/blogs/ammar1.jpg"));
-        testModelViewPagers.add(new TestModelViewPager(4, "https://avatars.mds.yandex.net/get-altay/1881820/2a0000016de58bee7e6f8174f773ef64ac50/XXL"));
-        testModelViewPagers.add(new TestModelViewPager(5, "https://avatars.mds.yandex.net/get-altay/1881820/2a0000016de58bee7e6f8174f773ef64ac50/XXL"));
-        testModelViewPagers.add(new TestModelViewPager(6, "https://lotta-tm.com/images/blogs/ammar1.jpg"));
+                    setListener();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<GetProfileTiny> call, Throwable t) {
+
+            }
+        });
     }
 
     public void showCustomDialog() {
@@ -224,40 +260,6 @@ public class AllProductViewsActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void setMovieTimes() {
-        movieTimes.clear();
-        ArrayList<String> times = new ArrayList<>();
-        ArrayList<String> times1 = new ArrayList<>();
-        ArrayList<String> times2 = new ArrayList<>();
-        ArrayList<String> times3 = new ArrayList<>();
-        times.add("13:00");
-        times.add("15:00");
-        times.add("17:00");
-        times.add("19:00");
-        times1.add("22:30");
-        times2.add("22:30");
-        times3.add("22:30");
-        movieTimes.add(new MovieTime("7.01.2022", times));
-        movieTimes.add(new MovieTime("7.01.2022", times1));
-        movieTimes.add(new MovieTime("7.01.2022", times2));
-        movieTimes.add(new MovieTime("7.01.2022", times3));
-
-        movie_time_rec.setAdapter(new MovieTimeAdapter(movieTimes, this));
-        movie_time_rec.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-
-    }
-
-    private void setPromotionsAdapter() {
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
-        post_rec.setLayoutManager(mLayoutManager);
-//        promotionAndOffersAdapter = new PromotionAndOffersAdapter(this, promotionAndOffers, prom_scroll, root_prom);
-//        post_rec.setAdapter(promotionAndOffersAdapter);
-    }
-
-    private void setPromotionsList() {
-        promotionAndOffers.clear();
-        }
-
     private void setFont() {
         name_profile_txt.setTypeface(Font.getInstance(this).getMontserrat_800());
 
@@ -297,6 +299,9 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
         view = findViewById(R.id.bottomsheet);
         sliderContainer = findViewById(R.id.sliderContainer);
+        instagram_layout = findViewById(R.id.instagram_layout);
+        site_layout = findViewById(R.id.site_layout);
+        location_layout = findViewById(R.id.location_layout);
         movie_time_rec = findViewById(R.id.movie_time_rec);
         call_layout_products = findViewById(R.id.call_layout_products);
         bottomSheetBehavior = BottomSheetBehavior.from(view);
@@ -565,5 +570,12 @@ public class AllProductViewsActivity extends AppCompatActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
         }
 
+    }
+
+    private void allProfileImageAdapter() {
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        images_profile_rec.setLayoutManager(layoutManager);
+        images_profile_rec.setAdapter(new TestAdapterViewPager(this, imgProfiles, all_views_viewPager, dots_indicator));
     }
 }
