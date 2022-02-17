@@ -22,7 +22,7 @@ public class AllProfile {
     private String location;
     private String address;
     private String work_hours;
-    private String delivery;
+    private Boolean delivery;
     private String cousineTM;
     private String cousineRU;
     private String average_check;
@@ -39,8 +39,18 @@ public class AllProfile {
     private String free_time;
     private Boolean is_cash;
     private Boolean is_terminal;
+    private Boolean is_wifi;
 
-    public AllProfile(Integer id, String nameTM, String nameRU, String short_descTM, String short_descRU, Integer like, Integer dislike, String instagram, String site, Integer status, Integer is_VIP, ImgProfile image, ArrayList<NumbersProfile> phone_numbers, Boolean is_promotion, Integer promotion_status, String location, String address, String work_hours, String delivery, String cousineTM, String cousineRU, String average_check, Boolean is_active_card, Integer tm_muse_card, Boolean is_certificate, Boolean is_promo, Integer category_id, Integer view_count, Integer promo_count, String descriptionTM, String descriptionRU, Integer order_in_list, String free_time, Boolean is_cash, Boolean is_terminal) {
+    public AllProfile(Integer id, String nameTM, String nameRU, String short_descTM, String short_descRU,
+                      Integer like, Integer dislike, String instagram, String site, Integer status,
+                      Integer is_VIP, ImgProfile image, ArrayList<NumbersProfile> phone_numbers,
+                      Boolean is_promotion, Integer promotion_status, String location, String address,
+                      String work_hours, Boolean delivery, String cousineTM, String cousineRU,
+                      String average_check, Boolean is_active_card, Integer tm_muse_card,
+                      Boolean is_certificate, Boolean is_promo, Integer category_id,
+                      Integer view_count, Integer promo_count, String descriptionTM,
+                      String descriptionRU, Integer order_in_list, String free_time,
+                      Boolean is_cash, Boolean is_terminal, Boolean is_wifi) {
         this.id = id;
         this.nameTM = nameTM;
         this.nameRU = nameRU;
@@ -76,6 +86,7 @@ public class AllProfile {
         this.free_time = free_time;
         this.is_cash = is_cash;
         this.is_terminal = is_terminal;
+        this.is_wifi = is_wifi;
     }
 
     public Integer getId() {
@@ -222,11 +233,11 @@ public class AllProfile {
         this.work_hours = work_hours;
     }
 
-    public String getDelivery() {
+    public Boolean getDelivery() {
         return delivery;
     }
 
-    public void setDelivery(String delivery) {
+    public void setDelivery(Boolean delivery) {
         this.delivery = delivery;
     }
 
@@ -356,5 +367,13 @@ public class AllProfile {
 
     public void setIs_terminal(Boolean is_terminal) {
         this.is_terminal = is_terminal;
+    }
+
+    public Boolean getIs_wifi() {
+        return is_wifi;
+    }
+
+    public void setIs_wifi(Boolean is_wifi) {
+        this.is_wifi = is_wifi;
     }
 }

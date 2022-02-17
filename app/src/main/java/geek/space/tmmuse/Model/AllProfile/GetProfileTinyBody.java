@@ -8,28 +8,26 @@ import geek.space.tmmuse.Model.PromotionAndOffers.PromotionAndOffers;
 import geek.space.tmmuse.Model.Tags_Filter_Btn.Tags_Btn;
 
 public class GetProfileTinyBody {
-    private AllProfile profiles;
+    private AllProfile profile;
     private ArrayList<ProfilePhone> phone_numbers = new ArrayList<>();
     private ArrayList<ImgProfile> images = new ArrayList<>();
     private ArrayList<PromotionAndOffers> posts = new ArrayList<>();
     private ArrayList<Tags_Btn> tags = new ArrayList<>();
 
-    public GetProfileTinyBody(AllProfile profiles, ArrayList<ProfilePhone> phone_numbers,
-                              ArrayList<ImgProfile> images, ArrayList<PromotionAndOffers> posts,
-                              ArrayList<Tags_Btn> tags) {
-        this.profiles = profiles;
+    public GetProfileTinyBody(AllProfile profile, ArrayList<ProfilePhone> phone_numbers, ArrayList<ImgProfile> images, ArrayList<PromotionAndOffers> posts, ArrayList<Tags_Btn> tags) {
+        this.profile = profile;
         this.phone_numbers = phone_numbers;
         this.images = images;
         this.posts = posts;
         this.tags = tags;
     }
 
-    public AllProfile getProfiles() {
-        return profiles;
+    public AllProfile getProfile() {
+        return profile;
     }
 
-    public void setProfiles(AllProfile profiles) {
-        this.profiles = profiles;
+    public void setProfile(AllProfile profile) {
+        this.profile = profile;
     }
 
     public ArrayList<ProfilePhone> getPhone_numbers() {

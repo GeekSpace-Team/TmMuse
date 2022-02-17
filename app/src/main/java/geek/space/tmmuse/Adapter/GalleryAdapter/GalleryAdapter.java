@@ -13,16 +13,17 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 
+import geek.space.tmmuse.Model.AllProfile.ImgProfile;
 import geek.space.tmmuse.Model.TestModelViewPager.TestModelViewPager;
 import geek.space.tmmuse.R;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<TestModelViewPager> testModelViewPagers;
+    private ArrayList<ImgProfile> imgProfiles;
 
-    public GalleryAdapter(Context context, ArrayList<TestModelViewPager> testModelViewPagers) {
+    public GalleryAdapter(Context context, ArrayList<ImgProfile> imgProfiles) {
         this.context = context;
-        this.testModelViewPagers = testModelViewPagers;
+        this.imgProfiles = imgProfiles;
     }
 
     @NonNull
@@ -34,12 +35,12 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Glide.with(context).load(testModelViewPagers.get(position).getImg_url()).into(holder.gallery_img);
+        Glide.with(context).load(imgProfiles.get(position).getLarge_image()).into(holder.gallery_img);
     }
 
     @Override
     public int getItemCount() {
-        return testModelViewPagers.size();
+        return imgProfiles.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

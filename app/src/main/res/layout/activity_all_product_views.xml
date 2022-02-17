@@ -7,12 +7,12 @@
     tools:context=".Activity.AllProductViews.AllProductViewsActivity">
 
     <RelativeLayout
+        android:id="@+id/page_rel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/page_rel"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,7 +36,7 @@
                     <RelativeLayout
                         android:id="@+id/sliderContainer"
                         android:layout_width="match_parent"
-                        android:layout_height="441dp"/>
+                        android:layout_height="441dp" />
 
                 </RelativeLayout>
 
@@ -49,7 +49,7 @@
                     android:layout_marginTop="24dp"
                     android:onClick="onBack"
                     android:src="@drawable/ic_back"
-                    android:tint="@color/text_color"/>
+                    android:tint="@color/text_color" />
 
                 <ImageView
                     android:id="@+id/share_img_profile"
@@ -59,7 +59,7 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginRight="@dimen/margins"
                     android:src="@drawable/ic_share"
-                    android:tint="@color/text_color"/>
+                    android:tint="@color/text_color" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -97,24 +97,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBaseline_toBottomOf="@id/page_rel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/bottomsheet"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:overScrollMode="never"
-        android:scrollbars="none"
-        app:behavior_hideable="false"
-        app:behavior_peekHeight="300dp"
-        app:layout_anchorGravity="center"
-        app:layout_behavior="@string/sheetbehavior">
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/bottomsheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="300dp"
+            app:layout_anchorGravity="center"
+            app:layout_behavior="@string/sheetbehavior">
 
-        <include layout="@layout/view_bottom_sheet_all_profile" />
+            <include layout="@layout/view_bottom_sheet_all_profile" />
 
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

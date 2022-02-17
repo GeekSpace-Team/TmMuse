@@ -31,6 +31,7 @@ import java.util.Locale;
 import geek.space.tmmuse.Activity.AboutUs.AboutUsActivity;
 import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
 import geek.space.tmmuse.Activity.Sig_Up.Sig_Up_Activity;
+import geek.space.tmmuse.Common.AppAlert;
 import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.SharedPref;
@@ -139,11 +140,13 @@ public class SettingsFragment extends Fragment {
                 sharedPref.setNightModeState(true);
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 switch_dark_mode.setChecked(true);
+                getActivity().getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
 
             } else {
                 sharedPref.setNightModeState(false);
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 switch_dark_mode.setChecked(false);
+                getActivity().getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
             }
         });
 
@@ -167,37 +170,23 @@ public class SettingsFragment extends Fragment {
         logout_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dialog dialog = new Dialog(context);
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.log_out_popup, null, false);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                dialog.setContentView(view);
-
-                TextView pay_attention, pay_attention_desc, cancel_txt, aply_txt;
-                pay_attention = dialog.findViewById(R.id.pay_attention);
-                pay_attention_desc = dialog.findViewById(R.id.pay_attention_desc);
-                cancel_txt = dialog.findViewById(R.id.cancel_txt);
-                aply_txt = dialog.findViewById(R.id.aply_txt);
-                aply_txt.setOnClickListener(new View.OnClickListener() {
+                AppAlert alert=new AppAlert(context);
+                alert.setTitle(context.getResources().getString(R.string.pay_attention));
+                alert.setDescription(context.getResources().getString(R.string.pay_attention_desc));
+                alert.setButtonListener(new AppAlert.ButtonListener() {
                     @Override
-                    public void onClick(View view) {
+                    public void onOkListener() {
                         Utils.setSharePreference(context, "token", "");
-                        dialog.dismiss();
+                        alert.dismiss();
+                    }
+
+                    @Override
+                    public void onCancelListener() {
+                        alert.dismiss();
                     }
                 });
+                alert.show();
 
-                pay_attention.setTypeface(Font.getInstance(context).getMontserrat_800());
-                pay_attention_desc.setTypeface(Font.getInstance(context).getMontserrat_400());
-                cancel_txt.setTypeface(Font.getInstance(context).getMontserrat_600());
-                aply_txt.setTypeface(Font.getInstance(context).getMontserrat_600());
-
-                cancel_txt.setOnClickListener(view1 -> dialog.dismiss());
-
-                final Window window = dialog.getWindow();
-                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-                window.setGravity(Gravity.CENTER);
-                dialog.show();
             }
         });
 

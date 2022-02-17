@@ -17,6 +17,7 @@ import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
 
+import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Model.AllProfile.ImgProfile;
 import geek.space.tmmuse.Model.TestModelViewPager.TestModelViewPager;
 import geek.space.tmmuse.R;
@@ -48,8 +49,11 @@ public class TestAdapterViewPager extends RecyclerView.Adapter<TestAdapterViewPa
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.setIsRecyclable(false);
         ImgProfile imgProfile = imgProfiles.get(position);
+        if (imgProfile.getVR()){
+            holder.itemView.setVisibility(View.GONE);
+        }
         if(isFirst){
-            Glide.with(context).load(imgProfile.getLarge_image()).into(holder.product_img);
+            Glide.with(context).load(Constant.BASE_URL_IMAGE+imgProfile.getLarge_image()).into(holder.product_img);
             viewPager.setAdapter(new TestViewPagerAdapter(context, imgProfiles));
             isFirst=false;
         }
@@ -59,7 +63,7 @@ public class TestAdapterViewPager extends RecyclerView.Adapter<TestAdapterViewPa
                 viewPager.setCurrentItem(position);
             }
         });
-        Glide.with(context).load(imgProfile.getLarge_image()).into(holder.product_img);
+        Glide.with(context).load(Constant.BASE_URL_IMAGE+imgProfile.getLarge_image()).into(holder.product_img);
     }
 
     @Override

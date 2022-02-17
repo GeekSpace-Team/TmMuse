@@ -16,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -26,11 +27,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.LayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -43,10 +46,13 @@ import geek.space.tmmuse.API.ApiInterface;
 import geek.space.tmmuse.Activity.VrImage.VrImageActivity;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneData_adapter;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneTimeAdapter;
+import geek.space.tmmuse.Adapter.GalleryAdapter.GalleryAdapter;
 import geek.space.tmmuse.Adapter.ProfilePhoneAdapter.ProfilePhoneAdapter;
 import geek.space.tmmuse.Adapter.PromotionsPage.PromotionAndOffersAdapter;
 import geek.space.tmmuse.Adapter.TestAdapterViewPager.TestAdapterViewPager;
+import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Common.Font.Font;
+import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Model.AllProfile.AllProfile;
 import geek.space.tmmuse.Model.AllProfile.GetProfileTiny;
 import geek.space.tmmuse.Model.AllProfile.ImgProfile;
@@ -64,40 +70,50 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
     private BottomSheetBehavior bottomSheetBehavior;
     private View view;
-    float oldOffSet = 0f;
-    private boolean inRangeExpanding;
-    private boolean inRangeCollapsing;
     private RelativeLayout sliderContainer, view_bottom_rel;
     private ViewPager all_views_viewPager;
     private WormDotsIndicator dots_indicator;
     private TextView product_text_count_down, product_text_call, product_text_instagram,
             product_text_web, product_text_location, certificate_txt, promo_txt,
-            address_txt, address_desc_txt, Payment_desc_txt, clock_txt, clock_desc_txt,
-            deliver_desc_txt, cuisen_txt, average_check_txt, own_promotion_desc_txt, tm_muse_card_prod_txt,
-            ard_prod_desc_txt, gallery_txt, post_txt, name_profile_txt, product_text_count_up, payment_txt, promotion_txt,
-            deliver_txt, cuisine_desc_txt, average_check_desc_txt, tm_muse_card_prod_desc_txt;
-    private LinearLayout certificate_layout, promo_layout, images_layout, all_views_info_layout, call_layout_products, instagram_layout,
-            site_layout, location_layout;
+            address_txt, address_desc_txt, deliver_desc_txt, average_check_txt, own_promotion_desc_txt,
+            gallery_txt, post_txt, name_profile_txt, product_text_count_up, payment_txt,
+            deliver_txt, average_check_desc_txt, look_txt_counts, film_desc_txt, film_desc_all_desc_txt,
+            film_time_txt, payment_desc_txt, work_hours_txt, work_hours_desc_txt, cuisine_txt, cuisine_desc_txt,
+            own_promotion_txt, tm_muse_card_txt, tm_muse_card_desc_txt, wifi_txt, wifi_desc_txt;
+    private LinearLayout certificate_layout, promo_layout, images_layout,
+            call_layout_products, instagram_layout, fing_up_layout, fing_down_layout, brone_movie_layout,
+            site_layout, location_layout, film_desc_layout, film_time_layout, payment_layout, work_time_another_layout,
+            deliver_layout, cuisine_layout, average_check_layout, own_promotion_layout, tm_muse_card_layout, gallery_layout, wifi_layout;
     private View view_Stick;
+    private HorizontalScrollView img_horizontal_scroll;
     private ImageView onback_img, share_img;
-    private String profileId = "", imageUrl = "";
-    private ArrayList<PromotionAndOffers> promotionAndOffers = new ArrayList<>();
-    private PromotionAndOffersAdapter promotionAndOffersAdapter;
     private RecyclerView post_rec, movie_time_rec, images_profile_rec, gallery_rec;
     private ScrollView prom_scroll;
     private FrameLayout root_prom;
     private NestedScrollView bottomsheet;
-    private ArrayList<MovieTime> movieTimes = new ArrayList<>();
-    private String count_tickets;
-    private int string_to_int;
-    private ArrayList<TestModelViewPager> testModelViewPagers = new ArrayList<>();
-    private int dotsCount;
     private RoundedImageView vr_img;
-    private ArrayList<ProfilePhone> profilePhones = new ArrayList<>();
+
     private ApiInterface apiInterface;
-    private ArrayList<AllProfile> allProfiles = new ArrayList<>();
+
     private TestAdapterViewPager imagesAdapter;
+    private PromotionAndOffersAdapter promotionAndOffersAdapter;
+
     private ArrayList<ImgProfile> imgProfiles = new ArrayList<>();
+    private ArrayList<AllProfile> allProfiles = new ArrayList<>();
+    private ArrayList<ProfilePhone> profilePhones = new ArrayList<>();
+    private ArrayList<TestModelViewPager> testModelViewPagers = new ArrayList<>();
+    private ArrayList<MovieTime> movieTimes = new ArrayList<>();
+    private ArrayList<PromotionAndOffers> promotionAndOffers = new ArrayList<>();
+
+
+    private String profileId = "", imageUrl = "";
+    private String count_tickets;
+    private int dotsCount;
+    float oldOffSet = 0f;
+    private boolean inRangeExpanding;
+    private boolean inRangeCollapsing;
+    private int string_to_int;
+    private String largeVrImageUrl = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,9 +136,21 @@ public class AllProductViewsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetProfileTiny> call, Response<GetProfileTiny> response) {
                 if (response.isSuccessful() || response != null) {
-                    AllProfile profile = response.body().getBody().getProfiles();
-                    name_profile_txt.setText(profile.getNameTM());
-                    allProfileImageAdapter();
+                    AllProfile profile = response.body().getBody().getProfile();
+//                    if (profile == null) {
+//                        return;
+//                    }
+                    if (profile.getNameTM() != null || profile.getNameRU() != null) {
+                        name_profile_txt.setText(profile.getNameTM());
+                        if (Utils.getLanguage(AllProductViewsActivity.this).equals("ru")) {
+                            name_profile_txt.setText(profile.getNameRU());
+                        }
+                    }
+                    if (response.body().getBody().getImages() != null) {
+                        imgProfiles = response.body().getBody().getImages();
+                        allProfileImageAdapter();
+                    }
+
                     if (profile.getLike() != null && profile.getDislike() != null) {
                         product_text_count_up.setText(profile.getLike() + "");
                         product_text_count_down.setText(profile.getDislike() + "");
@@ -130,45 +158,116 @@ public class AllProductViewsActivity extends AppCompatActivity {
                     if (response.body().getBody().getPhone_numbers() != null) {
                         profilePhones = response.body().getBody().getPhone_numbers();
                     }
-                    if (response.body().getBody().getProfiles().getInstagram() != null) {
+                    if (response.body().getBody().getProfile().getInstagram() != null) {
                         if (profile.getInstagram().isEmpty()) {
                             instagram_layout.setVisibility(View.GONE);
                         }
                     }
-                    if (response.body().getBody().getProfiles().getSite() != null) {
+                    if (response.body().getBody().getProfile().getSite() != null) {
                         if (profile.getSite().isEmpty()) {
                             site_layout.setVisibility(View.GONE);
                         }
                     }
-                    if (response.body().getBody().getProfiles().getLocation() != null) {
+                    if (response.body().getBody().getProfile().getLocation() != null) {
                         if (profile.getLocation().isEmpty()) {
                             location_layout.setVisibility(View.GONE);
                         }
                     }
 
-                    if (response.body().getBody().getProfiles().getIs_certificate() != null) {
-                        if (profile.getLocation().isEmpty()) {
-                            certificate_layout.setVisibility(View.GONE);
-                        }
+                    if (response.body().getBody().getProfile().getIs_certificate() != null && profile.getIs_certificate()) {
+                        certificate_layout.setVisibility(View.VISIBLE);
+                    } else {
+                        certificate_layout.setVisibility(View.GONE);
                     }
-
-                    if (response.body().getBody().getProfiles().getIs_promo() != null) {
-                        if (profile.getLocation().isEmpty()) {
-                            promo_layout.setVisibility(View.GONE);
-                        }
+                    if (response.body().getBody().getProfile().getIs_promo() != null && profile.getIs_promo()) {
+                        promo_layout.setVisibility(View.VISIBLE);
+                    } else {
+                        promo_layout.setVisibility(View.GONE);
                     }
                     if (profile.getCategory_id() != null) {
-                        if (profile.getCategory_id() == 2) {
+                        if (profile.getCategory_id() == 2 || profile.getCategory_id() == 1) {
+                            brone_movie_layout.setVisibility(View.VISIBLE);
+                            film_desc_layout.setVisibility(View.VISIBLE);
+                            average_check_txt.setText(getResources().getString(R.string.price));
+                            String movieTime = "";
+                            if (profile.getSite() != null) {
+                                movieTime = profile.getSite();
+
+                            }
+                        } else {
+                            brone_movie_layout.setVisibility(View.GONE);
+                            film_desc_layout.setVisibility(View.GONE);
+                            average_check_txt.setText(getResources().getString(R.string.average_check));
                         }
                     }
 
+                    if (profile.getDelivery() != null && profile.getDelivery()) {
+                        deliver_layout.setVisibility(View.VISIBLE);
+                    } else {
+                        deliver_layout.setVisibility(View.GONE);
+                    }
+
+                    if (profile.getIs_terminal() != null && profile.getIs_terminal()) {
+                        payment_layout.setVisibility(View.VISIBLE);
+                    } else {
+                        payment_layout.setVisibility(View.GONE);
+                    }
+
+                    if (profile.getWork_hours() != null) {
+                        work_time_another_layout.setVisibility(View.VISIBLE);
+                        work_hours_desc_txt.setText(profile.getWork_hours());
+                        if (profile.getWork_hours().isEmpty()) {
+                            work_time_another_layout.setVisibility(View.GONE);
+                        }
+                    }
+
+                    if (profile.getCousineTM() != null && profile.getCousineRU() != null) {
+                        cuisine_layout.setVisibility(View.VISIBLE);
+                        cuisine_desc_txt.setText(profile.getCousineTM());
+                        if (Utils.getLanguage(AllProductViewsActivity.this).equals("ru")) {
+                            cuisine_desc_txt.setText(profile.getCousineRU());
+                        }
+                        if (profile.getCousineTM().isEmpty() && profile.getCousineRU().isEmpty()) {
+                            cuisine_layout.setVisibility(View.GONE);
+                        }
+                    }
+
+                    if (profile.getAverage_check() != null) {
+                        average_check_layout.setVisibility(View.VISIBLE);
+                        average_check_desc_txt.setText(profile.getAverage_check() + "TM");
+                        if (profile.getAverage_check().isEmpty()) {
+                            average_check_layout.setVisibility(View.GONE);
+                        }
+                    }
+
+                    if (profile.getIs_wifi() != null && profile.getIs_wifi()) {
+                        wifi_layout.setVisibility(View.VISIBLE);
+                    } else {
+                        wifi_layout.setVisibility(View.GONE);
+                    }
+
+                    if (response.body().getBody().getImages() != null) {
+                        galleryAdapter();
+                        for (ImgProfile img : response.body().getBody().getImages()) {
+                            if (img.getVR()) {
+                                Glide.with(AllProductViewsActivity.this)
+                                        .load(Constant.BASE_URL_IMAGE + img.getSmall_image())
+                                        .into(vr_img);
+                                largeVrImageUrl = Constant.BASE_URL_IMAGE + img.getLarge_image();
+                            }
+                        }
+                    }
+
+
                     setListener();
+                } else {
+                    Toast.makeText(AllProductViewsActivity.this, "Islanok bla", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<GetProfileTiny> call, Throwable t) {
-
+                Toast.makeText(AllProductViewsActivity.this, "KOtagma", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -263,15 +362,19 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
     private void setFont() {
         name_profile_txt.setTypeface(Font.getInstance(this).getMontserrat_800());
+        gallery_txt.setTypeface(Font.getInstance(this).getMontserrat_800());
+        post_txt.setTypeface(Font.getInstance(this).getMontserrat_800());
 
         address_txt.setTypeface(Font.getInstance(this).getMontserrat_700());
         payment_txt.setTypeface(Font.getInstance(this).getMontserrat_700());
-        clock_txt.setTypeface(Font.getInstance(this).getMontserrat_700());
         deliver_txt.setTypeface(Font.getInstance(this).getMontserrat_700());
-        cuisen_txt.setTypeface(Font.getInstance(this).getMontserrat_700());
         average_check_txt.setTypeface(Font.getInstance(this).getMontserrat_700());
-        promotion_txt.setTypeface(Font.getInstance(this).getMontserrat_700());
-        tm_muse_card_prod_txt.setTypeface(Font.getInstance(this).getMontserrat_700());
+        film_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_700());
+        film_time_txt.setTypeface(Font.getInstance(this).getMontserrat_700());
+        work_hours_txt.setTypeface(Font.getInstance(this).getMontserrat_700());
+        cuisine_txt.setTypeface(Font.getInstance(this).getMontserrat_700());
+        own_promotion_txt.setTypeface(Font.getInstance(this).getMontserrat_700());
+        wifi_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_700());
 
         product_text_count_up.setTypeface(Font.getInstance(this).getMontserrat_600());
         product_text_count_down.setTypeface(Font.getInstance(this).getMontserrat_600());
@@ -281,25 +384,31 @@ public class AllProductViewsActivity extends AppCompatActivity {
         product_text_location.setTypeface(Font.getInstance(this).getMontserrat_600());
         certificate_txt.setTypeface(Font.getInstance(this).getMontserrat_600());
         promo_txt.setTypeface(Font.getInstance(this).getMontserrat_600());
-        payment_txt.setTypeface(Font.getInstance(this).getMontserrat_600());
+
 
         address_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
-        Payment_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
-        clock_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
         deliver_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
         own_promotion_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
-        ard_prod_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
         gallery_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
-        post_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
-        cuisine_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
         average_check_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
-        tm_muse_card_prod_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
+
+        payment_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
+        film_desc_all_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
+        payment_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
+        work_hours_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
+        deliver_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
+        cuisine_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
+        own_promotion_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
+        wifi_desc_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
+
+
     }
 
     private void initViews() {
 
         view = findViewById(R.id.bottomsheet);
         sliderContainer = findViewById(R.id.sliderContainer);
+        wifi_layout = findViewById(R.id.wifi_layout);
         instagram_layout = findViewById(R.id.instagram_layout);
         site_layout = findViewById(R.id.site_layout);
         location_layout = findViewById(R.id.location_layout);
@@ -342,6 +451,34 @@ public class AllProductViewsActivity extends AppCompatActivity {
         images_profile_rec = findViewById(R.id.images_profile_rec);
         vr_img = findViewById(R.id.vr_img);
         gallery_rec = findViewById(R.id.gallery_rec);
+        look_txt_counts = findViewById(R.id.look_txt_counts);
+        film_desc_txt = findViewById(R.id.film_desc_txt);
+        film_desc_all_desc_txt = findViewById(R.id.film_desc_all_desc_txt);
+        film_time_txt = findViewById(R.id.film_time_txt);
+        payment_desc_txt = findViewById(R.id.payment_desc_txt);
+        work_hours_txt = findViewById(R.id.work_hours_txt);
+        work_hours_desc_txt = findViewById(R.id.work_hours_desc_txt);
+        cuisine_txt = findViewById(R.id.cuisine_txt);
+        cuisine_desc_txt = findViewById(R.id.cuisine_desc_txt);
+        own_promotion_txt = findViewById(R.id.own_promotion_txt);
+        tm_muse_card_txt = findViewById(R.id.tm_muse_card_txt);
+        tm_muse_card_desc_txt = findViewById(R.id.tm_muse_card_desc_txt);
+        fing_down_layout = findViewById(R.id.fing_down_layout);
+        brone_movie_layout = findViewById(R.id.brone_movie_layout);
+        site_layout = findViewById(R.id.site_layout);
+        location_layout = findViewById(R.id.location_layout);
+        film_desc_layout = findViewById(R.id.film_desc_layout);
+        film_time_layout = findViewById(R.id.film_time_layout);
+        payment_layout = findViewById(R.id.payment_layout);
+        work_time_another_layout = findViewById(R.id.work_time_another_layout);
+        deliver_layout = findViewById(R.id.deliver_layout);
+        cuisine_layout = findViewById(R.id.cuisine_layout);
+        average_check_layout = findViewById(R.id.average_check_layout);
+        own_promotion_layout = findViewById(R.id.own_promotion_layout);
+        tm_muse_card_layout = findViewById(R.id.tm_muse_card_layout);
+        gallery_layout = findViewById(R.id.gallery_layout);
+        wifi_txt = findViewById(R.id.wifi_txt);
+        wifi_desc_txt = findViewById(R.id.wifi_desc_txt);
     }
 
     private void setListener() {
@@ -443,9 +580,18 @@ public class AllProductViewsActivity extends AppCompatActivity {
         findViewById(R.id.image_relative).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), VrImageActivity.class));
+                if (!largeVrImageUrl.isEmpty()) {
+                    Intent intent = new Intent(getApplicationContext(), VrImageActivity.class);
+                    intent.putExtra("VR_IMG", largeVrImageUrl);
+                    startActivity(intent);
+                }
+
             }
         });
+
+        if (largeVrImageUrl.isEmpty()) {
+            findViewById(R.id.image_relative).setVisibility(View.GONE);
+        }
 
         certificate_layout.setOnClickListener(view -> {
             Context context = AllProductViewsActivity.this;
@@ -567,5 +713,11 @@ public class AllProductViewsActivity extends AppCompatActivity {
                 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         images_profile_rec.setLayoutManager(layoutManager);
         images_profile_rec.setAdapter(new TestAdapterViewPager(this, imgProfiles, all_views_viewPager, dots_indicator));
+    }
+
+    private void galleryAdapter() {
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+        gallery_rec.setLayoutManager(mLayoutManager);
+        gallery_rec.setAdapter(new GalleryAdapter(this, imgProfiles));
     }
 }

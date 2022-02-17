@@ -26,11 +26,11 @@ import geek.space.tmmuse.R;
 
 public class AllProdfileAdapters extends RecyclerView.Adapter<AllProdfileAdapters.ViewHolder> {
     private Context context;
-    private ArrayList<AllProfile> allProfiles = new ArrayList<>();
+    private ArrayList<AllProfile> profile = new ArrayList<>();
 
-    public AllProdfileAdapters(Context context, ArrayList<AllProfile> allProfiles) {
+    public AllProdfileAdapters(Context context, ArrayList<AllProfile> profile) {
         this.context = context;
-        this.allProfiles = allProfiles;
+        this.profile = profile;
     }
 
     @NonNull
@@ -42,7 +42,7 @@ public class AllProdfileAdapters extends RecyclerView.Adapter<AllProdfileAdapter
 
     @Override
     public void onBindViewHolder(@NonNull AllProdfileAdapters.ViewHolder holder, int position) {
-        AllProfile allProfile = allProfiles.get(position);
+        AllProfile allProfile = profile.get(position);
 
         holder.profile_adapter_name.setText(allProfile.getNameTM());
         holder.profile_adapter_desc.setText(allProfile.getShort_descTM());
@@ -57,7 +57,7 @@ public class AllProdfileAdapters extends RecyclerView.Adapter<AllProdfileAdapter
             ex.printStackTrace();
         }
 
-        if(allProfile.getIs_VIP()){
+        if(allProfile.getIs_VIP()!=null && allProfile.getIs_VIP()==1){
             holder.card_view_profile.setBackground(context.getResources().getDrawable(R.drawable.profile_rec_adapter_back));
         } else {
             holder.card_view_profile.setCardBackgroundColor(context.getResources().getColor(R.color.card_background));
@@ -75,7 +75,7 @@ public class AllProdfileAdapters extends RecyclerView.Adapter<AllProdfileAdapter
 
     @Override
     public int getItemCount() {
-        return allProfiles.size();
+        return profile.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

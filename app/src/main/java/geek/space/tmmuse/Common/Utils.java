@@ -111,11 +111,15 @@ public class Utils {
     }
 
     public static void restart(FragmentActivity activity, Context context) {
-        Intent i = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        i.addFlags(FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(i);
-        activity.finish();
+//        Intent i = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
+//        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        i.addFlags(FLAG_ACTIVITY_NEW_TASK);
+//        context.startActivity(i);
+//        activity.finish();
+        activity.recreate();
+        activity.getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
+        Main_Menu.isFirst=false;
+
     }
 
     public static void gotoProfiles(String categoryName, ArrayList<Integer> categoryId, FragmentManager fragmentManager) {

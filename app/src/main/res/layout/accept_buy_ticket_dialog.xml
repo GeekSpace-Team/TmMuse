@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/answer_buy_ticket"
+            android:text="@string/Answer_buy_ticket"
             android:textColor="@color/text_color"
             android:textSize="18sp" />
 

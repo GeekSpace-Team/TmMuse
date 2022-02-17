@@ -125,9 +125,15 @@ public class HomeFragment extends Fragment {
                         filmList = res.getBody().getNew_movies();
                         banners = res.getBody().getBanners();
                         promotionAndOffers = res.getBody().getPromotionAndOffers();
-                        setBanners();
-                        setFilm();
-                        setPromotionsAndOffersAdapter();
+                        if (res.getBody().getBanners() != null) {
+                            setBanners();
+                        }
+                        if (res.getBody().getNew_movies() != null) {
+                            setFilm();
+                        }
+                        if (res.getBody().getPromotionAndOffers() != null) {
+                            setPromotionsAndOffersAdapter();
+                        }
                     } else {
 
                         promotionAndOffers.addAll(res.getBody().getPromotionAndOffers());
@@ -301,10 +307,14 @@ public class HomeFragment extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                weather_tp.setText("0" + "°");
-                weather_desc.setText(getResources().getString(R.string.wait_to_weather));
-                weather_desc.setTextColor(Color.RED);
-                weather_tp.setTextColor(Color.RED);
+                try {
+                    weather_tp.setText("0" + "°");
+                    weather_desc.setText(getResources().getString(R.string.wait_to_weather));
+                    weather_desc.setTextColor(Color.RED);
+                    weather_tp.setTextColor(Color.RED);
+                } catch (Exception ex){
+                    ex.printStackTrace();
+                }
             }
         });
         stringRequest.setTag(TAG);

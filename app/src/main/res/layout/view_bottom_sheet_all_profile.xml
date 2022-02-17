@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
+                <!--Top buttons-->
                 <RelativeLayout
                     android:id="@+id/top_menu"
                     android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                         android:visibility="visible" />
                 </RelativeLayout>
 
-
+                <!--Name profile and views-->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -97,6 +97,8 @@
 
                 </RelativeLayout>
 
+
+                <!--images profile-->
                 <HorizontalScrollView
                     android:id="@+id/img_horizontal_scroll"
                     android:layout_width="match_parent"
@@ -168,6 +170,7 @@
                     android:padding="10dp">
 
                     <LinearLayout
+                        android:id="@+id/fing_up_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
@@ -198,6 +201,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/fing_down_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
@@ -357,17 +361,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="12dp">
 
                     <LinearLayout
+                        android:id="@+id/certificate_layout"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
+                        android:layout_weight="1"
                         android:background="@drawable/all_product_images_back"
                         android:gravity="center"
-                        android:id="@+id/certificate_layout"
-                        android:layout_weight="1"
                         android:visibility="gone">
 
                         <ImageView
@@ -378,49 +382,49 @@
                             android:tint="@color/text_color" />
 
                         <TextView
+                            android:id="@+id/certificate_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="14sp"
-                            android:text="@string/certificate"
                             android:layout_marginStart="5dp"
-                            android:id="@+id/certificate_txt"/>
+                            android:text="@string/certificate"
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/brone_movie_layout"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
+                        android:layout_weight="1"
                         android:background="@drawable/all_product_images_back"
                         android:gravity="center_vertical"
-                        android:id="@+id/brone_movie_layout"
-                        android:layout_weight="1"
                         android:visibility="gone">
 
                         <ImageView
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_gravity="center"
+                            android:layout_marginStart="15dp"
                             android:src="@drawable/ic_brone"
-                            android:tint="@color/text_color"
-                            android:layout_marginStart="15dp"/>
+                            android:tint="@color/text_color" />
 
                         <TextView
+                            android:id="@+id/bron_movie_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="14sp"
-                            android:text="@string/bron_movie"
                             android:layout_marginStart="5dp"
-                            android:id="@+id/bron_movie_txt"/>
+                            android:text="@string/bron_movie"
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/promo_layout"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
+                        android:layout_weight="1"
                         android:background="@drawable/all_product_images_back"
                         android:gravity="center"
-                        android:id="@+id/promo_layout"
-                        android:layout_weight="1"
                         android:visibility="gone">
 
                         <ImageView
@@ -431,18 +435,19 @@
                             android:tint="@color/text_color" />
 
                         <TextView
+                            android:id="@+id/promo_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="14sp"
-                            android:text="@string/promo_code"
                             android:layout_marginStart="5dp"
-                            android:id="@+id/promo_txt"/>
+                            android:text="@string/promo_code"
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <!--Film description-->
                 <LinearLayout
+                    android:id="@+id/film_desc_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -489,6 +494,7 @@
 
                 <!--Film time desc-->
                 <LinearLayout
+                    android:id="@+id/film_time_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -509,7 +515,7 @@
                             android:tint="@color/text_color" />
 
                         <TextView
-                            android:id="@+id/filim_time_txt"
+                            android:id="@+id/film_time_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -522,7 +528,7 @@
                     </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/moview_time"
+                        android:id="@+id/movie_time_rec"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:overScrollMode="never" />
@@ -576,6 +582,7 @@
 
                 <!--Payment layout-->
                 <LinearLayout
+                    android:id="@+id/payment_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -614,7 +621,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
-                        android:text="add desc"
+                        android:text="@string/terminal_have"
                         android:textColor="@color/text_color"
                         android:textSize="12sp" />
 
@@ -622,6 +629,7 @@
 
                 <!--Work Hours-->
                 <LinearLayout
+                    android:id="@+id/work_time_another_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -668,6 +676,7 @@
 
                 <!--Deliver-->
                 <LinearLayout
+                    android:id="@+id/deliver_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -706,7 +715,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
-                        android:text="add desc"
+                        android:text="@string/terminal_have"
                         android:textColor="@color/text_color"
                         android:textSize="12sp" />
 
@@ -714,6 +723,7 @@
 
                 <!--Cuisine-->
                 <LinearLayout
+                    android:id="@+id/cuisine_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -747,7 +757,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/cusine_desc_txt"
+                        android:id="@+id/cuisine_desc_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
@@ -760,6 +770,7 @@
 
                 <!--Average Check-->
                 <LinearLayout
+                    android:id="@+id/average_check_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -806,6 +817,7 @@
 
                 <!--Own Promotion-->
                 <LinearLayout
+                    android:id="@+id/own_promotion_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -850,8 +862,56 @@
 
                 </LinearLayout>
 
+                <!--Wifi Promotion-->
+                <LinearLayout
+                    android:id="@+id/wifi_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="15dp"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_wifi"
+                            android:tint="@color/text_color" />
+
+                        <TextView
+                            android:id="@+id/wifi_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:gravity="center"
+                            android:text="WIFI"
+                            android:textColor="@color/text_color"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/wifi_desc_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/terminal_have"
+                        android:textColor="@color/text_color"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
                 <!--Tm Muse Card-->
                 <LinearLayout
+                    android:id="@+id/tm_muse_card_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -898,6 +958,7 @@
 
                 <!--Gallery Layout-->
                 <LinearLayout
+                    android:id="@+id/gallery_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"

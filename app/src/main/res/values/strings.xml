@@ -117,19 +117,23 @@
     <string name="clear_history_all">Taryhy arassala</string>
     <string name="search_history">Gözleg taryhy</string>
     <string name="tm_muse_message">TM MUSE "\n" habary</string>
-    <string name="enter_informations">Enter informations:</string>
-    <string name="select_date_and_time">Select date and time:</string>
-    <string name="enter_count_off_tickets">Enter count off tickets:</string>
-    <string name="answer_buy_ticket">Do you want booking this movie?</string>
-    <string name="price">Price:</string>
-    <string name="buy_ticket_desc">You have to come to the cinema 30 minutes before the movie starts!</string>
-    <string name="no">No</string>
-    <string name="yes">Yes</string>
-    <string name="visit_page">Visit page</string>
-    <string name="enter_amount_of_certificate">Enter amount of certificate:</string>
-    <string name="your_promo_code">Your promo code:</string>
-    <string name="promo_code">Promo code</string>
-    <string name="select_phone_number">Select phone number</string>
+    <string name="enter_informations"> Maglumatlary giriziň: </string>
+    <string name="select_date_and_time"> Sene we wagty saýlaň: </string>
+    <string name="enter_count_off_ticket"> Hasaplaşyk peteklerini giriziň: </string>
+    <string name="Answer_buy_ticket"> Bu filmi bron etmek isleýärsiňizmi? </string>
+    <string name="price"> Bahasy: </string>
+    <string name="buy_ticket_desc"> Film başlamazdan 30 minut öň kinoteatra gelmeli! </string>
+    <string name="no"> ýok </string>
+    <string name="yes"> Hawa </string>
+    <string name="visit_page"> Sahypany görmek </string>
+    <string name="enter_amount_of_certificate"> Şahadatnamanyň mukdaryny giriziň: </string>
+    <string name="your_promo_code"> mahabat koduňyz: </string>
+    <string name="promo_code"> Promo kody </string>
+    <string name="select_phone_number"> Telefon belgisini saýlaň </string>
+    <string name="terminal_have"> bar </string>
+
+    <string name="access_get_card">Siziň bilen ýakyn wagtda habarlaşarys</string>
+    <string name="first_you_must_sign_up">First you must <font color='#CD2791'> <u><b>sign up</b></u></font> </string>
 
 
 </resources>

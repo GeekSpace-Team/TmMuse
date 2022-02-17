@@ -4,6 +4,8 @@ import geek.space.tmmuse.Model.AboutUs.Constant;
 import geek.space.tmmuse.Model.AllProfile.GetProfileTiny;
 import geek.space.tmmuse.Model.AllProfile.ResponseAllProfile;
 import geek.space.tmmuse.Model.AllProfile.GetProfile;
+import geek.space.tmmuse.Model.GetCard.PostGetCard;
+import geek.space.tmmuse.Model.GetCard.SendGetCard;
 import geek.space.tmmuse.Model.Home.Home;
 import geek.space.tmmuse.Model.Interest.GetInterest;
 import geek.space.tmmuse.Model.Interest.PostInterest;
@@ -44,6 +46,10 @@ public interface ApiInterface {
 
     @GET("get-profile-tiny?")
     Call<GetProfileTiny> get_profile_tiny(@Query("profile_id") String profile_id);
+
+    @POST("create-card-user")
+    Call<PostGetCard> create_card_user(@Body SendGetCard sendGetCard,
+                                       @Header("Authorization") String token);
 
 
 }

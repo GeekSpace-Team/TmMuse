@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -63,11 +64,12 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
     private TextView no_connection_txt;
     private ImageView reload_app_img;
     private RelativeLayout connection_is_not_ok_rel, connection_is_ok_rel;
-    private boolean isFirst = true;
+    public static boolean isFirst = true;
     private Dialog popup_in_start;
     private String testParisImg = "https://mayel.ru/wp-content/uploads/2017/06/paris-3296269_1920.jpg";
     private View view;
     private final int CLOSE_POPUP = 15000;
+    private Integer bottomNavIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -256,7 +258,7 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
     private void openFragment(int index) {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-
+        bottomNavIndex = index;
         switch (index) {
             case 0:
 
@@ -336,4 +338,33 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
         return getSharedPreferences("mysettings", MODE_PRIVATE).getString("My_Lang", "");
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("indexBottomNav", bottomNavIndex);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        try {
+            Integer indexBottomNav = savedInstanceState.getInt("indexBottomNav");
+            if (indexBottomNav != null) {
+                openFragment(indexBottomNav);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        firstFragment = new HomeFragment();
+        secondFragment = new CategoryFragment();
+        thirdFragment = new CardFragment();
+        fourthFragment = new MessageFragment();
+        fivesFragment = new SettingsFragment();
+    }
 }

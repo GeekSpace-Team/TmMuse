@@ -109,4 +109,20 @@
     <string name="clear_history_all">Отчистить историю</string>
     <string name="search_history">История поиска</string>
     <string name="tm_muse_message">TM MUSE "\n" сообщение</string>
+
+    <string name="enter_informations">Введите информацию:</string>
+    <string name="select_date_and_time">Выберите дату и время:</string>
+    <string name="enter_count_off_ticket">Введите билеты со скидкой:</string>
+    <string name="Answer_buy_ticket">Хотите заказать этот фильм?</string>
+    <string name="price">Цена:</string>
+    <string name="buy_ticket_desc">Вы должны прийти в кинотеатр за 30 минут до начала фильма!</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
+    <string name="visit_page">Посетить страницу</string>
+    <string name="enter_amount_of_certificate">Введите сумму сертификата:</string>
+    <string name="your_promo_code">Ваш промокод:</string>
+    <string name="promo_code">Промокод</string>
+    <string name="select_phone_number">Выберите номер телефона</string>
+    <string name="terminal_have">бар</string>
+    <string name = "access_get_card"> Мы свяжемся с Вами в ближайшее время </string>
 </resources>
