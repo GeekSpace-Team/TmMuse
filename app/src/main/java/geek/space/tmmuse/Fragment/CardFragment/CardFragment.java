@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import geek.space.tmmuse.Activity.GetCard.GetCardActivity;
+import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
 import geek.space.tmmuse.Activity.Sig_Up.Sig_Up_Activity;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
@@ -44,11 +46,7 @@ public class CardFragment extends Fragment {
         tm_muse_card_desc_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Utils.getSharePreferences(context, "token").equals("")) {
-                    startActivity(new Intent(context, Sig_Up_Activity.class).putExtra("type", "1"));
-                } else {
-                    startActivity(new Intent(context, GetCardActivity.class));
-                }
+                startActivity(new Intent(context, GetCardActivity.class));
             }
         });
     }

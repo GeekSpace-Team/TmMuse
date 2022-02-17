@@ -101,6 +101,9 @@ public class Interest_Activity extends AppCompatActivity {
 
 
     public void go_main_menu(View view) {
+        if(selectedInterests.size()<=0){
+            return;
+        }
         progressBar.setVisibility(View.VISIBLE);
         next_txt.setVisibility(View.GONE);
         String token="Bearer "+ Utils.getSharePreferences(this,"token");

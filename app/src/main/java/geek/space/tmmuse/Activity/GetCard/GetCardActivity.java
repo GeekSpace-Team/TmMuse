@@ -1,5 +1,6 @@
 package geek.space.tmmuse.Activity.GetCard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import geek.space.tmmuse.API.ApiClient;
 import geek.space.tmmuse.API.ApiInterface;
+import geek.space.tmmuse.Activity.Sig_Up.Sig_Up_Activity;
 import geek.space.tmmuse.Common.AppAlert;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
@@ -36,7 +38,7 @@ import soup.neumorphism.NeumorphCardView;
 public class GetCardActivity extends AppCompatActivity {
 
     private TextView help_txt, full_name_txt, number_txt, day_of_bth_txt, gender_txt,
-            email_txt,  day_birth_edit, number_edit, full_name_edit, reciv_about_card_txt;
+            email_txt,  day_birth_edit, number_edit, full_name_edit, reciv_about_card_txt, go_to_sig_up;
     private RadioGroup gender_group, sms_or_email_group;
     private RadioButton male_btn, female_btn, sms_btn,  email_btn;
     private EditText email_edit;
@@ -64,6 +66,14 @@ public class GetCardActivity extends AppCompatActivity {
 
 
     private void setListener() {
+
+        if (Utils.getSharePreferences(this, "token").equals("")){
+            findViewById(R.id.no_reg_layout).setVisibility(View.VISIBLE);
+            findViewById(R.id.if_token_have_scr).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.no_reg_layout).setVisibility(View.GONE);
+            findViewById(R.id.if_token_have_scr).setVisibility(View.VISIBLE);
+        }
 
         day_birth_edit.setInputType(InputType.TYPE_NULL);
         birth_card.setOnClickListener(view -> {
@@ -213,6 +223,13 @@ public class GetCardActivity extends AppCompatActivity {
 
         });
 
+        go_to_sig_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Sig_Up_Activity.class).putExtra("type", "1"));
+            }
+        });
+
 
     }
 
@@ -271,6 +288,7 @@ public class GetCardActivity extends AppCompatActivity {
         female_card = findViewById(R.id.female_card);
         sms_card = findViewById(R.id.sms_card);
         email_card = findViewById(R.id.email_card);
+        go_to_sig_up = findViewById(R.id.go_to_sig_up);
 
 
     }
@@ -283,5 +301,17 @@ public class GetCardActivity extends AppCompatActivity {
     // НАстройка языкого панеля
     public String getLang() {
         return getSharedPreferences("mysettings", MODE_PRIVATE).getString("My_Lang", "");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Utils.getSharePreferences(this, "token").equals("")){
+            findViewById(R.id.no_reg_layout).setVisibility(View.VISIBLE);
+            findViewById(R.id.if_token_have_scr).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.no_reg_layout).setVisibility(View.GONE);
+            findViewById(R.id.if_token_have_scr).setVisibility(View.VISIBLE);
+        }
     }
 }

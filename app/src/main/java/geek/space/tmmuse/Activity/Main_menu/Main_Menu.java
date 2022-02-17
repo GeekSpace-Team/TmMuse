@@ -231,7 +231,6 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
             firstFragment = new PromotionsOffersFragment();
             Utils.removeShow(new PromotionsOffersFragment(), PromotionsOffersFragment.class.getSimpleName(), getSupportFragmentManager(), R.id.menu_frame);
         }
-
     }
 
     @Override
