@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_prom"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -125,11 +126,12 @@
 
                                 <com.makeramen.roundedimageview.RoundedImageView
                                     android:id="@+id/vr_img"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_width="100dp"
+                                    android:layout_height="80dp"
                                     android:padding="2dp"
                                     android:scaleType="fitXY"
-                                    tools:ignore="TooDeepLayout" />
+                                    tools:ignore="TooDeepLayout"
+                                    app:riv_corner_radius="20dp"/>
 
                                 <TextView
                                     android:id="@+id/vr_image_txt"
@@ -397,7 +399,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:background="@drawable/all_product_images_back"
-                        android:gravity="center_vertical"
+                        android:gravity="center"
                         android:visibility="gone">
 
                         <ImageView

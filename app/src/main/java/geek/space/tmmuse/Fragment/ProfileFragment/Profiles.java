@@ -2,6 +2,7 @@ package geek.space.tmmuse.Fragment.ProfileFragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class Profiles extends Fragment {
     public static ArrayList<AllProfile> allProfiles = new ArrayList<>();
     private AllProdfileAdapters allProdfileAdapters;
     public static ArrayList<Integer> tags=new ArrayList<>();
-    public static Integer limit = 4;
+    public static Integer limit = 20;
     public static Integer page = 1;
     private static Profiles INSTANCE;
     private ProgressBar progress_bar;
@@ -122,9 +123,11 @@ public class Profiles extends Fragment {
         allProfileCall.enqueue(new Callback<ResponseAllProfile>() {
             @Override
             public void onResponse(Call<ResponseAllProfile> call, Response<ResponseAllProfile> response) {
-                if (response.isSuccessful() && response.body()!=null){
+                if (response.isSuccessful() && response.body().getBody()!=null){
                     ProfileFilterFragment.tags_btns.clear();
-                    ProfileFilterFragment.tags_btns=response.body().getBody().getTags();
+                    if(response.body().getBody().getTags()!=null)
+                        ProfileFilterFragment.tags_btns=response.body().getBody().getTags();
+
                     if(response.body().getBody()==null){
                         isLoading=false;
                         loadMore=false;
@@ -154,6 +157,7 @@ public class Profiles extends Fragment {
                 Toast.makeText(context, "Internedinizi barlan", Toast.LENGTH_SHORT).show();
                 isLoading=false;
                 progressBar.setVisibility(View.GONE);
+                Log.e("Error",t.getMessage());
             }
         });
     }

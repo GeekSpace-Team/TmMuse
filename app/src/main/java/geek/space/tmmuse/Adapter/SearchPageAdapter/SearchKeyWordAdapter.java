@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import geek.space.tmmuse.Common.Font.Font;
+import geek.space.tmmuse.Model.SearchHistory.SearchHistory;
 import geek.space.tmmuse.Model.SearchPage.SearchKeyWord;
 import geek.space.tmmuse.R;
 import geek.space.tmmuse.Service.SearchHistoryDB;
@@ -20,11 +21,11 @@ import soup.neumorphism.NeumorphButton;
 
 public class SearchKeyWordAdapter extends RecyclerView.Adapter<SearchKeyWordAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<SearchKeyWord> searchKeyWords;
+    private ArrayList<SearchHistory> searchKeyWords;
     private EditText editText;
     private NeumorphButton oldSearchKeyWordButton;
 
-    public SearchKeyWordAdapter(Context context, ArrayList<SearchKeyWord> searchKeyWords, EditText editText) {
+    public SearchKeyWordAdapter(Context context, ArrayList<SearchHistory> searchKeyWords, EditText editText) {
         this.context = context;
         this.searchKeyWords = searchKeyWords;
         this.editText = editText;
@@ -39,15 +40,15 @@ public class SearchKeyWordAdapter extends RecyclerView.Adapter<SearchKeyWordAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.search_key_word_btn.setText(searchKeyWords.get(position).getKey_word());
+        holder.search_key_word_btn.setText(searchKeyWords.get(position).getText());
         holder.search_key_word_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editText.setText(searchKeyWords.get(position).getKey_word());
+                editText.setText(searchKeyWords.get(position).getText());
                 holder.search_key_word_btn.setTextColor(context.getResources().getColor(R.color.aply_text_color));
                 holder.search_key_word_btn.setShapeType(1);
 
-                if(oldSearchKeyWordButton == null){
+                if(oldSearchKeyWordButton != null){
                     oldSearchKeyWordButton.setTextColor(context.getResources().getColor(R.color.tex_color_btn_search));
                     oldSearchKeyWordButton.setShapeType(0);
                 }

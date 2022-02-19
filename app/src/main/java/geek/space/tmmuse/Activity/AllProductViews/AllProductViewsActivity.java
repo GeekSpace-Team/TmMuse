@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,8 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.logging.Logger;
 
 import geek.space.tmmuse.API.ApiClient;
 import geek.space.tmmuse.API.ApiInterface;
@@ -135,7 +138,8 @@ public class AllProductViewsActivity extends AppCompatActivity {
         getProfileTinyCall.enqueue(new Callback<GetProfileTiny>() {
             @Override
             public void onResponse(Call<GetProfileTiny> call, Response<GetProfileTiny> response) {
-                if (response.isSuccessful() || response != null) {
+                if (response.isSuccessful() || response.body().getBody() != null) {
+                    Log.e("Log", response.body().toString());
                     AllProfile profile = response.body().getBody().getProfile();
 //                    if (profile == null) {
 //                        return;
@@ -147,6 +151,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
                         }
                     }
                     if (response.body().getBody().getImages() != null) {
+                        findViewById(R.id.img_horizontal_scroll).setVisibility(View.VISIBLE);
                         imgProfiles = response.body().getBody().getImages();
                         allProfileImageAdapter();
                     }
@@ -174,6 +179,13 @@ public class AllProductViewsActivity extends AppCompatActivity {
                         }
                     }
 
+                    if (profile.getDescriptionTM() != null) {
+                        film_desc_all_desc_txt.setText(profile.getDescriptionTM());
+                        if (Utils.getLanguage(AllProductViewsActivity.this).equals("ru")) {
+                            film_desc_all_desc_txt.setText(profile.getDescriptionRU());
+                        }
+                    }
+
                     if (response.body().getBody().getProfile().getIs_certificate() != null && profile.getIs_certificate()) {
                         certificate_layout.setVisibility(View.VISIBLE);
                     } else {
@@ -192,6 +204,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
                             String movieTime = "";
                             if (profile.getSite() != null) {
                                 movieTime = profile.getSite();
+                                splitTime(movieTime);
 
                             }
                         } else {
@@ -245,17 +258,24 @@ public class AllProductViewsActivity extends AppCompatActivity {
                     } else {
                         wifi_layout.setVisibility(View.GONE);
                     }
+                    if (profile.getAddress() != null) {
+                        address_desc_txt.setText(profile.getAddress());
+                    }
 
                     if (response.body().getBody().getImages() != null) {
                         galleryAdapter();
                         for (ImgProfile img : response.body().getBody().getImages()) {
                             if (img.getVR()) {
                                 Glide.with(AllProductViewsActivity.this)
-                                        .load(Constant.BASE_URL_IMAGE + img.getSmall_image())
+                                        .load(Constant.BASE_URL_IMAGE + img.getLarge_image())
                                         .into(vr_img);
                                 largeVrImageUrl = Constant.BASE_URL_IMAGE + img.getLarge_image();
                             }
                         }
+                    }
+
+                    if (response.body().getBody().getPosts() != null) {
+                        postAdapter();
                     }
 
 
@@ -268,8 +288,41 @@ public class AllProductViewsActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<GetProfileTiny> call, Throwable t) {
                 Toast.makeText(AllProductViewsActivity.this, "KOtagma", Toast.LENGTH_SHORT).show();
+                Log.e("Error", t.getMessage().toString());
             }
         });
+    }
+
+    private void splitTime(String movieTime) {
+        String[] times=movieTime.split("\\*");
+        for(String time:times){
+            String[] dateTime=time.split("\\(");
+            for(int l=0;l<dateTime.length;l++){
+                if(l%2==0){
+                    String[] myDate=dateTime[l].split("-");
+                    for(String md:myDate){
+                        String[] myTimes=dateTime[l+1].replace(")","").split(",");
+                        ArrayList<String> mt=new ArrayList<>();
+                        mt.addAll(Arrays.asList(myTimes));
+                        movieTimes.add(new MovieTime(md,mt));
+                    }
+                }
+
+            }
+        }
+
+
+        for(MovieTime md:movieTimes){
+            System.out.println(md.getDate());
+            for (String mt:md.getTimes()){
+                System.out.println("Times: "+mt);
+            }
+        }
+
+
+
+
+
     }
 
     public void showCustomDialog() {
@@ -321,7 +374,6 @@ public class AllProductViewsActivity extends AppCompatActivity {
         brone_time_rec.setAdapter(new BroneTimeAdapter(this, movieTimes.get(0).getTimes()));
         brone_date_rec.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         brone_time_rec.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-
 
         final Window window = dialog.getWindow();
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
@@ -710,7 +762,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
     private void allProfileImageAdapter() {
         LinearLayoutManager layoutManager
-                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         images_profile_rec.setLayoutManager(layoutManager);
         images_profile_rec.setAdapter(new TestAdapterViewPager(this, imgProfiles, all_views_viewPager, dots_indicator));
     }
@@ -719,5 +771,11 @@ public class AllProductViewsActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         gallery_rec.setLayoutManager(mLayoutManager);
         gallery_rec.setAdapter(new GalleryAdapter(this, imgProfiles));
+    }
+
+    private void postAdapter() {
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+        post_rec.setLayoutManager(mLayoutManager);
+        post_rec.setAdapter(new PromotionAndOffersAdapter(this, promotionAndOffers));
     }
 }

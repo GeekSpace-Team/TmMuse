@@ -46,18 +46,18 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         SearchHistory searchHistory = searchHistories.get(holder.getAbsoluteAdapterPosition());
 
-        holder.search_history_txt.setText(searchHistory.getSearch_history_txt());
+        holder.search_history_txt.setText(searchHistory.getText());
         holder.search_history_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editText.setText(searchHistory.getSearch_history_txt());
+                editText.setText(searchHistory.getText());
                 string = editText.getText().toString();
             }
         });
         holder.delete_search_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int result = searchHistoryDB.deleteData(searchHistory.getSearch_history_txt());
+                int result = searchHistoryDB.deleteData(searchHistory.getText());
                 if (result > 0) {
                     searchHistories.remove(holder.getAbsoluteAdapterPosition());
                     notifyItemRemoved(holder.getAbsoluteAdapterPosition());

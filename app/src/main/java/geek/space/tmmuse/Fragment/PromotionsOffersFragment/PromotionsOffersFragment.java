@@ -123,13 +123,17 @@ public class PromotionsOffersFragment extends Fragment {
         call.enqueue(new Callback<Home>() {
             @Override
             public void onResponse(Call<Home> call, retrofit2.Response<Home> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && response.body()!=null) {
                     Home res=response.body();
                     if(page==1) {
-                        promotionAndOffers = res.getBody().getPromotionAndOffers();
-                        setPromotionsAndOffersAdapter();
+                        if(res.getBody().getPromotionAndOffers()!=null) {
+                            promotionAndOffers = res.getBody().getPromotionAndOffers();
+                            setPromotionsAndOffersAdapter();
+                        }
                     } else{
-                        promotionAndOffers.addAll(res.getBody().getPromotionAndOffers());
+                        if(res.getBody().getPromotionAndOffers()!=null) {
+                            promotionAndOffers.addAll(res.getBody().getPromotionAndOffers());
+                        }
                     }
                 } else {
                     Log.e("Code",response.code()+"");

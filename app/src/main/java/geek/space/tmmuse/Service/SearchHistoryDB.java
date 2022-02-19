@@ -38,13 +38,13 @@ public class SearchHistoryDB extends SQLiteOpenHelper {
     }
 
     public boolean insertData(SearchHistory searchHistory) {
-        Cursor select=getSelect(searchHistory.getSearch_history_txt());
+        Cursor select=getSelect(searchHistory.getText());
         if(select.getCount()>0){
             return true;
         }
         db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("searchHistory", searchHistory.getSearch_history_txt());
+        values.put("searchHistory", searchHistory.getText());
         db.insert(TBNAME, null, values);
         db.close();
          return true;
@@ -52,7 +52,7 @@ public class SearchHistoryDB extends SQLiteOpenHelper {
 
     public Cursor getAll() {
         db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TBNAME, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TBNAME +" ORDER BY id DESC LIMIT 5", null);
         return cursor;
     }
 

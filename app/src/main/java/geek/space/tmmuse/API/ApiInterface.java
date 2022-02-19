@@ -4,11 +4,16 @@ import geek.space.tmmuse.Model.AboutUs.Constant;
 import geek.space.tmmuse.Model.AllProfile.GetProfileTiny;
 import geek.space.tmmuse.Model.AllProfile.ResponseAllProfile;
 import geek.space.tmmuse.Model.AllProfile.GetProfile;
+import geek.space.tmmuse.Model.GetCard.GetCardBody;
+import geek.space.tmmuse.Model.GetCard.GetCardResponse;
 import geek.space.tmmuse.Model.GetCard.PostGetCard;
 import geek.space.tmmuse.Model.GetCard.SendGetCard;
 import geek.space.tmmuse.Model.Home.Home;
 import geek.space.tmmuse.Model.Interest.GetInterest;
 import geek.space.tmmuse.Model.Interest.PostInterest;
+import geek.space.tmmuse.Model.SearchHistory.GetSearchHistory;
+import geek.space.tmmuse.Model.SearchHistory.SearchHistory;
+import geek.space.tmmuse.Model.SearchPage.PostSearchProfile;
 import geek.space.tmmuse.Model.UserRegister.CheckUserCode;
 import geek.space.tmmuse.Model.UserRegister.ResponseCheckUser;
 import geek.space.tmmuse.Model.UserRegister.UserGetRegister;
@@ -51,5 +56,14 @@ public interface ApiInterface {
     Call<PostGetCard> create_card_user(@Body SendGetCard sendGetCard,
                                        @Header("Authorization") String token);
 
+    @GET("/get-card-promotion?")
+    Call<GetCardResponse> get_card_promotion(@Query("limit") Integer limit,
+                                             @Query("page") Integer page);
+
+    @GET("/get-search-history")
+    Call<GetSearchHistory> get_search_history();
+
+    @POST("/search-profile")
+    Call<PostSearchProfile> search_profile(@Body SearchHistory body);
 
 }

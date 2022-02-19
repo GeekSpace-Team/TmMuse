@@ -1,17 +1,37 @@
 package geek.space.tmmuse.Model.SearchHistory;
 
 public class SearchHistory {
-    private String search_history_txt;
+    private Integer page;
+    private Integer limit;
+    private String text;
 
-    public SearchHistory(String search_history_txt) {
-        this.search_history_txt = search_history_txt;
+    public SearchHistory(Integer page, Integer limit, String text) {
+        this.page = page;
+        this.limit = limit;
+        this.text = text;
     }
 
-    public String getSearch_history_txt() {
-        return search_history_txt;
+    public Integer getPage() {
+        return page;
     }
 
-    public void setSearch_history_txt(String search_history_txt) {
-        this.search_history_txt = search_history_txt;
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }

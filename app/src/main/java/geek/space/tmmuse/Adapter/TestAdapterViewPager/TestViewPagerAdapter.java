@@ -19,6 +19,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 
+import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Model.AllProfile.ImgProfile;
 import geek.space.tmmuse.Model.TestModelViewPager.TestModelViewPager;
@@ -51,7 +52,7 @@ public class TestViewPagerAdapter extends PagerAdapter {
         final RoundedImageView imageView = (RoundedImageView) view
                 .findViewById(R.id.iv_carousel_image);
         Glide.with(context)
-                .load(imgProfile.getLarge_image())
+                .load(Constant.BASE_URL_IMAGE + imgProfile.getLarge_image())
                 .into(imageView);
 
         container.addView(view, 0);
@@ -61,7 +62,7 @@ public class TestViewPagerAdapter extends PagerAdapter {
             public void onClick(View view) {
                 ArrayList<String> imgs=new ArrayList<>();
                 for(ImgProfile m:imgProfiles){
-                    imgs.add(m.getLarge_image());
+                    imgs.add(Constant.BASE_URL_IMAGE+m.getLarge_image());
                 }
                 Utils.showImageViewer(context, imgs, imgs);
             }

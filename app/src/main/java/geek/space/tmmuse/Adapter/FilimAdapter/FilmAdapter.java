@@ -57,7 +57,7 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, AllProductViewsActivity.class);
-                intent.putExtra("id", film.getId()+"");
+                intent.putExtra("ID", film.getId()+"");
                 intent.putExtra("image",Constant.BASE_URL+film.getSmall_image());
                 context.startActivity(intent);
             }

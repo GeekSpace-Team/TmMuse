@@ -5,43 +5,64 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
+import geek.space.tmmuse.API.ApiClient;
+import geek.space.tmmuse.API.ApiInterface;
+import geek.space.tmmuse.Adapter.AllProdileAdapters.AllProdfileAdapters;
 import geek.space.tmmuse.Adapter.SearchHistoryAdapter.SearchHistoryAdapter;
 import geek.space.tmmuse.Adapter.SearchPageAdapter.SearchKeyWordAdapter;
 import geek.space.tmmuse.Adapter.SearchPageAdapter.SearchPageAdapter;
 import geek.space.tmmuse.Common.Font.Font;
+import geek.space.tmmuse.Model.AllProfile.AllProfile;
+import geek.space.tmmuse.Model.SearchHistory.GetSearchHistory;
 import geek.space.tmmuse.Model.SearchHistory.SearchHistory;
-import geek.space.tmmuse.Model.SearchPage.SearchKeyWord;
+import geek.space.tmmuse.Model.SearchPage.PostSearchProfile;
 import geek.space.tmmuse.Model.SearchPage.SearchPage;
 import geek.space.tmmuse.R;
 import geek.space.tmmuse.Service.SearchHistoryDB;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SearchActivity extends AppCompatActivity {
     private EditText full_name_edit;
     private TextView top_key_word_txt, search_result_txt, search_history_txt, delete_all_search_txt;
-    private ImageView clear_search_img,search_img;
+    private ImageView clear_search_img, search_img;
     private RecyclerView search_rec, top_key_words_rec, search_history_rec;
     private SearchPageAdapter searchPageAdapter;
     private SearchKeyWordAdapter searchKeyWordAdapter;
     private ArrayList<SearchPage> searchPages = new ArrayList<>();
-    private ArrayList<SearchKeyWord> searchKeyWords = new ArrayList<>();
+    private ArrayList<SearchHistory> searchKeyWords = new ArrayList<>();
     private ArrayList<SearchHistory> searchHistories = new ArrayList<>();
     private SearchHistoryAdapter searchHistoryAdapter;
     private LinearLayout search_history_layout, search_result_layout;
     private SearchHistoryDB searchHistoryDB;
     private LinearLayout delete_all_search_layout;
+    private ApiInterface apiInterface;
+    public static Integer limit = 4;
+    public static Integer page = 1;
+    public static ArrayList<AllProfile> allProfiles = new ArrayList<>();
+    private LinearLayout error_search_layout;
+    private ProgressBar search_progress;
+    private boolean isLoading=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +73,10 @@ public class SearchActivity extends AppCompatActivity {
         setFont();
         getLang();
         setSearchList();
-        setSearchAdapter();
+
         setSearchResultAdapter();
         setSearchListHistory();
+        setSearchResultList(page);
 
     }
 
@@ -64,7 +86,7 @@ public class SearchActivity extends AppCompatActivity {
         if (cursor.getCount() == 0) {
         } else {
             while (cursor.moveToNext()) {
-                searchHistories.add(new SearchHistory(cursor.getString(1)));
+                searchHistories.add(new SearchHistory(1, 1, cursor.getString(1)));
             }
             searchHistoryAdapter = new SearchHistoryAdapter(this, searchHistories, full_name_edit);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -75,28 +97,47 @@ public class SearchActivity extends AppCompatActivity {
 
 
     private void setSearchResultAdapter() {
-        LinearLayoutManager layoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        search_rec.setLayoutManager(layoutManager2);
-        searchPageAdapter = new SearchPageAdapter(this, searchPages);
-        search_rec.setAdapter(searchPageAdapter);
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        search_rec.setLayoutManager(layoutManager);
+        AllProdfileAdapters allProdfileAdapters = new AllProdfileAdapters(this, allProfiles);
+        search_rec.setAdapter(allProdfileAdapters);
     }
 
-    private void setSearchResultList(String query) {
-        searchPages.clear();
-        searchPages.add(new SearchPage(1, "Zenan", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "", "", ""));
-        searchPages.add(new SearchPage(2, "Zenan1", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "", "", ""));
-        searchPages.add(new SearchPage(3, "Zenan2", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "", "", ""));
-        searchPages.add(new SearchPage(4, "Zenan3", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "", "", ""));
-        searchPages.add(new SearchPage(5, "Zenan4", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "", "", ""));
-        searchPages.add(new SearchPage(6, "Zenan5", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "", "", ""));
-        searchPages.add(new SearchPage(7, "Zenan6", "https://ae04.alicdn.com/kf/H150cb94b559c4b53a24f4405e2b9ff12I/SMTHMA-2021-New-Autumn-And-Winter-Turtleneck-Sweater-Dress-Women-s-Lantern-Sleeve-Warm-Knitted-Long.jpg_220x220xzq55.jpg",
-                "", "", ""));
+    private void setSearchResultList(int i) {
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        isLoading=true;
+        search_progress.setVisibility(View.VISIBLE);
+        Call<GetSearchHistory> getSearchHistoryCall = apiInterface.get_search_history();
+        getSearchHistoryCall.enqueue(new Callback<GetSearchHistory>() {
+            @Override
+            public void onResponse(Call<GetSearchHistory> call, Response<GetSearchHistory> response) {
+                if (response.body().getBody() != null) {
+                    searchKeyWords = response.body().getBody();
+                    search_rec.setVisibility(View.VISIBLE);
+                    error_search_layout.setVisibility(View.GONE);
+                    top_key_words_rec.setVisibility(View.VISIBLE);
+                    search_result_layout.setVisibility(View.VISIBLE);
+                    search_history_layout.setVisibility(View.GONE);
+                    search_progress.setVisibility(View.GONE);
+                    isLoading=false;
+                    setSearchAdapter();
+                } else {
+                    search_rec.setVisibility(View.GONE);
+                    error_search_layout.setVisibility(View.VISIBLE);
+                    top_key_words_rec.setVisibility(View.VISIBLE);
+                    search_result_layout.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetSearchHistory> call, Throwable t) {
+                search_result_layout.setVisibility(View.GONE);
+                search_history_layout.setVisibility(View.VISIBLE);
+                search_progress.setVisibility(View.GONE);
+                isLoading=false;
+            }
+        });
 
     }
 
@@ -118,12 +159,6 @@ public class SearchActivity extends AppCompatActivity {
 
     private void setSearchList() {
         searchKeyWords.clear();
-        searchKeyWords.add(new SearchKeyWord(1, "Woman"));
-        searchKeyWords.add(new SearchKeyWord(2, "Man"));
-        searchKeyWords.add(new SearchKeyWord(3, "Child"));
-        searchKeyWords.add(new SearchKeyWord(4, "Sport"));
-        searchKeyWords.add(new SearchKeyWord(5, "Kaffe"));
-        searchKeyWords.add(new SearchKeyWord(6, "Restourants"));
         Log.e("1. ", searchKeyWords + "");
     }
 
@@ -132,33 +167,7 @@ public class SearchActivity extends AppCompatActivity {
         search_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchPages.clear();
-                setSearchResultList(full_name_edit.getText().toString());
-                SearchHistory result = new SearchHistory( full_name_edit.getText().toString());
-                if (searchHistoryDB.insertData(result)) {
-                } else {
-                }
-            }
-        });
-        full_name_edit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                clear_search_img.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                clear_search_img.setVisibility(View.VISIBLE);
-                clear_search_img.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        full_name_edit.getText().clear();
-                    }
-                });
+                getSearch(full_name_edit.getText().toString());
             }
         });
         delete_all_search_layout.setOnClickListener(new View.OnClickListener() {
@@ -171,10 +180,102 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        full_name_edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    getSearch(full_name_edit.getText().toString());
+                    return true;
+                }
+                return false;
+            }
+        });
+        full_name_edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                search_history_layout.setVisibility(View.VISIBLE);
+                search_result_layout.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                clear_search_img.setVisibility(View.VISIBLE);
+                clear_search_img.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        full_name_edit.setText("");
+                    }
+                });
+            }
+        });
+
+        search_history_rec.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!recyclerView.canScrollVertically(1)){
+                    if (!isLoading){
+                        loadMore();
+                    }
+                }
+            }
+        });
+
+    }
+
+    private void getSearch(String toString) {
+        if (toString.trim().isEmpty()) {
+            return;
+        }
+        if (page == 1) {
+            allProfiles.clear();
+        }
+        saveSearchHistory();
+
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        SearchHistory query = new SearchHistory(page, limit, toString.toLowerCase());
+        Call<PostSearchProfile> call = apiInterface.search_profile(query);
+        call.enqueue(new Callback<PostSearchProfile>() {
+            @Override
+            public void onResponse(Call<PostSearchProfile> call, Response<PostSearchProfile> response) {
+                if (response.isSuccessful()) {
+                    Log.e("Res", new Gson().toJson(response.body()));
+                    if (response.body().getBody() != null) {
+                        allProfiles.addAll(response.body().getBody());
+                        if (page == 1)
+                            setSearchResultAdapter();
+                        else
+                            search_rec.getAdapter().notifyDataSetChanged();
+
+                        search_result_layout.setVisibility(View.VISIBLE);
+                        error_search_layout.setVisibility(View.GONE);
+                    } else {
+                        search_result_layout.setVisibility(View.GONE);
+                        error_search_layout.setVisibility(View.VISIBLE);
+                    }
+
+                } else {
+                    Toast.makeText(SearchActivity.this, "" + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PostSearchProfile> call, Throwable t) {
+                Log.e("Search error", t.getMessage());
+                Toast.makeText(SearchActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initViews() {
         full_name_edit = findViewById(R.id.full_name_edit);
+        search_progress = findViewById(R.id.search_progress);
         clear_search_img = findViewById(R.id.clear_search_img);
         search_rec = findViewById(R.id.search_rec);
         top_key_words_rec = findViewById(R.id.top_key_words_rec);
@@ -186,6 +287,7 @@ public class SearchActivity extends AppCompatActivity {
         search_history_txt = findViewById(R.id.search_history_txt);
         delete_all_search_layout = findViewById(R.id.delete_all_search_layout);
         delete_all_search_txt = findViewById(R.id.delete_all_search_txt);
+        error_search_layout = findViewById(R.id.error_search_layout);
         search_img = findViewById(R.id.search_img);
         searchHistoryDB = new SearchHistoryDB(this);
     }
@@ -193,5 +295,21 @@ public class SearchActivity extends AppCompatActivity {
     // НАстройка языкого панеля
     public String getLang() {
         return getSharedPreferences("mysettings", MODE_PRIVATE).getString("My_Lang", "");
+    }
+
+    public void saveSearchHistory() {
+        searchPages.clear();
+        setSearchResultList(page);
+        SearchHistory result = new SearchHistory(1, 1, full_name_edit.getText().toString());
+        if (searchHistoryDB.insertData(result)) {
+        } else {
+        }
+
+    }
+
+
+    private void loadMore() {
+        page++;
+        setSearchResultList(page);
     }
 }

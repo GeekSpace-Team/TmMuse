@@ -1,6 +1,7 @@
 package geek.space.tmmuse.Fragment.HomeFragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -42,6 +43,7 @@ import java.util.TimerTask;
 import geek.space.tmmuse.API.ApiClient;
 import geek.space.tmmuse.API.ApiInterface;
 import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
+import geek.space.tmmuse.Activity.SearchActivity.SearchActivity;
 import geek.space.tmmuse.Adapter.Banner.ImgCaruselAdapter;
 import geek.space.tmmuse.Adapter.FilimAdapter.FilmAdapter;
 import geek.space.tmmuse.Adapter.PromotionsPage.PromotionAndOffersAdapter;
@@ -53,6 +55,7 @@ import geek.space.tmmuse.Model.Banner.Banner;
 import geek.space.tmmuse.Model.Film.Film;
 import geek.space.tmmuse.Model.Home.Home;
 import geek.space.tmmuse.Model.PromotionAndOffers.PromotionAndOffers;
+import geek.space.tmmuse.Model.SearchHistory.SearchHistory;
 import geek.space.tmmuse.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -208,6 +211,12 @@ public class HomeFragment extends Fragment {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 Main_Menu.firstFragment = promotionsOffersFragment;
                 Utils.hideAdd(promotionsOffersFragment, promotionsOffersFragment.getClass().getSimpleName(), fragmentManager, R.id.menu_frame);
+            }
+        });
+        search_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, SearchActivity.class));
             }
         });
 

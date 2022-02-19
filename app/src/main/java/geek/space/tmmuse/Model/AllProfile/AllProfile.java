@@ -16,9 +16,9 @@ public class AllProfile {
     private Integer status;
     private Integer is_VIP;
     private ImgProfile image;
-    private ArrayList<NumbersProfile> phone_numbers = new ArrayList<>();
+    private ArrayList<NumbersProfile> phone_numbers;
     private Boolean is_promotion;
-    private Integer promotion_status;
+    private String promotion_status;
     private String location;
     private String address;
     private String work_hours;
@@ -41,16 +41,7 @@ public class AllProfile {
     private Boolean is_terminal;
     private Boolean is_wifi;
 
-    public AllProfile(Integer id, String nameTM, String nameRU, String short_descTM, String short_descRU,
-                      Integer like, Integer dislike, String instagram, String site, Integer status,
-                      Integer is_VIP, ImgProfile image, ArrayList<NumbersProfile> phone_numbers,
-                      Boolean is_promotion, Integer promotion_status, String location, String address,
-                      String work_hours, Boolean delivery, String cousineTM, String cousineRU,
-                      String average_check, Boolean is_active_card, Integer tm_muse_card,
-                      Boolean is_certificate, Boolean is_promo, Integer category_id,
-                      Integer view_count, Integer promo_count, String descriptionTM,
-                      String descriptionRU, Integer order_in_list, String free_time,
-                      Boolean is_cash, Boolean is_terminal, Boolean is_wifi) {
+    public AllProfile(Integer id, String nameTM, String nameRU, String short_descTM, String short_descRU, Integer like, Integer dislike, String instagram, String site, Integer status, Integer is_VIP, ImgProfile image, ArrayList<NumbersProfile> phone_numbers, Boolean is_promotion, String promotion_status, String location, String address, String work_hours, Boolean delivery, String cousineTM, String cousineRU, String average_check, Boolean is_active_card, Integer tm_muse_card, Boolean is_certificate, Boolean is_promo, Integer category_id, Integer view_count, Integer promo_count, String descriptionTM, String descriptionRU, Integer order_in_list, String free_time, Boolean is_cash, Boolean is_terminal, Boolean is_wifi) {
         this.id = id;
         this.nameTM = nameTM;
         this.nameRU = nameRU;
@@ -201,11 +192,11 @@ public class AllProfile {
         this.is_promotion = is_promotion;
     }
 
-    public Integer getPromotion_status() {
+    public String getPromotion_status() {
         return promotion_status;
     }
 
-    public void setPromotion_status(Integer promotion_status) {
+    public void setPromotion_status(String promotion_status) {
         this.promotion_status = promotion_status;
     }
 

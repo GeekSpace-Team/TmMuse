@@ -226,10 +226,10 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
             Utils.removeShow(new SettingsFragment(), SettingsFragment.class.getSimpleName(), getSupportFragmentManager(), R.id.menu_frame);
         }
 
-        HomeFragment homeFragment1 = (HomeFragment) getSupportFragmentManager().findFragmentByTag(HomeFragment.class.getSimpleName());
-        if (homeFragment1 != null && homeFragment1.isVisible()) {
-            firstFragment = new PromotionsOffersFragment();
-            Utils.removeShow(new PromotionsOffersFragment(), PromotionsOffersFragment.class.getSimpleName(), getSupportFragmentManager(), R.id.menu_frame);
+        PromotionsOffersFragment promotionsOffersFragment = (PromotionsOffersFragment) getSupportFragmentManager().findFragmentByTag(PromotionsOffersFragment.class.getSimpleName());
+        if (promotionsOffersFragment != null && promotionsOffersFragment.isVisible()) {
+            firstFragment = new HomeFragment();
+            Utils.removeShow(new HomeFragment(), HomeFragment.class.getSimpleName(), getSupportFragmentManager(), R.id.menu_frame);
         }
     }
 
