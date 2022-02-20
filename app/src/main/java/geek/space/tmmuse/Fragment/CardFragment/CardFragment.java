@@ -7,20 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.util.ArrayList;
 
 import geek.space.tmmuse.API.ApiClient;
 import geek.space.tmmuse.API.ApiInterface;
 import geek.space.tmmuse.Activity.GetCard.GetCardActivity;
-import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
-import geek.space.tmmuse.Activity.Sig_Up.Sig_Up_Activity;
 import geek.space.tmmuse.Adapter.TmMuseCard.TmMuseCardAdapter;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
@@ -69,24 +67,34 @@ public class CardFragment extends Fragment {
     }
 
     private void setGetTmMuseCards() {
+        KProgressHUD progress = Utils.AppProgressBar(context);
+        progress.setLabel(context.getResources().getString(R.string.wait));
+        progress.show();
         apiInterface = ApiClient.getClient()
                 .create(ApiInterface.class);
         Call<GetCardResponse> getCardResponseCall = apiInterface.get_card_promotion(limit, page);
         getCardResponseCall.enqueue(new Callback<GetCardResponse>() {
             @Override
             public void onResponse(Call<GetCardResponse> call, Response<GetCardResponse> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     getCardBodies = response.body().getBody();
                     setTmMuseCardAdapter();
                 } else {
-                    Toast.makeText(context, "Pizdec", Toast.LENGTH_SHORT).show();
+                    Utils.showCustomToast(context.getResources().getString(R.string.check_internet),
+                            R.drawable.ic_wifi_no_connection,
+                            context,
+                            R.color.no_internet_back);
                 }
+                progress.dismiss();
             }
 
             @Override
             public void onFailure(Call<GetCardResponse> call, Throwable t) {
-                Toast.makeText(context, "Islanok", Toast.LENGTH_SHORT).show();
-
+                Utils.showCustomToast(context.getResources().getString(R.string.check_internet),
+                        R.drawable.ic_wifi_no_connection,
+                        context,
+                        R.color.no_internet_back);
+                progress.dismiss();
             }
         });
     }

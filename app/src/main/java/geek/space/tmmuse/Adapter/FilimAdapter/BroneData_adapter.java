@@ -38,7 +38,7 @@ public class BroneData_adapter extends RecyclerView.Adapter<BroneData_adapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MovieTime movieTime = movieTimes.get(position);
-        holder.search_key_word_btn.setText(movieTime.getDate());
+        holder.search_key_word_btn.setText(movieTime.getDate().trim().replace("\n",""));
         if(isFirst){
             holder.search_key_word_btn.setTextColor(context.getResources().getColor(R.color.aply_text_color));
             holder.search_key_word_btn.setShapeType(1);

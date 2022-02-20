@@ -19,6 +19,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kaopiz.kprogresshud.KProgressHUD;
+
 import java.util.ArrayList;
 
 import geek.space.tmmuse.API.ApiClient;
@@ -115,11 +117,13 @@ public class PromotionsOffersFragment extends Fragment {
 
 
     private void request(int i) {
+        KProgressHUD progress = Utils.AppProgressBar(context);
+        progress.setLabel(context.getResources().getString(R.string.wait));
+        progress.show();
         apiInterface = ApiClient.getClient()
                 .create(ApiInterface.class);
         Call<Home> call = apiInterface.getHome(i);
         isLoading=true;
-        loadingProgress.setVisibility(View.VISIBLE);
         call.enqueue(new Callback<Home>() {
             @Override
             public void onResponse(Call<Home> call, retrofit2.Response<Home> response) {
@@ -135,19 +139,19 @@ public class PromotionsOffersFragment extends Fragment {
                             promotionAndOffers.addAll(res.getBody().getPromotionAndOffers());
                         }
                     }
-                } else {
-                    Log.e("Code",response.code()+"");
-                    Log.e("Error",response.errorBody().toString());
+                } else { Utils.showCustomToast(context.getResources().getString(R.string.check_internet),
+                        R.drawable.ic_wifi_no_connection,
+                        context,
+                        R.color.no_internet_back);
                 }
+                progress.dismiss();
                 isLoading=false;
-                loadingProgress.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<Home> call, Throwable t) {
                 Log.e("Error",t.getMessage());
                 isLoading=false;
-                loadingProgress.setVisibility(View.GONE);
             }
         });
     }

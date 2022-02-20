@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import geek.space.tmmuse.API.ApiClient;
 import geek.space.tmmuse.API.ApiInterface;
@@ -23,7 +24,7 @@ import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Model.UserRegister.CheckUserCode;
 import geek.space.tmmuse.Model.UserRegister.ResponseCheckUser;
-import geek.space.tmmuse.Model.UserRegister.UserGetRegister;
+import geek.space.tmmuse.Model.UserRegister.StringResponse;
 import geek.space.tmmuse.Model.UserRegister.UserPostRegister;
 import geek.space.tmmuse.R;
 import retrofit2.Call;
@@ -63,9 +64,11 @@ public class Sig_Up_Activity extends AppCompatActivity {
                     edit_code_four.getText().toString();
             if (number_edit.getText().toString().length() < 8 || full_name_edit.getText().toString().trim().isEmpty() ||
                     code.length() < 4) {
-                Toast.makeText(context, "Maglumatlary doly girizin", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getResources().getString(R.string.enter_all_values), Toast.LENGTH_SHORT).show();
             } else {
-                Utils.setPressedSendSave(save_btn, 2, R.color.aply_text_color, R.color.card_background, context);
+                KProgressHUD progress=Utils.AppProgressBar(context);
+                progress.setLabel(getResources().getString(R.string.wait));
+                progress.show();
                 ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                 CheckUserCode checkUserCode = new CheckUserCode(full_name_edit.getText().toString(),
                         "+993" + number_edit.getText().toString(), code);
@@ -80,20 +83,28 @@ public class Sig_Up_Activity extends AppCompatActivity {
                                 Utils.setSharePreference(context, "full_name", response.body().getBody().getFullname());
                                 Utils.setSharePreference(context, "phone_number", response.body().getBody().getPhone_number());
 //                                Toast.makeText(context, Utils.getSharePreferences(context,"token"), Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), Interest_Activity.class).putExtra("type",
+                                startActivity(new Intent(context, Interest_Activity.class).putExtra("type",
                                         getIntent().getStringExtra("type")));
                                 finish();
                             } else {
-                                Toast.makeText(context, "Nadogry kod girizildi", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, getResources().getString(R.string.error_values), Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(context, "Yalnyshlyk yuze cykdy", Toast.LENGTH_SHORT).show();
+                            Utils.showCustomToast(context.getResources().getString(R.string.check_internet),
+                                    R.drawable.ic_wifi_no_connection,
+                                    context,
+                                    R.color.no_internet_back);
                         }
+                        progress.dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<ResponseCheckUser> call, Throwable t) {
-
+                        progress.dismiss();
+                        Utils.showCustomToast(context.getResources().getString(R.string.check_internet),
+                                R.drawable.ic_wifi_no_connection,
+                                context,
+                                R.color.no_internet_back);
                     }
                 });
             }
@@ -121,28 +132,35 @@ public class Sig_Up_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (number_edit.getText().toString().length() < 8) {
-                    Toast.makeText(context, "Telefon belginizi doly girizin", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getResources().getString(R.string.enter_number), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 progress_bar.setVisibility(View.VISIBLE);
                 getCode.setVisibility(View.GONE);
                 ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                 UserPostRegister body = new UserPostRegister("+993" + phone_number);
-                Call<UserGetRegister> userGetRegisterCall = apiInterface.phoneVerification(body);
-                userGetRegisterCall.enqueue(new Callback<UserGetRegister>() {
+                Call<StringResponse> userGetRegisterCall = apiInterface.phoneVerification(body);
+                userGetRegisterCall.enqueue(new Callback<StringResponse>() {
                     @Override
-                    public void onResponse(Call<UserGetRegister> call, Response<UserGetRegister> response) {
+                    public void onResponse(Call<StringResponse> call, Response<StringResponse> response) {
                         if (response.isSuccessful() && response.body().getError() != true) {
                             progress_bar.setVisibility(View.GONE);
                             getCode.setVisibility(View.VISIBLE);
-                            Snackbar.make(view, "Sms arkaly gelen kody ashakdaky oyjuklere girizin!", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(view, getResources().getString(R.string.get_sms), Snackbar.LENGTH_LONG).show();
                         } else {
-
+                            Utils.showCustomToast(context.getResources().getString(R.string.check_internet),
+                                    R.drawable.ic_wifi_no_connection,
+                                    context,
+                                    R.color.no_internet_back);
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<UserGetRegister> call, Throwable t) {
+                    public void onFailure(Call<StringResponse> call, Throwable t) {
+                        Utils.showCustomToast(context.getResources().getString(R.string.check_internet),
+                                R.drawable.ic_wifi_no_connection,
+                                context,
+                                R.color.no_internet_back);
                     }
                 });
             }

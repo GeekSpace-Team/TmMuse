@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,10 +34,16 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.util.ArrayList;
+
+import geek.space.tmmuse.API.ApiClient;
+import geek.space.tmmuse.API.ApiInterface;
+import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Fragment.CardFragment.CardFragment;
 import geek.space.tmmuse.Fragment.CategoryFragment.CategoryFragment;
+import geek.space.tmmuse.Fragment.HelpFragment.HelpFragment;
 import geek.space.tmmuse.Fragment.HomeFragment.HomeFragment;
 import geek.space.tmmuse.Fragment.MessageFragment.MessageFragment;
 import geek.space.tmmuse.Fragment.OpenMessage.OpenMessageFragment;
@@ -43,8 +51,13 @@ import geek.space.tmmuse.Fragment.ProfileFragment.Profiles;
 import geek.space.tmmuse.Fragment.ProfileFragment.UserProfileFragment;
 import geek.space.tmmuse.Fragment.PromotionsOffersFragment.PromotionsOffersFragment;
 import geek.space.tmmuse.Fragment.SettingsFragment.SettingsFragment;
+import geek.space.tmmuse.Model.AllProfile.Popup;
+import geek.space.tmmuse.Model.Home.Home;
 import geek.space.tmmuse.R;
 import io.alterac.blurkit.BlurLayout;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import soup.neumorphism.NeumorphCardView;
 import soup.neumorphism.NeumorphImageView;
 
@@ -64,12 +77,15 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
     private TextView no_connection_txt;
     private ImageView reload_app_img;
     private RelativeLayout connection_is_not_ok_rel, connection_is_ok_rel;
-    public static boolean isFirst = true;
-    private Dialog popup_in_start;
+//    public static boolean isFirst = true;
+//    private Dialog popup_in_start;
     private String testParisImg = "https://mayel.ru/wp-content/uploads/2017/06/paris-3296269_1920.jpg";
     private View view;
-    private final int CLOSE_POPUP = 15000;
+//    private final int CLOSE_POPUP = 15000;
     private Integer bottomNavIndex = 0;
+    boolean doubleBackToExitPressedOnce = false;
+    private ApiInterface apiInterface;
+    private Integer page = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,70 +93,95 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.main__menu);
         INSTANCE = this;
         intiComponents();
-        showPopup();
+//        showPopup();
         setListeners();
         setFont();
         getLang();
         InternetConnectionFunction();
     }
 
-    private void showPopup() {
-        if (isFirst) {
-            popup_in_start.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.popup_in_start_app, null, false);
-            popup_in_start.setContentView(view);
-
-
-            TextView popup_tit_txt, popup_desc_text;
-            RoundedImageView popup_img;
-            ImageView back_img_popup, close_popup_img;
-            popup_img = popup_in_start.findViewById(R.id.popup_img);
-            back_img_popup = popup_in_start.findViewById(R.id.back_img_popup);
-            close_popup_img = popup_in_start.findViewById(R.id.close_popup_img);
-            popup_tit_txt = popup_in_start.findViewById(R.id.popup_tit_txt);
-            popup_desc_text = popup_in_start.findViewById(R.id.popup_desc_text);
-
-
-            popup_desc_text.setTypeface(Font.getInstance(this).getMontserrat_400());
-            popup_tit_txt.setTypeface(Font.getInstance(this).getMontserrat_800());
-            close_popup_img.setOnClickListener(view -> popup_in_start.dismiss());
-            Glide.with(context).load(testParisImg).into(popup_img);
-            Glide.with(this).asBitmap().listener(new RequestListener<Bitmap>() {
-                @Override
-                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                    return false;
-                }
-
-                @Override
-                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                    Bitmap blur = Utils.blurRenderScript(resource, 20, Main_Menu.this);
-                    back_img_popup.setImageBitmap(blur);
-                    return true;
-                }
-            }).load(testParisImg).into(back_img_popup);
-
-            final Window window = popup_in_start.getWindow();
-            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-            window.setBackgroundDrawableResource(R.drawable.card_gradient);
-            window.setGravity(Gravity.CENTER);
-            popup_in_start.show();
-
-
-            final Handler handler = new Handler();
-            final Runnable runnable = () -> {
-                if (popup_in_start.isShowing()) {
-                    popup_in_start.dismiss();
-                }
-            };
-
-            popup_in_start.setOnDismissListener(dialog -> handler.removeCallbacks(runnable));
-
-            handler.postDelayed(runnable, CLOSE_POPUP);
-
-            isFirst = false;
-        }
-    }
+//    private void showPopup() {
+//        if (isFirst) {
+//            popup_in_start.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            view = inflater.inflate(R.layout.popup_in_start_app, null, false);
+//            popup_in_start.setContentView(view);
+//
+//            TextView popup_tit_txt, popup_desc_text;
+//            RoundedImageView popup_img;
+//            ImageView back_img_popup, close_popup_img;
+//            popup_img = popup_in_start.findViewById(R.id.popup_img);
+//            back_img_popup = popup_in_start.findViewById(R.id.back_img_popup);
+//            close_popup_img = popup_in_start.findViewById(R.id.close_popup_img);
+//            popup_tit_txt = popup_in_start.findViewById(R.id.popup_tit_txt);
+//            popup_desc_text = popup_in_start.findViewById(R.id.popup_desc_text);
+//
+//
+//            popup_desc_text.setTypeface(Font.getInstance(this).getMontserrat_400());
+//            popup_tit_txt.setTypeface(Font.getInstance(this).getMontserrat_800());
+//
+//
+//            apiInterface = ApiClient.getClient().create(ApiInterface.class);
+//            Call<Home> homeCall = apiInterface.getHome(page);
+//            homeCall.enqueue(new Callback<Home>() {
+//                @Override
+//                public void onResponse(Call<Home> call, Response<Home> response) {
+//                    if (response.isSuccessful()){
+//                        ArrayList<Popup> popups = new ArrayList<>();
+//                        popup_tit_txt.setText(popups.get(0).getTitleTM());
+//                        popup_desc_text.setText(popups.get(0).getDescriptionTM());
+//                        if (Utils.getLanguage(context).equals("ru")){
+//                            popup_tit_txt.setText(popups.get(0).getTitleRU());
+//                            popup_desc_text.setText(popups.get(0).getDescriptionRU());
+//                        }
+//                        Glide.with(context).load(Constant.BASE_URL_IMAGE + popups.get(0).getImage()).into(popup_img);
+//                        Glide.with(context).asBitmap().listener(new RequestListener<Bitmap>() {
+//                            @Override
+//                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+//                                return false;
+//                            }
+//
+//                            @Override
+//                            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+//                                Bitmap blur = Utils.blurRenderScript(resource, 20, Main_Menu.this);
+//                                back_img_popup.setImageBitmap(blur);
+//                                return true;
+//                            }
+//                        }).load(Constant.BASE_URL_IMAGE + popups.get(0).getImage()).into(back_img_popup);
+//
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Home> call, Throwable t) {
+//
+//                }
+//            });
+//
+//
+//            close_popup_img.setOnClickListener(view -> popup_in_start.dismiss());
+//
+//            final Window window = popup_in_start.getWindow();
+//            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+//            window.setBackgroundDrawableResource(R.drawable.card_gradient);
+//            window.setGravity(Gravity.CENTER);
+//            popup_in_start.show();
+//
+//
+//            final Handler handler = new Handler();
+//            final Runnable runnable = () -> {
+//                if (popup_in_start.isShowing()) {
+//                    popup_in_start.dismiss();
+//                }
+//            };
+//
+//            popup_in_start.setOnDismissListener(dialog -> handler.removeCallbacks(runnable));
+//
+//            handler.postDelayed(runnable, CLOSE_POPUP);
+//
+//            isFirst = false;
+//        }
+//    }
 
     private void setFont() {
         no_connection_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
@@ -182,12 +223,12 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
         connection_is_ok_rel = findViewById(R.id.connection_is_ok_rel);
         no_connection_txt = findViewById(R.id.no_connection_txt);
         openFragment(0);
-        popup_in_start = new Dialog(this);
+//        popup_in_start = new Dialog(this);
     }
 
     @Override
     public void onBackPressed() {
-        try {
+       try {
             if (Profiles.draw_profile.isDrawerOpen(GravityCompat.END)) {
                 Profiles.draw_profile.closeDrawer(GravityCompat.END);
                 return;
@@ -200,12 +241,14 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
         HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(HomeFragment.class.getSimpleName());
         MessageFragment messageFragment = (MessageFragment) getSupportFragmentManager().findFragmentByTag(MessageFragment.class.getSimpleName());
         CategoryFragment categoryFragment = (CategoryFragment) getSupportFragmentManager().findFragmentByTag(CategoryFragment.class.getSimpleName());
+        if (homeFragment != null && homeFragment.isVisible()){
+            finish();
+        }
         if ((settingsFragment != null && settingsFragment.isVisible())
                 || (cardFragment != null && cardFragment.isVisible())
-                || (homeFragment != null && homeFragment.isVisible())
                 || (messageFragment != null && messageFragment.isVisible())
                 || (categoryFragment != null && categoryFragment.isVisible())) {
-            finish();
+            openFragment(0);
         }
 
         Profiles myFragment = (Profiles) getSupportFragmentManager().findFragmentByTag(Profiles.class.getSimpleName());
@@ -231,6 +274,14 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
             firstFragment = new HomeFragment();
             Utils.removeShow(new HomeFragment(), HomeFragment.class.getSimpleName(), getSupportFragmentManager(), R.id.menu_frame);
         }
+
+        HelpFragment helpFragment = (HelpFragment) getSupportFragmentManager().findFragmentByTag(HelpFragment.class.getSimpleName());
+        if (helpFragment != null && helpFragment.isVisible()) {
+            fivesFragment = new HelpFragment();
+            Utils.removeShow(new SettingsFragment(), SettingsFragment.class.getSimpleName(), getSupportFragmentManager(), R.id.menu_frame);
+        }
+
+
     }
 
     @Override

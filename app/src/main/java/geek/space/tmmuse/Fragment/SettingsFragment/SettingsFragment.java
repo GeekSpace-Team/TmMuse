@@ -36,6 +36,7 @@ import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.SharedPref;
 import geek.space.tmmuse.Common.Utils;
+import geek.space.tmmuse.Fragment.HelpFragment.HelpFragment;
 import geek.space.tmmuse.Fragment.ProfileFragment.UserProfileFragment;
 import geek.space.tmmuse.R;
 import soup.neumorphism.NeumorphCardView;
@@ -83,8 +84,15 @@ public class SettingsFragment extends Fragment {
         terms_use_card.setOnClickListener(view -> startActivity(new Intent(context, AboutUsActivity.class)
                 .putExtra("page_type", "privacy")));
 
-        help_card.setOnClickListener(view -> startActivity(new Intent(context, AboutUsActivity.class)
-                .putExtra("page_type", "help")));
+        help_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HelpFragment helpFragment = new HelpFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                Main_Menu.fivesFragment = helpFragment;
+                Utils.hideAdd(helpFragment, helpFragment.getClass().getSimpleName(), fragmentManager, R.id.menu_frame);
+            }
+        });
 
         language_card.setOnClickListener(view -> {
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context, R.style.CustomBottomSheetDialogTheme);

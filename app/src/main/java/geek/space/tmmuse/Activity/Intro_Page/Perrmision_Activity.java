@@ -66,7 +66,7 @@ public class Perrmision_Activity extends AppCompatActivity {
                     finish();
                     startActivity(new Intent(getApplicationContext(), Sig_Up_Activity.class).putExtra("type","0"));
                 } else {
-                    Toast.makeText(context, "Please accept permissions", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getResources().getString(R.string.chek_permission_for), Toast.LENGTH_SHORT).show();
                 }
 
 

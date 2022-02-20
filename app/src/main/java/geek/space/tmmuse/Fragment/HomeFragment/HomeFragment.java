@@ -1,20 +1,27 @@
 package geek.space.tmmuse.Fragment.HomeFragment;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -28,6 +35,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+import com.kaopiz.kprogresshud.KProgressHUD;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import org.json.JSONArray;
@@ -47,15 +61,16 @@ import geek.space.tmmuse.Activity.SearchActivity.SearchActivity;
 import geek.space.tmmuse.Adapter.Banner.ImgCaruselAdapter;
 import geek.space.tmmuse.Adapter.FilimAdapter.FilmAdapter;
 import geek.space.tmmuse.Adapter.PromotionsPage.PromotionAndOffersAdapter;
+import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.SharedPref;
 import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Fragment.PromotionsOffersFragment.PromotionsOffersFragment;
+import geek.space.tmmuse.Model.AllProfile.Popup;
 import geek.space.tmmuse.Model.Banner.Banner;
 import geek.space.tmmuse.Model.Film.Film;
 import geek.space.tmmuse.Model.Home.Home;
 import geek.space.tmmuse.Model.PromotionAndOffers.PromotionAndOffers;
-import geek.space.tmmuse.Model.SearchHistory.SearchHistory;
 import geek.space.tmmuse.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -92,7 +107,9 @@ public class HomeFragment extends Fragment {
     private FrameLayout frameLayout;
     private ApiInterface apiInterface;
     private Integer page = 1;
-
+    public static boolean isFirst = true;
+    private Dialog popup_in_start;
+    private final int CLOSE_POPUP = 15000;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -115,10 +132,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void request(int i) {
+        KProgressHUD progress = Utils.AppProgressBar(context);
+        progress.setLabel(getResources().getString(R.string.wait));
+        progress.show();
         apiInterface = ApiClient.getClient()
                 .create(ApiInterface.class);
         Call<Home> call = apiInterface.getHome(i);
-
         call.enqueue(new Callback<Home>() {
             @Override
             public void onResponse(Call<Home> call, retrofit2.Response<Home> response) {
@@ -128,6 +147,9 @@ public class HomeFragment extends Fragment {
                         filmList = res.getBody().getNew_movies();
                         banners = res.getBody().getBanners();
                         promotionAndOffers = res.getBody().getPromotionAndOffers();
+                        if(res.getBody().getPopup()!=null && res.getBody().getPopup().size()>0)
+                            showPopup(res.getBody().getPopup());
+
                         if (res.getBody().getBanners() != null) {
                             setBanners();
                         }
@@ -142,13 +164,23 @@ public class HomeFragment extends Fragment {
                         promotionAndOffers.addAll(res.getBody().getPromotionAndOffers());
                     }
                 } else {
+                    Utils.showCustomToast(context.getResources().getString(R.string.check_internet),
+                            R.drawable.ic_wifi_no_connection,
+                            context,
+                            R.color.no_internet_back);
                     Log.e("Code", response.code() + "");
                     Log.e("Error", response.errorBody().toString());
                 }
+                progress.dismiss();
             }
 
             @Override
             public void onFailure(Call<Home> call, Throwable t) {
+                Utils.showCustomToast(context.getResources().getString(R.string.check_internet),
+                        R.drawable.ic_wifi_no_connection,
+                        context,
+                        R.color.no_internet_back);
+                progress.dismiss();
                 Log.e("Error", t.getMessage());
             }
         });
@@ -164,9 +196,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void setPromotionsAndOffers() {
-    }
-
     private void setFilm() {
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -174,12 +203,6 @@ public class HomeFragment extends Fragment {
         filmAdapter = new FilmAdapter(context, filmList);
         rec_films.setAdapter(filmAdapter);
 
-    }
-
-    private void setFilmList() {
-    }
-
-    private void setBannersList() {
     }
 
 
@@ -251,7 +274,7 @@ public class HomeFragment extends Fragment {
         frameLayout = view.findViewById(R.id.root);
         search_btn = view.findViewById(R.id.search_btn);
         all_promotions_txt = view.findViewById(R.id.all_promotions_txt);
-
+        popup_in_start = new Dialog(context);
 
     }
 
@@ -321,7 +344,7 @@ public class HomeFragment extends Fragment {
                     weather_desc.setText(getResources().getString(R.string.wait_to_weather));
                     weather_desc.setTextColor(Color.RED);
                     weather_tp.setTextColor(Color.RED);
-                } catch (Exception ex){
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
@@ -359,6 +382,81 @@ public class HomeFragment extends Fragment {
 //                    img_carusel_view_pager.setCurrentItem((img_carusel_view_pager.getCurrentItem() + 1) % banners.size());
 //                }
 //            });
+        }
+    }
+
+
+
+    private void showPopup(ArrayList<Popup> popups) {
+        if (isFirst) {
+            popup_in_start.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.popup_in_start_app, null, false);
+            popup_in_start.setContentView(view);
+
+            TextView popup_tit_txt, popup_desc_text;
+            RoundedImageView popup_img;
+            ImageView back_img_popup, close_popup_img;
+            popup_img = popup_in_start.findViewById(R.id.popup_img);
+            back_img_popup = popup_in_start.findViewById(R.id.back_img_popup);
+            close_popup_img = popup_in_start.findViewById(R.id.close_popup_img);
+            popup_tit_txt = popup_in_start.findViewById(R.id.popup_tit_txt);
+            popup_desc_text = popup_in_start.findViewById(R.id.popup_desc_text);
+
+
+            popup_desc_text.setTypeface(Font.getInstance(context).getMontserrat_400());
+            popup_tit_txt.setTypeface(Font.getInstance(context).getMontserrat_800());
+            if (popups.get(0).getTitleTM()!=null || popups.get(0).getTitleRU()!=null){
+                popup_tit_txt.setText(popups.get(0).getTitleTM());
+                popup_desc_text.setText(popups.get(0).getDescriptionTM());
+                if (Utils.getLanguage(context).equals("ru")){
+                    popup_tit_txt.setText(popups.get(0).getTitleRU());
+                    popup_desc_text.setText(popups.get(0).getDescriptionRU());
+                }
+            }
+            try {
+                Glide.with(context).load(Constant.BASE_URL_IMAGE + popups.get(0).getImage()).into(popup_img);
+                Glide.with(context).asBitmap().listener(new RequestListener<Bitmap>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                        Bitmap blur = Utils.blurRenderScript(resource, 20, context);
+                        back_img_popup.setImageBitmap(blur);
+                        return true;
+                    }
+                }).load(Constant.BASE_URL_IMAGE + popups.get(0).getImage()).into(back_img_popup);
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
+
+            close_popup_img.setOnClickListener(view -> popup_in_start.dismiss());
+
+            final Window window = popup_in_start.getWindow();
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+            window.setBackgroundDrawableResource(R.drawable.card_gradient);
+            window.setGravity(Gravity.CENTER);
+            window.getAttributes().windowAnimations=R.style.DialogAnimationPopup;
+            popup_in_start.show();
+
+
+            final Handler handler = new Handler();
+            final Runnable runnable = () -> {
+                if (popup_in_start.isShowing()) {
+                    popup_in_start.dismiss();
+                }
+            };
+
+            popup_in_start.setOnDismissListener(dialog -> handler.removeCallbacks(runnable));
+
+            handler.postDelayed(runnable, CLOSE_POPUP);
+
+            isFirst = false;
         }
     }
 }

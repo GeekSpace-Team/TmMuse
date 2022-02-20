@@ -35,5 +35,7 @@
     <color name="zoom_image_unClickable">#BFFFFFFF</color>
     <color name="white">#FFF</color>
     <color name="black">#000</color>
+    <color name="no_internet_back">#BABECC</color>
+    <color name="transparent">#00000000</color>
 
 </resources>

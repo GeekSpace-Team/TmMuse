@@ -134,6 +134,21 @@
 
     <string name="access_get_card">Siziň bilen ýakyn wagtda habarlaşarys</string>
     <string name="first_you_must_sign_up">First you must <font color='#CD2791'> <u><b>sign up</b></u></font> </string>
+    <string name="biraz_gara_y">Biraz garaşyň...</string>
+    <string name="wait">Please wait...</string>
+    <string name="chek_brith">Set day of birthday</string>
+    <string name="chek_gender">Please choose your gender</string>
+    <string name="chek_email">Write your email</string>
+    <string name="chek_permission">You must accept permission</string>
+    <string name="chek_info_card">Choose how you want get information about your card</string>
+    <string name="chek_permission_for">Please accept permissions</string>
+    <string name="two_click_exit">Please click BACK again to exit</string>
+
+
+    <string name="error_values">Nadogry kod girizildi</string>
+    <string name="enter_number">Telefon belginizi doly girizin</string>
+    <string name="get_sms">Sms arkaly gelen kody ashakdaky oyjuklere girizin!</string>
+    <string name="enter_all_values">Maglumatlary doly girizin</string>
 
 
 </resources>

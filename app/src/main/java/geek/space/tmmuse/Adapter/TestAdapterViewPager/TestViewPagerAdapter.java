@@ -51,9 +51,13 @@ public class TestViewPagerAdapter extends PagerAdapter {
         assert view != null;
         final RoundedImageView imageView = (RoundedImageView) view
                 .findViewById(R.id.iv_carousel_image);
-        Glide.with(context)
-                .load(Constant.BASE_URL_IMAGE + imgProfile.getLarge_image())
-                .into(imageView);
+        try {
+            Glide.with(context)
+                    .load(Constant.BASE_URL_IMAGE + imgProfile.getLarge_image())
+                    .into(imageView);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
         container.addView(view, 0);
 

@@ -1,30 +1,47 @@
 package geek.space.tmmuse.Fragment.MessageFragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kaopiz.kprogresshud.KProgressHUD;
+
 import java.util.ArrayList;
 
+import geek.space.tmmuse.API.ApiClient;
+import geek.space.tmmuse.API.ApiInterface;
+import geek.space.tmmuse.Activity.Sig_Up.Sig_Up_Activity;
 import geek.space.tmmuse.Adapter.MessageAdapter.MessageAdapter;
 import geek.space.tmmuse.Common.Font.Font;
-import geek.space.tmmuse.Model.Message.Message;
+import geek.space.tmmuse.Common.Utils;
+import geek.space.tmmuse.Model.Message.FirstMessage;
+import geek.space.tmmuse.Model.Message.GetMessage;
 import geek.space.tmmuse.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MessageFragment extends Fragment {
     private View view;
     private Context context;
-    private TextView inbox_txt;
-    private ArrayList<Message> messages = new ArrayList<>();
+    private TextView inbox_txt, go_to_sig_up;
+    private ArrayList<FirstMessage> messages = new ArrayList<>();
     private MessageAdapter messageAdapter;
     private RecyclerView incoming_msg_rec;
+    private ApiInterface apiInterface;
+    private ProgressBar progress_bar;
+    private boolean isLoading = false;
+    public static Integer page = 1;
 
     public MessageFragment() {
     }
@@ -40,10 +57,19 @@ public class MessageFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_message, container, false);
         context = getContext();
         initComponents();
+        setListener();
         setFont();
         setMessageList();
-        setMessageAdapter();
         return view;
+    }
+
+    private void setListener() {
+        go_to_sig_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context, Sig_Up_Activity.class).putExtra("type", "1"));
+            }
+        });
     }
 
     private void setMessageAdapter() {
@@ -55,26 +81,50 @@ public class MessageFragment extends Fragment {
     }
 
     private void setMessageList() {
-        messages.clear();
-        messages.add(new Message(1, "Welcome to our application!",
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium  optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit, quia. Quo neque error repudiandae fuga Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit, quia. Quo neque error repudiandae fuga?",
-                "28.01.2022"));
-        messages.add(new Message(2, "Third message title",
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium  optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit, quia. Quo neque error repudiandae fuga Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit, quia. Quo neque error repudiandae fuga?",
-                "15.01.2022"));
-        messages.add(new Message(3, "After user read a message",
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium  optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit, quia. Quo neque error repudiandae fuga Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit, tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit, quia. Quo neque error repudiandae fuga?",
-                "10.01.2022"));
+        KProgressHUD progress = Utils.AppProgressBar(context);
+        progress.setLabel(context.getResources().getString(R.string.wait));
+        progress.show();
+        isLoading = true;
+        String token = "Bearer " + Utils.getSharePreferences(context, "token");
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<GetMessage> getMessageCall = apiInterface.answer(token);
+        getMessageCall.enqueue(new Callback<GetMessage>() {
+            @Override
+            public void onResponse(Call<GetMessage> call, Response<GetMessage> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().getBody() != null) {
+                        messages.addAll(response.body().getBody().getFirst());
+                        messages.addAll(response.body().getBody().getSecond());
+                        messages.addAll(response.body().getBody().getThird());
+                        setMessageAdapter();
+                    }
+                } else {
+//
+                }
+                progress.dismiss();
+            }
 
-
+            @Override
+            public void onFailure(Call<GetMessage> call, Throwable t) {
+                Utils.showCustomToast(getResources().getString(R.string.check_internet),
+                        R.drawable.ic_wifi_no_connection,
+                        context,
+                        R.color.no_internet_back);
+                progress.dismiss();
+                Log.e("Error", t.getMessage() + "");
+            }
+        });
     }
 
     private void setFont() {
         inbox_txt.setTypeface(Font.getInstance(context).getMontserrat_800());
+        go_to_sig_up.setTypeface(Font.getInstance(context).getMontserrat_600());
     }
 
     private void initComponents() {
         inbox_txt = view.findViewById(R.id.inbox_txt);
         incoming_msg_rec = view.findViewById(R.id.incoming_msg_rec);
+        go_to_sig_up = view.findViewById(R.id.go_to_sig_up);
     }
+
 }

@@ -1,104 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/card_background"
     tools:context=".Activity.AllProductViews.AllProductViewsActivity">
 
-    <RelativeLayout
-        android:id="@+id/page_rel"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@android:color/transparent"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <LinearLayout
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:ignore="UselessParent">
+            android:layout_height="wrap_content"
+            app:contentScrim="@color/white"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+            app:title="@string/app_name">
 
             <RelativeLayout
+                android:id="@+id/page_rel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/all_views_viewPager"
-                        android:layout_width="match_parent"
-                        android:layout_height="441dp" />
-
-                    <RelativeLayout
-                        android:id="@+id/sliderContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="441dp" />
-
-                </RelativeLayout>
-
-
-                <ImageView
-                    android:id="@+id/onback_img_profile"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="@dimen/margins"
-                    android:layout_marginTop="24dp"
-                    android:onClick="onBack"
-                    android:src="@drawable/ic_back"
-                    android:tint="@color/text_color" />
-
-                <ImageView
-                    android:id="@+id/share_img_profile"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginRight="@dimen/margins"
-                    android:src="@drawable/ic_share"
-                    android:tint="@color/text_color" />
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="150dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="100dp"
-                    android:layout_marginRight="-35dp"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    tools:ignore="UselessParent">
 
-                    <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
-                        android:id="@+id/dots_indicator"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:rotation="-90"
-                        app:dotsColor="@color/aply_text_color"
-                        app:dotsCornerRadius="8dp"
-                        app:dotsSize="10dp"
-                        app:dotsSpacing="4dp"
-                        app:dotsStrokeColor="@color/aply_text_color"
-                        app:dotsStrokeWidth="2dp" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RelativeLayout
+                            android:id="@+id/sliderContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="441dp">
+
+                            <androidx.viewpager.widget.ViewPager
+                                android:id="@+id/all_views_viewPager"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+
+
+                        </RelativeLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="150dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginRight="-150dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                                android:id="@+id/dots_indicator"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:rotation="-90"
+                                app:dotsColor="@color/aply_text_color"
+                                app:dotsCornerRadius="8dp"
+                                app:dotsSize="10dp"
+                                app:dotsSpacing="4dp"
+                                app:dotsStrokeColor="@color/aply_text_color"
+                                app:dotsStrokeWidth="2dp" />
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/top_round"
+                    android:gravity="center_horizontal">
+
+                    <View
+                        android:id="@+id/view_Stick"
+                        android:layout_width="100dp"
+                        android:layout_height="5dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/view_stick_back" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@android:color/transparent"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                app:layout_collapseMode="pin">
 
-        </LinearLayout>
-    </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="10dp">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+                    <ImageView
+                        android:id="@+id/onback_img_profile"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="@dimen/margins"
+                        android:layout_marginTop="24dp"
+                        android:onClick="onBack"
+                        android:src="@drawable/ic_back"
+                        android:tint="@color/text_color" />
+
+                    <ImageView
+                        android:id="@+id/share_img_profile"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginRight="@dimen/margins"
+                        android:src="@drawable/ic_share"
+                        android:tint="@color/text_color" />
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBaseline_toBottomOf="@id/page_rel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/bottomsheet"
@@ -108,14 +166,12 @@
             android:overScrollMode="never"
             android:scrollbars="none"
             app:behavior_hideable="false"
-            app:behavior_peekHeight="300dp"
             app:layout_anchorGravity="center"
             app:layout_behavior="@string/sheetbehavior">
 
             <include layout="@layout/view_bottom_sheet_all_profile" />
 
         </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

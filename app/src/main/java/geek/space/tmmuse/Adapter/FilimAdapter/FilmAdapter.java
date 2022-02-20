@@ -52,7 +52,12 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
             holder.category_film.setText(film.getShort_descRU());
             holder.name_film.setText(film.getNameRU());
         }
-        Glide.with(context).load(Constant.BASE_URL_IMAGE+film.getSmall_image()).into(holder.films_img);
+        try {
+            Glide.with(context).load(Constant.BASE_URL_IMAGE+film.getSmall_image()).into(holder.films_img);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         holder.film_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

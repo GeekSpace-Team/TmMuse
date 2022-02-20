@@ -1,7 +1,6 @@
 package geek.space.tmmuse.Adapter.MessageAdapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,16 +19,15 @@ import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Fragment.OpenMessage.OpenMessageFragment;
-import geek.space.tmmuse.Model.Message.Message;
+import geek.space.tmmuse.Model.Message.FirstMessage;
 import geek.space.tmmuse.R;
 import soup.neumorphism.NeumorphCardView;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<Message>messages;
-    private FragmentActivity fragmentActivity;
+    private ArrayList<FirstMessage>messages;
 
-    public MessageAdapter(Context context, ArrayList<Message> messages) {
+    public MessageAdapter(Context context, ArrayList<FirstMessage> messages) {
         this.context = context;
         this.messages = messages;
     }
@@ -43,22 +41,34 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
-        Message message = messages.get(position);
+        FirstMessage message = messages.get(position);
+        if (message.getTittle()!=null){
+            holder.msg_name_txt.setText(message.getTittle());
+        }
 
-        holder.msg_name_txt.setText(message.getMsg_name());
-        holder.msg_desc_txt.setText(message.getMesg_desc());
-        holder.data_income_txt.setText(message.getMsg_come_date());
+        if (message.getMessage()!=null){
+            holder.msg_desc_txt.setText(message.getMessage().replace("\n",", "));
+        }
+
+        if (message.getCreated_at()!=null){
+            holder.data_income_txt.setText(message.getCreated_at().split("T")[0]);
+        }
+
         holder.message_card_adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.msg_check_uncheck_view.setBackground(context.getResources().getDrawable(R.drawable.mesg_checked_back));
+                if (message.getIs_read()!=null && message.getIs_read()){
+                    holder.msg_check_uncheck_view.setBackground(context.getResources().getDrawable(R.drawable.mesg_uncheked_back));
+                } else{
+                    holder.msg_check_uncheck_view.setBackground(context.getResources().getDrawable(R.drawable.mesg_checked_back));
+                }
                 AppCompatActivity appCompatActivity = (AppCompatActivity) view.getContext();
                 OpenMessageFragment openMessageFragment = new OpenMessageFragment();
                 FragmentManager fragmentManager = appCompatActivity.getSupportFragmentManager();
                 Bundle bundle = new Bundle();
-                bundle.putString("MSG_NAME", message.getMsg_name());
-                bundle.putString("MSG_DATA", message.getMsg_come_date());
-                bundle.putString("MSG_DESC", message.getMesg_desc());
+                bundle.putString("MSG_NAME", message.getTittle());
+                bundle.putString("MSG_DATA", message.getCreated_at());
+                bundle.putString("MSG_DESC", message.getMessage());
                 openMessageFragment.setArguments(bundle);
                 Main_Menu.fourthFragment = openMessageFragment;
                 Utils.hideAdd(openMessageFragment, openMessageFragment.getClass().getSimpleName(), fragmentManager, R.id.menu_frame);

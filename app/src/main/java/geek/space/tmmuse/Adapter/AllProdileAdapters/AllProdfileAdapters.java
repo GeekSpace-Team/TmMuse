@@ -52,7 +52,7 @@ public class AllProdfileAdapters extends RecyclerView.Adapter<AllProdfileAdapter
         }
 
         try {
-            Glide.with(context).load(Constant.BASE_URL_IMAGE + allProfile.getImage().getLarge_image()).into(holder.profile_adapter_img);
+            Glide.with(context).load(Constant.BASE_URL_IMAGE + allProfile.getImage().get(0).getLarge_image()).into(holder.profile_adapter_img);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

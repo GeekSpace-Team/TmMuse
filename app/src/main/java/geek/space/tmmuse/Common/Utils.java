@@ -21,6 +21,8 @@ import android.view.Window;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -29,6 +31,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -38,6 +41,7 @@ import java.util.ArrayList;
 
 import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
 import geek.space.tmmuse.Adapter.ZoomImageAdapter.ImageViewerAdapter;
+import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Fragment.ProfileFragment.Profiles;
 import geek.space.tmmuse.R;
 import soup.neumorphism.NeumorphButton;
@@ -118,7 +122,7 @@ public class Utils {
 //        activity.finish();
         activity.recreate();
         activity.getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
-        Main_Menu.isFirst=false;
+//        Main_Menu.isFirst=false;
 
     }
 
@@ -273,5 +277,35 @@ public class Utils {
         SharedPreferences preferences = context.getSharedPreferences(name, MODE_PRIVATE);
         String value = preferences.getString(name, "");
         return value;
+    }
+
+    public static KProgressHUD AppProgressBar(Context context){
+        return KProgressHUD.create(context)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setCancellable(true)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f);
+    }
+
+    public static void showCustomToast(String textStr,int imageId,Context context,int backgroundId){
+        LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_layout, null, false);
+
+        ImageView image = (ImageView) layout.findViewById(R.id.image);
+        image.setImageResource(imageId);
+        TextView text = (TextView) layout.findViewById(R.id.text);
+        LinearLayout bg = (LinearLayout) layout.findViewById(R.id.bg);
+        bg.setBackgroundResource(backgroundId);
+        text.setText(textStr);
+        text.setTypeface(Font.getInstance(context).getMontserrat_700());
+
+        Toast toast = new Toast(context);
+        toast.setGravity(Gravity.TOP|Gravity.FILL_HORIZONTAL, 20, 20);
+        toast.setDuration(Toast.LENGTH_LONG);
+
+        toast.setView(layout);
+        toast.show();
+
+
     }
 }

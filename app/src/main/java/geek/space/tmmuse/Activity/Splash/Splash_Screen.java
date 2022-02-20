@@ -39,7 +39,7 @@ public class Splash_Screen extends AppCompatActivity {
 
         // Run next activity after 3 sec. We create in this function if user first time
         removeCallbacks = () -> {
-            Intent mainIntent = new Intent(Splash_Screen.this, Main_Menu.class).putExtra("type", "0");
+            Intent mainIntent = new Intent(Splash_Screen.this, Sig_Up_Activity.class).putExtra("type", "0");
             Splash_Screen.this.startActivity(mainIntent);
 
             finish();

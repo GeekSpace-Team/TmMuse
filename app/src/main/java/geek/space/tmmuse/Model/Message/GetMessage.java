@@ -1,10 +1,12 @@
-package geek.space.tmmuse.Model.UserRegister;
+package geek.space.tmmuse.Model.Message;
 
-public class UserGetRegister {
+import java.util.ArrayList;
+
+public class GetMessage {
     private Boolean error;
-    private String body;
+    private GetAllMessages body;
 
-    public UserGetRegister(Boolean error, String body) {
+    public GetMessage(Boolean error, GetAllMessages body) {
         this.error = error;
         this.body = body;
     }
@@ -17,11 +19,11 @@ public class UserGetRegister {
         this.error = error;
     }
 
-    public String getBody() {
+    public GetAllMessages getBody() {
         return body;
     }
 
-    public void setBody(String body) {
+    public void setBody(GetAllMessages body) {
         this.body = body;
     }
 }

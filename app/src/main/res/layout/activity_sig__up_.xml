@@ -53,7 +53,8 @@
                 android:layout_marginLeft="@dimen/margins"
                 android:text="@string/sign_up_desc"
                 android:textColor="@color/text_color"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:layout_marginTop="@dimen/margins" />
 
             <TextView
                 android:id="@+id/ful_name_txt"
@@ -71,7 +72,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margins"
-                android:layout_marginRight="@dimen/margins">
+                android:layout_marginRight="@dimen/margins"
+                android:layout_marginTop="@dimen/margins">
 
                 <soup.neumorphism.NeumorphCardView
                     style="@style/CustomShapeAppearance"
@@ -124,7 +126,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margins"
-                android:layout_marginRight="@dimen/margins">
+                android:layout_marginRight="@dimen/margins"
+
+                android:layout_marginTop="@dimen/margins">
 
 
                 <soup.neumorphism.NeumorphCardView
@@ -165,7 +169,8 @@
                             android:inputType="number"
                             android:textColor="@color/text_color"
                             android:textSize="14sp"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1"
+                            android:maxLength="8"/>
 
 
                         <TextView
@@ -207,8 +212,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/margins">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -220,7 +226,7 @@
                     <soup.neumorphism.NeumorphCardView
                         style="@style/CustomShapeAppearance"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         app:neumorph_shapeType="pressed">
 
@@ -233,8 +239,10 @@
                             android:hint="0"
                             android:inputType="number"
                             android:maxLength="1"
+                            android:gravity="center"
                             android:textColor="@color/text_color"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:padding="@dimen/margins"/>
 
 
                     </soup.neumorphism.NeumorphCardView>
@@ -252,7 +260,7 @@
                     <soup.neumorphism.NeumorphCardView
                         style="@style/CustomShapeAppearance"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         app:neumorph_shapeType="pressed">
 
@@ -265,8 +273,10 @@
                             android:hint="0"
                             android:inputType="number"
                             android:maxLength="1"
+                            android:gravity="center|center_vertical"
                             android:textColor="@color/text_color"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:padding="@dimen/margins"/>
 
 
                     </soup.neumorphism.NeumorphCardView>
@@ -284,7 +294,7 @@
                     <soup.neumorphism.NeumorphCardView
                         style="@style/CustomShapeAppearance"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         app:neumorph_shapeType="pressed">
 
@@ -297,8 +307,10 @@
                             android:hint="0"
                             android:inputType="number"
                             android:maxLength="1"
+                            android:gravity="center|center_vertical"
                             android:textColor="@color/text_color"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:padding="@dimen/margins"/>
 
 
                     </soup.neumorphism.NeumorphCardView>
@@ -315,7 +327,7 @@
                     <soup.neumorphism.NeumorphCardView
                         style="@style/CustomShapeAppearance"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         app:neumorph_shapeType="pressed">
 
@@ -328,8 +340,10 @@
                             android:hint="0"
                             android:inputType="number"
                             android:maxLength="1"
+                            android:gravity="center|center_vertical"
                             android:textColor="@color/text_color"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:padding="@dimen/margins"/>
 
 
                     </soup.neumorphism.NeumorphCardView>

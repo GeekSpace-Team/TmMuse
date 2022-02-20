@@ -37,12 +37,12 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.logging.Logger;
 
 import geek.space.tmmuse.API.ApiClient;
 import geek.space.tmmuse.API.ApiInterface;
@@ -71,7 +71,6 @@ import soup.neumorphism.NeumorphButton;
 
 public class AllProductViewsActivity extends AppCompatActivity {
 
-    private BottomSheetBehavior bottomSheetBehavior;
     private View view;
     private RelativeLayout sliderContainer, view_bottom_rel;
     private ViewPager all_views_viewPager;
@@ -89,7 +88,6 @@ public class AllProductViewsActivity extends AppCompatActivity {
             deliver_layout, cuisine_layout, average_check_layout, own_promotion_layout, tm_muse_card_layout, gallery_layout, wifi_layout;
     private View view_Stick;
     private HorizontalScrollView img_horizontal_scroll;
-    private ImageView onback_img, share_img;
     private RecyclerView post_rec, movie_time_rec, images_profile_rec, gallery_rec;
     private ScrollView prom_scroll;
     private FrameLayout root_prom;
@@ -130,6 +128,9 @@ public class AllProductViewsActivity extends AppCompatActivity {
     }
 
     private void setAllProfileList() {
+        KProgressHUD progress = Utils.AppProgressBar(this);
+        progress.setLabel(this.getResources().getString(R.string.wait));
+        progress.show();
         Intent intent = getIntent();
         String id = intent.getStringExtra("ID");
         apiInterface = ApiClient.getClient()
@@ -266,10 +267,15 @@ public class AllProductViewsActivity extends AppCompatActivity {
                         galleryAdapter();
                         for (ImgProfile img : response.body().getBody().getImages()) {
                             if (img.getVR()) {
-                                Glide.with(AllProductViewsActivity.this)
-                                        .load(Constant.BASE_URL_IMAGE + img.getLarge_image())
-                                        .into(vr_img);
-                                largeVrImageUrl = Constant.BASE_URL_IMAGE + img.getLarge_image();
+                                try {
+                                    Glide.with(AllProductViewsActivity.this)
+                                            .load(Constant.BASE_URL_IMAGE + img.getLarge_image())
+                                            .into(vr_img);
+                                    largeVrImageUrl = Constant.BASE_URL_IMAGE + img.getLarge_image();
+                                } catch (Exception e){
+                                    e.printStackTrace();
+                                }
+
                             }
                         }
                     }
@@ -281,30 +287,39 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
                     setListener();
                 } else {
-                    Toast.makeText(AllProductViewsActivity.this, "Islanok bla", Toast.LENGTH_SHORT).show();
+                    Utils.showCustomToast(getResources().getString(R.string.check_internet),
+                            R.drawable.ic_wifi_no_connection,
+                            AllProductViewsActivity.this,
+                            R.color.no_internet_back);
+
                 }
+                progress.dismiss();
             }
 
             @Override
             public void onFailure(Call<GetProfileTiny> call, Throwable t) {
-                Toast.makeText(AllProductViewsActivity.this, "KOtagma", Toast.LENGTH_SHORT).show();
+                Utils.showCustomToast(getResources().getString(R.string.check_internet),
+                        R.drawable.ic_wifi_no_connection,
+                        AllProductViewsActivity.this,
+                        R.color.no_internet_back);
+                progress.dismiss();
                 Log.e("Error", t.getMessage().toString());
             }
         });
     }
 
     private void splitTime(String movieTime) {
-        String[] times=movieTime.split("\\*");
-        for(String time:times){
-            String[] dateTime=time.split("\\(");
-            for(int l=0;l<dateTime.length;l++){
-                if(l%2==0){
-                    String[] myDate=dateTime[l].split("-");
-                    for(String md:myDate){
-                        String[] myTimes=dateTime[l+1].replace(")","").split(",");
-                        ArrayList<String> mt=new ArrayList<>();
+        String[] times = movieTime.split("\\*");
+        for (String time : times) {
+            String[] dateTime = time.split("\\(");
+            for (int l = 0; l < dateTime.length; l++) {
+                if (l % 2 == 0) {
+                    String[] myDate = dateTime[l].split("-");
+                    for (String md : myDate) {
+                        String[] myTimes = dateTime[l + 1].replace(")", "").split(",");
+                        ArrayList<String> mt = new ArrayList<>();
                         mt.addAll(Arrays.asList(myTimes));
-                        movieTimes.add(new MovieTime(md,mt));
+                        movieTimes.add(new MovieTime(md, mt));
                     }
                 }
 
@@ -312,15 +327,12 @@ public class AllProductViewsActivity extends AppCompatActivity {
         }
 
 
-        for(MovieTime md:movieTimes){
+        for (MovieTime md : movieTimes) {
             System.out.println(md.getDate());
-            for (String mt:md.getTimes()){
-                System.out.println("Times: "+mt);
+            for (String mt : md.getTimes()) {
+                System.out.println("Times: " + mt);
             }
         }
-
-
-
 
 
     }
@@ -342,17 +354,17 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
                 if (count_tickets_ed_text.equals("") || count_tickets_ed_text == null) {
                     count_tickets = "0";
                 } else {
                     count_tickets = count_tickets_ed_text.getText().toString();
                 }
-                string_to_int = Integer.valueOf(count_tickets);
+                string_to_int = Integer.parseInt(count_tickets);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
         NeumorphButton send_btn = dialog.findViewById(R.id.send_btn);
@@ -465,8 +477,6 @@ public class AllProductViewsActivity extends AppCompatActivity {
         site_layout = findViewById(R.id.site_layout);
         location_layout = findViewById(R.id.location_layout);
         call_layout_products = findViewById(R.id.call_layout_products);
-        bottomSheetBehavior = BottomSheetBehavior.from(view);
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
         all_views_viewPager = findViewById(R.id.all_views_viewPager);
         dots_indicator = findViewById(R.id.dots_indicator);
         product_text_count_down = findViewById(R.id.product_text_count_down);
@@ -494,8 +504,6 @@ public class AllProductViewsActivity extends AppCompatActivity {
         images_layout = findViewById(R.id.images_layout);
         view_Stick = findViewById(R.id.view_Stick);
         view_bottom_rel = findViewById(R.id.view_bottom_rel);
-        onback_img = findViewById(R.id.onback_img);
-        share_img = findViewById(R.id.share_img);
         post_rec = findViewById(R.id.post_rec);
         prom_scroll = findViewById(R.id.prom_scroll);
         root_prom = findViewById(R.id.root_prom);
@@ -535,6 +543,12 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
     private void setListener() {
 
+        if( bottomsheet.canScrollVertically(-1)){
+            findViewById(R.id.tool_bar).setBackgroundColor(getResources().getColor(R.color.card_background));
+        } else {
+            findViewById(R.id.tool_bar).setBackgroundColor(getResources().getColor(R.color.transparent));
+        }
+
         findViewById(R.id.brone_movie_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -542,72 +556,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
             }
         });
 
-        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
 
-                } else if (newState == BottomSheetBehavior.STATE_HALF_EXPANDED) {
-
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                inRangeExpanding = oldOffSet < slideOffset;
-                inRangeCollapsing = oldOffSet > slideOffset;
-                oldOffSet = slideOffset;
-                if (inRangeExpanding) {
-                    // acylyarka
-
-                }
-                if (inRangeCollapsing) {
-                    // yapylyarka
-                }
-
-                if (oldOffSet >= 1) {
-                    sliderContainer.setBackgroundColor(Color.parseColor("#FF000000"));
-                    view_Stick.setVisibility(View.INVISIBLE);
-                    onback_img.setVisibility(View.VISIBLE);
-                    share_img.setVisibility(View.VISIBLE);
-                    view_bottom_rel.setBackgroundColor(getResources().getColor(R.color.card_background));
-                } else if (oldOffSet >= 0.80f) {
-                    sliderContainer.setBackgroundColor(Color.parseColor("#A6000000"));
-                    view_bottom_rel.setBackground(getResources().getDrawable(R.drawable.bottom_sheet_language_back));
-                    view_Stick.setVisibility(View.VISIBLE);
-                    onback_img.setVisibility(View.INVISIBLE);
-                    share_img.setVisibility(View.INVISIBLE);
-                    prom_scroll.stopNestedScroll();
-                } else if (oldOffSet >= 0.70f) {
-                    sliderContainer.setBackgroundColor(Color.parseColor("#66000000"));
-                    view_bottom_rel.setBackground(getResources().getDrawable(R.drawable.bottom_sheet_language_back));
-                    view_Stick.setVisibility(View.VISIBLE);
-                    onback_img.setVisibility(View.INVISIBLE);
-                    share_img.setVisibility(View.INVISIBLE);
-                    prom_scroll.stopNestedScroll();
-                } else if (oldOffSet >= 0.60f) {
-                    sliderContainer.setBackgroundColor(Color.parseColor("#33000000"));
-                    view_bottom_rel.setBackground(getResources().getDrawable(R.drawable.bottom_sheet_language_back));
-                    view_Stick.setVisibility(View.VISIBLE);
-                    onback_img.setVisibility(View.INVISIBLE);
-                    share_img.setVisibility(View.INVISIBLE);
-                    prom_scroll.stopNestedScroll();
-                } else if (oldOffSet >= 0.50f) {
-                    sliderContainer.setBackgroundColor(Color.parseColor("#00000000"));
-                    view_Stick.setVisibility(View.VISIBLE);
-                    onback_img.setVisibility(View.INVISIBLE);
-                    share_img.setVisibility(View.INVISIBLE);
-                    prom_scroll.stopNestedScroll();
-                    view_bottom_rel.setBackground(getResources().getDrawable(R.drawable.bottom_sheet_language_back));
-                } else if (oldOffSet < 0.50f) {
-                    view_Stick.setVisibility(View.VISIBLE);
-                    view_bottom_rel.setBackground(getResources().getDrawable(R.drawable.bottom_sheet_language_back));
-                    onback_img.setVisibility(View.INVISIBLE);
-                    share_img.setVisibility(View.INVISIBLE);
-                    prom_scroll.stopNestedScroll();
-                }
-            }
-        });
 
         all_views_viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

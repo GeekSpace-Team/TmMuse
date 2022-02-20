@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.util.ArrayList;
 
@@ -31,6 +31,7 @@ import geek.space.tmmuse.Adapter.SearchHistoryAdapter.SearchHistoryAdapter;
 import geek.space.tmmuse.Adapter.SearchPageAdapter.SearchKeyWordAdapter;
 import geek.space.tmmuse.Adapter.SearchPageAdapter.SearchPageAdapter;
 import geek.space.tmmuse.Common.Font.Font;
+import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Model.AllProfile.AllProfile;
 import geek.space.tmmuse.Model.SearchHistory.GetSearchHistory;
 import geek.space.tmmuse.Model.SearchHistory.SearchHistory;
@@ -61,8 +62,7 @@ public class SearchActivity extends AppCompatActivity {
     public static Integer page = 1;
     public static ArrayList<AllProfile> allProfiles = new ArrayList<>();
     private LinearLayout error_search_layout;
-    private ProgressBar search_progress;
-    private boolean isLoading=false;
+    private boolean isLoading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,9 +105,11 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void setSearchResultList(int i) {
+        KProgressHUD progress = Utils.AppProgressBar(this);
+        progress.setLabel(getResources().getString(R.string.wait));
+        progress.show();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        isLoading=true;
-        search_progress.setVisibility(View.VISIBLE);
+        isLoading = true;
         Call<GetSearchHistory> getSearchHistoryCall = apiInterface.get_search_history();
         getSearchHistoryCall.enqueue(new Callback<GetSearchHistory>() {
             @Override
@@ -119,23 +121,29 @@ public class SearchActivity extends AppCompatActivity {
                     top_key_words_rec.setVisibility(View.VISIBLE);
                     search_result_layout.setVisibility(View.VISIBLE);
                     search_history_layout.setVisibility(View.GONE);
-                    search_progress.setVisibility(View.GONE);
-                    isLoading=false;
+                    isLoading = false;
                     setSearchAdapter();
                 } else {
                     search_rec.setVisibility(View.GONE);
                     error_search_layout.setVisibility(View.VISIBLE);
-                    top_key_words_rec.setVisibility(View.VISIBLE);
-                    search_result_layout.setVisibility(View.VISIBLE);
+                    top_key_words_rec.setVisibility(View.GONE);
+                    search_result_layout.setVisibility(View.GONE);
+                    search_history_rec.setVisibility(View.VISIBLE);
                 }
+                progress.dismiss();
+                isLoading = false;
             }
 
             @Override
             public void onFailure(Call<GetSearchHistory> call, Throwable t) {
                 search_result_layout.setVisibility(View.GONE);
                 search_history_layout.setVisibility(View.VISIBLE);
-                search_progress.setVisibility(View.GONE);
-                isLoading=false;
+                isLoading = false;
+                Utils.showCustomToast(getResources().getString(R.string.check_internet),
+                        R.drawable.ic_wifi_no_connection,
+                        SearchActivity.this,
+                        R.color.no_internet_back);
+                progress.dismiss();
             }
         });
 
@@ -219,8 +227,8 @@ public class SearchActivity extends AppCompatActivity {
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
 
-                if (!recyclerView.canScrollVertically(1)){
-                    if (!isLoading){
+                if (!recyclerView.canScrollVertically(1)) {
+                    if (!isLoading) {
                         loadMore();
                     }
                 }
@@ -237,7 +245,9 @@ public class SearchActivity extends AppCompatActivity {
             allProfiles.clear();
         }
         saveSearchHistory();
-
+        KProgressHUD progress = Utils.AppProgressBar(this);
+        progress.setLabel(getResources().getString(R.string.wait));
+        progress.show();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         SearchHistory query = new SearchHistory(page, limit, toString.toLowerCase());
         Call<PostSearchProfile> call = apiInterface.search_profile(query);
@@ -261,21 +271,27 @@ public class SearchActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(SearchActivity.this, "" + response.code(), Toast.LENGTH_SHORT).show();
+//
                 }
+                progress.dismiss();
             }
 
             @Override
             public void onFailure(Call<PostSearchProfile> call, Throwable t) {
+
+                Utils.showCustomToast(getResources().getString(R.string.check_internet),
+                        R.drawable.ic_wifi_no_connection,
+                        SearchActivity.this,
+                        R.color.no_internet_back);
+
+                progress.dismiss();
                 Log.e("Search error", t.getMessage());
-                Toast.makeText(SearchActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void initViews() {
         full_name_edit = findViewById(R.id.full_name_edit);
-        search_progress = findViewById(R.id.search_progress);
         clear_search_img = findViewById(R.id.clear_search_img);
         search_rec = findViewById(R.id.search_rec);
         top_key_words_rec = findViewById(R.id.top_key_words_rec);

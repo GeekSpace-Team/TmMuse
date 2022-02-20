@@ -1,15 +1,17 @@
 package geek.space.tmmuse.Activity.Interest;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.util.ArrayList;
 
@@ -23,7 +25,7 @@ import geek.space.tmmuse.Model.Interest.GetInterest;
 import geek.space.tmmuse.Model.Interest.Interest;
 import geek.space.tmmuse.Model.Interest.PostInterest;
 import geek.space.tmmuse.Model.Interest.SubInterest;
-import geek.space.tmmuse.Model.UserRegister.UserGetRegister;
+import geek.space.tmmuse.Model.UserRegister.StringResponse;
 import geek.space.tmmuse.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,6 +45,7 @@ public class Interest_Activity extends AppCompatActivity {
     public static ArrayList<Integer> selectedInterests=new ArrayList<>();
     private ApiInterface apiClient;
     private ProgressBar progressBar;
+    private Context context=this;
 
     @Override
 
@@ -56,6 +59,9 @@ public class Interest_Activity extends AppCompatActivity {
     }
 
     private void getAllInterst() {
+        KProgressHUD progress=Utils.AppProgressBar(context);
+        progress.setLabel(getResources().getString(R.string.wait));
+        progress.show();
         String token="Bearer "+ Utils.getSharePreferences(this,"token");
         apiClient = ApiClient.getClient()
                 .create(ApiInterface.class);
@@ -68,13 +74,21 @@ public class Interest_Activity extends AppCompatActivity {
                     interests=getInterest.getBody();
                     setIneterstAdapter();
                 } else {
-                    Toast.makeText(Interest_Activity.this, "Yalnyslyk yuze cykdy", Toast.LENGTH_SHORT).show();
+                    Utils.showCustomToast(getApplicationContext().getResources().getString(R.string.check_internet),
+                            R.drawable.ic_wifi_no_connection,
+                            getApplicationContext(),
+                            R.color.no_internet_back);
                 }
+                progress.dismiss();
             }
 
             @Override
             public void onFailure(Call<GetInterest> call, Throwable t) {
-                Toast.makeText(Interest_Activity.this, "Internedinizi barlan", Toast.LENGTH_SHORT).show();
+                Utils.showCustomToast(getApplicationContext().getResources().getString(R.string.check_internet),
+                        R.drawable.ic_wifi_no_connection,
+                        getApplicationContext(),
+                        R.color.no_internet_back);
+                progress.dismiss();
             }
         });
     }
@@ -106,14 +120,17 @@ public class Interest_Activity extends AppCompatActivity {
         }
         progressBar.setVisibility(View.VISIBLE);
         next_txt.setVisibility(View.GONE);
+        KProgressHUD progress=Utils.AppProgressBar(context);
+        progress.setLabel(getResources().getString(R.string.wait));
+        progress.show();
         String token="Bearer "+ Utils.getSharePreferences(this,"token");
         apiClient = ApiClient.getClient()
                 .create(ApiInterface.class);
         PostInterest postInterest = new PostInterest(Utils.getSharePreferences(this, "user_id"), selectedInterests);
-        Call<UserGetRegister> postInterestCall = apiClient.add_user_interest(postInterest, token);
-        postInterestCall.enqueue(new Callback<UserGetRegister>() {
+        Call<StringResponse> postInterestCall = apiClient.add_user_interest(postInterest, token);
+        postInterestCall.enqueue(new Callback<StringResponse>() {
             @Override
-            public void onResponse(Call<UserGetRegister> call, Response<UserGetRegister> response) {
+            public void onResponse(Call<StringResponse> call, Response<StringResponse> response) {
                 if (response.isSuccessful() && response.body()!=null){
                     progressBar.setVisibility(View.GONE);
                     next_txt.setVisibility(View.VISIBLE);
@@ -121,13 +138,21 @@ public class Interest_Activity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), Main_Menu.class));
                     finish();
                 } else {
-                    Toast.makeText(Interest_Activity.this, "Yalnyslyk yuze cykdy", Toast.LENGTH_SHORT).show();
+                    Utils.showCustomToast(getApplicationContext().getResources().getString(R.string.check_internet),
+                            R.drawable.ic_wifi_no_connection,
+                            context,
+                            R.color.no_internet_back);
                 }
+                progress.dismiss();
             }
 
             @Override
-            public void onFailure(Call<UserGetRegister> call, Throwable t) {
-                Toast.makeText(Interest_Activity.this, "Internedinizi barlan", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<StringResponse> call, Throwable t) {
+                Utils.showCustomToast(getApplicationContext().getResources().getString(R.string.check_internet),
+                        R.drawable.ic_wifi_no_connection,
+                        context,
+                        R.color.no_internet_back);
+                progress.dismiss();
             }
         });
     }

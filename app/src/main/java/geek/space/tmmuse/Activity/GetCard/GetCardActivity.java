@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.util.Calendar;
 import java.util.List;
@@ -160,16 +161,19 @@ public class GetCardActivity extends AppCompatActivity {
 
         send_btn.setOnClickListener(view -> {
             if (day_birth_edit.length() == 0) {
-                Toast.makeText(GetCardActivity.this, "Задайте пожалуйста день рождение", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GetCardActivity.this, getResources().getString(R.string.chek_brith), Toast.LENGTH_SHORT).show();
             } else if (jynsy.equals("")) {
-                Toast.makeText(GetCardActivity.this, "Выборите пол", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GetCardActivity.this, getResources().getString(R.string.chek_gender), Toast.LENGTH_SHORT).show();
             } else if (email_edit.length() == 0) {
-                Toast.makeText(GetCardActivity.this, "Напишите email", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GetCardActivity.this, getResources().getString(R.string.chek_email), Toast.LENGTH_SHORT).show();
             } else if (!accept_tex_box.isChecked()) {
-                Toast.makeText(GetCardActivity.this, "Вы должны соглашаться что бы отправить данные", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GetCardActivity.this, getResources().getString(R.string.chek_permission), Toast.LENGTH_SHORT).show();
             } else if (take_info_card.equals("")) {
-                Toast.makeText(GetCardActivity.this, "Выборети пожалуйста как вы хотите получить информацию о карте", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GetCardActivity.this, getResources().getString(R.string.chek_info_card), Toast.LENGTH_SHORT).show();
             } else {
+                KProgressHUD progress = Utils.AppProgressBar(this);
+                progress.setLabel(getResources().getString(R.string.wait));
+                progress.show();
                 apiInterface = ApiClient.getClient()
                         .create(ApiInterface.class);
                 String email_user = email_edit.getText().toString();
@@ -207,14 +211,20 @@ public class GetCardActivity extends AppCompatActivity {
                             });
                             alert.show();
                         } else {
-                            Toast.makeText(GetCardActivity.this, "Yalnyslyk yuze cykdy", Toast.LENGTH_SHORT).show();
+                            Utils.showCustomToast(getResources().getString(R.string.check_internet),
+                                    R.drawable.ic_wifi_no_connection,
+                                    GetCardActivity.this,
+                                    R.color.no_internet_back);
                         }
+                        progress.dismiss();
                     }
 
                     @Override
-                    public void onFailure(Call<PostGetCard> call, Throwable t) {
-                        Toast.makeText(GetCardActivity.this, R.string.check_internet, Toast.LENGTH_SHORT).show();
-                        findViewById(R.id.getCard_progress).setVisibility(View.VISIBLE);
+                    public void onFailure(Call<PostGetCard> call, Throwable t) {Utils.showCustomToast(getResources().getString(R.string.check_internet),
+                            R.drawable.ic_wifi_no_connection,
+                            GetCardActivity.this,
+                            R.color.no_internet_back);
+                        progress.dismiss(); findViewById(R.id.getCard_progress).setVisibility(View.VISIBLE);
                         send_btn.setVisibility(View.GONE);
                     }
                 });

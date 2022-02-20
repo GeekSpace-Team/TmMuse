@@ -52,18 +52,23 @@ public class TestAdapterViewPager extends RecyclerView.Adapter<TestAdapterViewPa
         if (imgProfile.getVR()){
             holder.itemView.setVisibility(View.GONE);
         }
-        if(isFirst){
-            Glide.with(context).load(Constant.BASE_URL_IMAGE+imgProfile.getLarge_image()).into(holder.product_img);
-            viewPager.setAdapter(new TestViewPagerAdapter(context, imgProfiles));
-            isFirst=false;
-        }
-        holder.product_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewPager.setCurrentItem(position);
+        try {
+            if(isFirst){
+                Glide.with(context).load(Constant.BASE_URL_IMAGE+imgProfile.getLarge_image()).into(holder.product_img);
+                viewPager.setAdapter(new TestViewPagerAdapter(context, imgProfiles));
+                isFirst=false;
             }
-        });
-        Glide.with(context).load(Constant.BASE_URL_IMAGE+imgProfile.getLarge_image()).into(holder.product_img);
+            holder.product_img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    viewPager.setCurrentItem(position);
+                }
+            });
+            Glide.with(context).load(Constant.BASE_URL_IMAGE+imgProfile.getLarge_image()).into(holder.product_img);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @Override

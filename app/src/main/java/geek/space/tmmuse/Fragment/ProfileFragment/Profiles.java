@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.util.ArrayList;
 
@@ -113,13 +114,14 @@ public class Profiles extends Fragment {
     }
 
     public static void setProfileListRequest(Integer page,Context context, ProgressBar progressBar ) {
-
+        KProgressHUD progress = Utils.AppProgressBar(context);
+        progress.setLabel(context.getResources().getString(R.string.wait));
+        progress.show();
         ApiInterface apiInterface = ApiClient.getClient()
                 .create(ApiInterface.class);
         GetProfile getProfile = new GetProfile(categoryID, sort, tags, limit, page);
         Call<ResponseAllProfile> allProfileCall = apiInterface.get_profile(getProfile);
         isLoading = true;
-        progressBar.setVisibility(View.VISIBLE);
         allProfileCall.enqueue(new Callback<ResponseAllProfile>() {
             @Override
             public void onResponse(Call<ResponseAllProfile> call, Response<ResponseAllProfile> response) {
@@ -146,17 +148,23 @@ public class Profiles extends Fragment {
                         ex.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(context, "Yalnyslyk", Toast.LENGTH_SHORT).show();
+                    Utils.showCustomToast(context.getResources().getString(R.string.check_internet),
+                            R.drawable.ic_wifi_no_connection,
+                            context,
+                            R.color.no_internet_back);
                 }
+                progress.dismiss();
                 isLoading = false;
-                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<ResponseAllProfile> call, Throwable t) {
-                Toast.makeText(context, "Internedinizi barlan", Toast.LENGTH_SHORT).show();
+                Utils.showCustomToast(context.getResources().getString(R.string.check_internet),
+                        R.drawable.ic_wifi_no_connection,
+                        context,
+                        R.color.no_internet_back);
+                progress.dismiss();
                 isLoading=false;
-                progressBar.setVisibility(View.GONE);
                 Log.e("Error",t.getMessage());
             }
         });
@@ -178,8 +186,7 @@ public class Profiles extends Fragment {
 
 
 
-    private void navigatioDrawerSet() {
-
+    public void navigatioDrawerSet() {
         navigation_filter.bringToFront();
         navigation_filter.setItemIconTintList(null);
         filter_img.setOnClickListener(new View.OnClickListener() {

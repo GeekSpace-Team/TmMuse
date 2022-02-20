@@ -4,19 +4,20 @@ import geek.space.tmmuse.Model.AboutUs.Constant;
 import geek.space.tmmuse.Model.AllProfile.GetProfileTiny;
 import geek.space.tmmuse.Model.AllProfile.ResponseAllProfile;
 import geek.space.tmmuse.Model.AllProfile.GetProfile;
-import geek.space.tmmuse.Model.GetCard.GetCardBody;
 import geek.space.tmmuse.Model.GetCard.GetCardResponse;
 import geek.space.tmmuse.Model.GetCard.PostGetCard;
 import geek.space.tmmuse.Model.GetCard.SendGetCard;
+import geek.space.tmmuse.Model.Help.PostHelp;
 import geek.space.tmmuse.Model.Home.Home;
 import geek.space.tmmuse.Model.Interest.GetInterest;
 import geek.space.tmmuse.Model.Interest.PostInterest;
+import geek.space.tmmuse.Model.Message.GetMessage;
 import geek.space.tmmuse.Model.SearchHistory.GetSearchHistory;
 import geek.space.tmmuse.Model.SearchHistory.SearchHistory;
 import geek.space.tmmuse.Model.SearchPage.PostSearchProfile;
 import geek.space.tmmuse.Model.UserRegister.CheckUserCode;
 import geek.space.tmmuse.Model.UserRegister.ResponseCheckUser;
-import geek.space.tmmuse.Model.UserRegister.UserGetRegister;
+import geek.space.tmmuse.Model.UserRegister.StringResponse;
 import geek.space.tmmuse.Model.UserRegister.UserPostRegister;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -31,7 +32,7 @@ public interface ApiInterface {
     Call<Home> getHome(@Query("page") Integer page);
 
     @POST("/phone-verification")
-    Call<UserGetRegister> phoneVerification(@Body UserPostRegister userPostRegister);
+    Call<StringResponse> phoneVerification(@Body UserPostRegister userPostRegister);
 
     @POST("/code-verification")
     Call<ResponseCheckUser> code_verification(@Body CheckUserCode checkUserCode);
@@ -40,8 +41,8 @@ public interface ApiInterface {
     Call<GetInterest> get_interest(@Header("Authorization") String token);
 
     @POST("add-user-interest")
-    Call<UserGetRegister> add_user_interest(@Body PostInterest postInterest,
-                                         @Header("Authorization") String token);
+    Call<StringResponse> add_user_interest(@Body PostInterest postInterest,
+                                           @Header("Authorization") String token);
 
     @GET("/get-constant?")
     Call<Constant> get_constant(@Query("type") String string);
@@ -66,4 +67,10 @@ public interface ApiInterface {
     @POST("/search-profile")
     Call<PostSearchProfile> search_profile(@Body SearchHistory body);
 
+    // Response
+    @POST("/insert-inbox")
+    Call<StringResponse> insert_inbox(@Body PostHelp postHelp, @Header("Authorization") String token);
+
+    @GET("/answers")
+    Call<GetMessage> answer(@Header("Authorization") String token);
 }
