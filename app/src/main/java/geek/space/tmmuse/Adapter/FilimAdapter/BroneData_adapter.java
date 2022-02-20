@@ -22,6 +22,7 @@ public class BroneData_adapter extends RecyclerView.Adapter<BroneData_adapter.Vi
     private NeumorphButton oldSearchKeyWordButton;
     private RecyclerView timeRec;
     private boolean isFirst=true;
+    public static String selectedDate="";
     public BroneData_adapter(Context context, ArrayList<MovieTime> movieTimes,RecyclerView timeRec) {
         this.context = context;
         this.movieTimes = movieTimes;
@@ -46,6 +47,7 @@ public class BroneData_adapter extends RecyclerView.Adapter<BroneData_adapter.Vi
             timeRec.setLayoutManager(new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false));
             oldSearchKeyWordButton=holder.search_key_word_btn;
             isFirst=false;
+            selectedDate=movieTime.getDate();
         }
         holder.search_key_word_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +62,7 @@ public class BroneData_adapter extends RecyclerView.Adapter<BroneData_adapter.Vi
                     oldSearchKeyWordButton.setShapeType(0);
                 }
                 oldSearchKeyWordButton=holder.search_key_word_btn;
+                selectedDate=movieTime.getDate();
             }
         });
     }

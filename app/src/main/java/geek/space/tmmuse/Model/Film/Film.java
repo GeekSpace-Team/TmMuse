@@ -1,20 +1,24 @@
 package geek.space.tmmuse.Model.Film;
 
+import java.util.ArrayList;
+
+import geek.space.tmmuse.Model.AllProfile.ImgProfile;
+
 public class Film {
    private int id;
    private String nameTM;
    private String nameRU;
    private String short_descTM;
    private String short_descRU;
-   private String small_image;
+   private ArrayList<ImgProfile> image = new ArrayList<>();
 
-    public Film(int id, String nameTM, String nameRU, String short_descTM, String short_descRU, String small_image) {
+    public Film(int id, String nameTM, String nameRU, String short_descTM, String short_descRU, ArrayList<ImgProfile> image) {
         this.id = id;
         this.nameTM = nameTM;
         this.nameRU = nameRU;
         this.short_descTM = short_descTM;
         this.short_descRU = short_descRU;
-        this.small_image = small_image;
+        this.image = image;
     }
 
     public int getId() {
@@ -57,11 +61,11 @@ public class Film {
         this.short_descRU = short_descRU;
     }
 
-    public String getSmall_image() {
-        return small_image;
+    public ArrayList<ImgProfile> getImage() {
+        return image;
     }
 
-    public void setSmall_image(String small_image) {
-        this.small_image = small_image;
+    public void setImage(ArrayList<ImgProfile> image) {
+        this.image = image;
     }
 }

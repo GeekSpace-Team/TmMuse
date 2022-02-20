@@ -40,8 +40,9 @@ public class AllProfile {
     private Boolean is_cash;
     private Boolean is_terminal;
     private Boolean is_wifi;
+    private Integer cinema_id;
 
-    public AllProfile(Integer id, String nameTM, String nameRU, String short_descTM, String short_descRU, Integer like, Integer dislike, String instagram, String site, Integer status, Integer is_VIP, ArrayList<ImgProfile> image, ArrayList<NumbersProfile> phone_numbers, Boolean is_promotion, String promotion_status, String location, String address, String work_hours, Boolean delivery, String cousineTM, String cousineRU, String average_check, Boolean is_active_card, Integer tm_muse_card, Boolean is_certificate, Boolean is_promo, Integer category_id, Integer view_count, Integer promo_count, String descriptionTM, String descriptionRU, Integer order_in_list, String free_time, Boolean is_cash, Boolean is_terminal, Boolean is_wifi) {
+    public AllProfile(Integer id, String nameTM, String nameRU, String short_descTM, String short_descRU, Integer like, Integer dislike, String instagram, String site, Integer status, Integer is_VIP, ArrayList<ImgProfile> image, ArrayList<NumbersProfile> phone_numbers, Boolean is_promotion, String promotion_status, String location, String address, String work_hours, Boolean delivery, String cousineTM, String cousineRU, String average_check, Boolean is_active_card, Integer tm_muse_card, Boolean is_certificate, Boolean is_promo, Integer category_id, Integer view_count, Integer promo_count, String descriptionTM, String descriptionRU, Integer order_in_list, String free_time, Boolean is_cash, Boolean is_terminal, Boolean is_wifi, Integer cinema_id) {
         this.id = id;
         this.nameTM = nameTM;
         this.nameRU = nameRU;
@@ -78,6 +79,7 @@ public class AllProfile {
         this.is_cash = is_cash;
         this.is_terminal = is_terminal;
         this.is_wifi = is_wifi;
+        this.cinema_id = cinema_id;
     }
 
     public Integer getId() {
@@ -366,5 +368,13 @@ public class AllProfile {
 
     public void setIs_wifi(Boolean is_wifi) {
         this.is_wifi = is_wifi;
+    }
+
+    public Integer getCinema_id() {
+        return cinema_id;
+    }
+
+    public void setCinema_id(Integer cinema_id) {
+        this.cinema_id = cinema_id;
     }
 }

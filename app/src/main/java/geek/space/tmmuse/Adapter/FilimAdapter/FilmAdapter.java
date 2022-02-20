@@ -53,7 +53,7 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
             holder.name_film.setText(film.getNameRU());
         }
         try {
-            Glide.with(context).load(Constant.BASE_URL_IMAGE+film.getSmall_image()).into(holder.films_img);
+            Glide.with(context).load(Constant.BASE_URL_IMAGE+film.getImage().get(0).getSmall_image()).into(holder.films_img);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -63,7 +63,7 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
             public void onClick(View view) {
                 Intent intent = new Intent(context, AllProductViewsActivity.class);
                 intent.putExtra("ID", film.getId()+"");
-                intent.putExtra("image",Constant.BASE_URL+film.getSmall_image());
+                intent.putExtra("image",Constant.BASE_URL+film.getImage().get(0).getSmall_image());
                 context.startActivity(intent);
             }
         });

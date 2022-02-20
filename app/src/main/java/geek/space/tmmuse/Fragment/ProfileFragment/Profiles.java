@@ -148,10 +148,6 @@ public class Profiles extends Fragment {
                         ex.printStackTrace();
                     }
                 } else {
-                    Utils.showCustomToast(context.getResources().getString(R.string.check_internet),
-                            R.drawable.ic_wifi_no_connection,
-                            context,
-                            R.color.no_internet_back);
                 }
                 progress.dismiss();
                 isLoading = false;

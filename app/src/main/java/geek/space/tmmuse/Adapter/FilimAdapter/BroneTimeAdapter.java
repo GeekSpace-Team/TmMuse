@@ -23,6 +23,7 @@ public class BroneTimeAdapter extends RecyclerView.Adapter<BroneTimeAdapter.View
     private LinearLayout oldSearchKeyWordButton;
     private TextView oldestTextView;
     private boolean isFirst=true;
+    public static String selectedTime="";
     public BroneTimeAdapter(Context context, ArrayList<String> movieTimes) {
         this.context = context;
         this.movieTimes = movieTimes;
@@ -45,6 +46,7 @@ public class BroneTimeAdapter extends RecyclerView.Adapter<BroneTimeAdapter.View
             oldSearchKeyWordButton=holder.bron_time_linear;
             oldestTextView=holder.bron_time_txt;
             isFirst=false;
+            selectedTime=movieTime;
         }
         holder.bron_time_linear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +60,7 @@ public class BroneTimeAdapter extends RecyclerView.Adapter<BroneTimeAdapter.View
                 }
                 oldSearchKeyWordButton=holder.bron_time_linear;
                 oldestTextView=holder.bron_time_txt;
+                selectedTime=movieTime;
             }
         });
     }

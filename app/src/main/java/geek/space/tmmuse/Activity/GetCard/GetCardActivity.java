@@ -220,7 +220,8 @@ public class GetCardActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<PostGetCard> call, Throwable t) {Utils.showCustomToast(getResources().getString(R.string.check_internet),
+                    public void onFailure(Call<PostGetCard> call, Throwable t) {
+                        Utils.showCustomToast(getResources().getString(R.string.check_internet),
                             R.drawable.ic_wifi_no_connection,
                             GetCardActivity.this,
                             R.color.no_internet_back);

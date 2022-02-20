@@ -43,9 +43,11 @@ import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 
 import geek.space.tmmuse.API.ApiClient;
 import geek.space.tmmuse.API.ApiInterface;
+import geek.space.tmmuse.Activity.GetCard.GetCardActivity;
 import geek.space.tmmuse.Activity.VrImage.VrImageActivity;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneData_adapter;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneTimeAdapter;
@@ -53,6 +55,7 @@ import geek.space.tmmuse.Adapter.GalleryAdapter.GalleryAdapter;
 import geek.space.tmmuse.Adapter.ProfilePhoneAdapter.ProfilePhoneAdapter;
 import geek.space.tmmuse.Adapter.PromotionsPage.PromotionAndOffersAdapter;
 import geek.space.tmmuse.Adapter.TestAdapterViewPager.TestAdapterViewPager;
+import geek.space.tmmuse.Common.AppAlert;
 import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
@@ -60,7 +63,9 @@ import geek.space.tmmuse.Model.AllProfile.AllProfile;
 import geek.space.tmmuse.Model.AllProfile.GetProfileTiny;
 import geek.space.tmmuse.Model.AllProfile.ImgProfile;
 import geek.space.tmmuse.Model.AllProfile.ProfilePhone;
+import geek.space.tmmuse.Model.Film.BronMovie;
 import geek.space.tmmuse.Model.Film.MovieTime;
+import geek.space.tmmuse.Model.Film.RequestBronFilm;
 import geek.space.tmmuse.Model.PromotionAndOffers.PromotionAndOffers;
 import geek.space.tmmuse.Model.TestModelViewPager.TestModelViewPager;
 import geek.space.tmmuse.R;
@@ -115,13 +120,12 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private boolean inRangeCollapsing;
     private int string_to_int;
     private String largeVrImageUrl = "";
-
+    AllProfile profile=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_product_views);
         initViews();
-        makeStatusbarTransparent();
         setFont();
         getLang();
         setAllProfileList();
@@ -141,7 +145,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
             public void onResponse(Call<GetProfileTiny> call, Response<GetProfileTiny> response) {
                 if (response.isSuccessful() || response.body().getBody() != null) {
                     Log.e("Log", response.body().toString());
-                    AllProfile profile = response.body().getBody().getProfile();
+                    profile = response.body().getBody().getProfile();
 //                    if (profile == null) {
 //                        return;
 //                    }
@@ -163,6 +167,25 @@ public class AllProductViewsActivity extends AppCompatActivity {
                     }
                     if (response.body().getBody().getPhone_numbers() != null) {
                         profilePhones = response.body().getBody().getPhone_numbers();
+                        call_layout_products.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Context context = AllProductViewsActivity.this;
+                                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(AllProductViewsActivity.this,
+                                        R.style.CustomBottomSheetDialogTheme);
+                                View bottomSheetDialogView = LayoutInflater.from(AllProductViewsActivity.this)
+                                        .inflate(R.layout.phone_bottom_sheet,
+                                                view.findViewById(R.id.phone_bottom));
+                                RecyclerView phone_number_rec;
+                                phone_number_rec = bottomSheetDialogView.findViewById(R.id.phone_number_rec);
+                                LayoutManager layoutManager = new LinearLayoutManager(AllProductViewsActivity.this);
+                                phone_number_rec.setLayoutManager(layoutManager);
+                                phone_number_rec.setAdapter(new ProfilePhoneAdapter(AllProductViewsActivity.this, profilePhones));
+
+                                bottomSheetDialog.setContentView(bottomSheetDialogView);
+                                bottomSheetDialog.show();
+                            }
+                        });
                     }
                     if (response.body().getBody().getProfile().getInstagram() != null) {
                         if (profile.getInstagram().isEmpty()) {
@@ -368,6 +391,8 @@ public class AllProductViewsActivity extends AppCompatActivity {
             }
         });
         NeumorphButton send_btn = dialog.findViewById(R.id.send_btn);
+        ImageView close_dialog_img = dialog.findViewById(R.id.close_dialog_img);
+        close_dialog_img.setOnClickListener(view -> dialog.dismiss());
         send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -409,7 +434,8 @@ public class AllProductViewsActivity extends AppCompatActivity {
         TextView price_bron_txt = dialog.findViewById(R.id.price_bron_txt);
         TextView answer_buy_ticket_txt = dialog.findViewById(R.id.answer_buy_ticket_txt);
         TextView desc_buy_txt = dialog.findViewById(R.id.desc_buy_txt);
-        int price_for_count = string_to_int * 100;
+        Double price_b = Double.parseDouble(profile.getAverage_check());
+        Double price_for_count = string_to_int * price_b;
         price_bron_txt.setText("Price: " + String.valueOf(price_for_count) + " TMT");
 
         no_btn.setTypeface(Font.getInstance(this).getMontserrat_600());
@@ -417,6 +443,55 @@ public class AllProductViewsActivity extends AppCompatActivity {
         price_bron_txt.setTypeface(Font.getInstance(this).getMontserrat_500());
         answer_buy_ticket_txt.setTypeface(Font.getInstance(this).getMontserrat_600());
         desc_buy_txt.setTypeface(Font.getInstance(this).getMontserrat_600());
+
+        yes_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                KProgressHUD progress = Utils.AppProgressBar(AllProductViewsActivity.this);
+                progress.setLabel(getResources().getString(R.string.wait));
+                progress.show();
+                String token = "Bearer " + Utils.getSharePreferences(AllProductViewsActivity.this, "token");
+                ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                BronMovie bronMovie=new BronMovie(profile.getId(), profile.getCinema_id(),
+                        Integer.parseInt(Utils.getSharePreferences(AllProductViewsActivity.this, "user_id")),
+                        BroneData_adapter.selectedDate,BroneTimeAdapter.selectedTime, string_to_int,
+                        Integer.parseInt(profile.getAverage_check()), profile.getPromo_count());
+                Call<RequestBronFilm> requestBronFilmCall = apiInterface.add_ticket(bronMovie, token);
+                requestBronFilmCall.enqueue(new Callback<RequestBronFilm>() {
+                    @Override
+                    public void onResponse(Call<RequestBronFilm> call, Response<RequestBronFilm> response) {
+                        if (response.isSuccessful()){
+                            AppAlert alert = new AppAlert(AllProductViewsActivity.this);
+                            alert.setTitle(AllProductViewsActivity.this.getResources().getString(R.string.access_get_card));
+                            alert.hasCancel(false);
+                            alert.setButtonListener(new AppAlert.ButtonListener() {
+                                @Override
+                                public void onOkListener() {
+                                    alert.dismiss();
+                                }
+
+                                @Override
+                                public void onCancelListener() {
+
+                                }
+                            });
+                            alert.show();
+                        } else {
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RequestBronFilm> call, Throwable t) {
+                        Utils.showCustomToast(getResources().getString(R.string.check_internet),
+                                R.drawable.ic_wifi_no_connection,
+                                AllProductViewsActivity.this,
+                                R.color.no_internet_back);
+                        progress.dismiss(); findViewById(R.id.getCard_progress).setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+        });
 
         final Window window = dialog.getWindow();
         window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -543,12 +618,6 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
     private void setListener() {
 
-        if( bottomsheet.canScrollVertically(-1)){
-            findViewById(R.id.tool_bar).setBackgroundColor(getResources().getColor(R.color.card_background));
-        } else {
-            findViewById(R.id.tool_bar).setBackgroundColor(getResources().getColor(R.color.transparent));
-        }
-
         findViewById(R.id.brone_movie_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -661,25 +730,25 @@ public class AllProductViewsActivity extends AppCompatActivity {
             }
         });
 
-        call_layout_products.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Context context = AllProductViewsActivity.this;
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(AllProductViewsActivity.this,
-                        R.style.CustomBottomSheetDialogTheme);
-                View bottomSheetDialogView = LayoutInflater.from(AllProductViewsActivity.this)
-                        .inflate(R.layout.phone_bottom_sheet,
-                                view.findViewById(R.id.phone_bottom));
-                RecyclerView phone_number_rec;
-                phone_number_rec = bottomSheetDialogView.findViewById(R.id.phone_number_rec);
-                LayoutManager layoutManager = new LinearLayoutManager(AllProductViewsActivity.this);
-                phone_number_rec.setLayoutManager(layoutManager);
-                phone_number_rec.setAdapter(new ProfilePhoneAdapter(AllProductViewsActivity.this, profilePhones));
-
-                bottomSheetDialog.setContentView(bottomSheetDialogView);
-                bottomSheetDialog.show();
-            }
-        });
+//        call_layout_products.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Context context = AllProductViewsActivity.this;
+//                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(AllProductViewsActivity.this,
+//                        R.style.CustomBottomSheetDialogTheme);
+//                View bottomSheetDialogView = LayoutInflater.from(AllProductViewsActivity.this)
+//                        .inflate(R.layout.phone_bottom_sheet,
+//                                view.findViewById(R.id.phone_bottom));
+//                RecyclerView phone_number_rec;
+//                phone_number_rec = bottomSheetDialogView.findViewById(R.id.phone_number_rec);
+//                LayoutManager layoutManager = new LinearLayoutManager(AllProductViewsActivity.this);
+//                phone_number_rec.setLayoutManager(layoutManager);
+//                phone_number_rec.setAdapter(new ProfilePhoneAdapter(AllProductViewsActivity.this, profilePhones));
+//
+//                bottomSheetDialog.setContentView(bottomSheetDialogView);
+//                bottomSheetDialog.show();
+//            }
+//        });
 
 
     }
@@ -692,21 +761,6 @@ public class AllProductViewsActivity extends AppCompatActivity {
     public void onBack(View view) {
         onBackPressed();
         finish();
-    }
-
-
-    private void makeStatusbarTransparent() {
-
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-        }
-
     }
 
     private void allProfileImageAdapter() {
