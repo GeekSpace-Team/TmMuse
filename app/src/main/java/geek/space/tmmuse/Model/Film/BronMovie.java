@@ -7,10 +7,10 @@ public class BronMovie {
     private String movie_date;
     private String movie_time;
     private Integer ticket_count;
-    private Integer ticket_price;
-    private Integer ticket_discount;
+    private Double ticket_price;
+    private Double ticket_discount;
 
-    public BronMovie(Integer cinema_id, Integer profile_id, Integer user_id, String movie_date, String movie_time, Integer ticket_count, Integer ticket_price, Integer ticket_discount) {
+    public BronMovie(Integer cinema_id, Integer profile_id, Integer user_id, String movie_date, String movie_time, Integer ticket_count, Double ticket_price, Double ticket_discount) {
         this.cinema_id = cinema_id;
         this.profile_id = profile_id;
         this.user_id = user_id;
@@ -69,19 +69,19 @@ public class BronMovie {
         this.ticket_count = ticket_count;
     }
 
-    public Integer getTicket_price() {
+    public Double getTicket_price() {
         return ticket_price;
     }
 
-    public void setTicket_price(Integer ticket_price) {
+    public void setTicket_price(Double ticket_price) {
         this.ticket_price = ticket_price;
     }
 
-    public Integer getTicket_discount() {
+    public Double getTicket_discount() {
         return ticket_discount;
     }
 
-    public void setTicket_discount(Integer ticket_discount) {
+    public void setTicket_discount(Double ticket_discount) {
         this.ticket_discount = ticket_discount;
     }
 }

@@ -149,6 +149,7 @@
     <string name="enter_number">Telefon belginizi doly girizin</string>
     <string name="get_sms">Sms arkaly gelen kody ashakdaky oyjuklere girizin!</string>
     <string name="enter_all_values">Maglumatlary doly girizin</string>
+    <string name="ticket_details">Ticket details</string>
 
 
 </resources>

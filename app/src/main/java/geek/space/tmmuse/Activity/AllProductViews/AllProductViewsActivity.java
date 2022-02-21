@@ -3,9 +3,7 @@ package geek.space.tmmuse.Activity.AllProductViews;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,7 +23,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -35,7 +32,6 @@ import androidx.recyclerview.widget.RecyclerView.LayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -43,11 +39,10 @@ import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 
 import geek.space.tmmuse.API.ApiClient;
 import geek.space.tmmuse.API.ApiInterface;
-import geek.space.tmmuse.Activity.GetCard.GetCardActivity;
+import geek.space.tmmuse.Activity.Sig_Up.Sig_Up_Activity;
 import geek.space.tmmuse.Activity.VrImage.VrImageActivity;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneData_adapter;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneTimeAdapter;
@@ -120,7 +115,8 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private boolean inRangeCollapsing;
     private int string_to_int;
     private String largeVrImageUrl = "";
-    AllProfile profile=null;
+    AllProfile profile = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -272,7 +268,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
                     if (profile.getAverage_check() != null) {
                         average_check_layout.setVisibility(View.VISIBLE);
                         average_check_desc_txt.setText(profile.getAverage_check() + "TM");
-                        if (profile.getAverage_check().isEmpty()) {
+                        if (profile.getAverage_check() == null) {
                             average_check_layout.setVisibility(View.GONE);
                         }
                     }
@@ -295,7 +291,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
                                             .load(Constant.BASE_URL_IMAGE + img.getLarge_image())
                                             .into(vr_img);
                                     largeVrImageUrl = Constant.BASE_URL_IMAGE + img.getLarge_image();
-                                } catch (Exception e){
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                 }
 
@@ -434,7 +430,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
         TextView price_bron_txt = dialog.findViewById(R.id.price_bron_txt);
         TextView answer_buy_ticket_txt = dialog.findViewById(R.id.answer_buy_ticket_txt);
         TextView desc_buy_txt = dialog.findViewById(R.id.desc_buy_txt);
-        Double price_b = Double.parseDouble(profile.getAverage_check());
+        Double price_b = profile.getAverage_check();
         Double price_for_count = string_to_int * price_b;
         price_bron_txt.setText("Price: " + String.valueOf(price_for_count) + " TMT");
 
@@ -447,20 +443,25 @@ public class AllProductViewsActivity extends AppCompatActivity {
         yes_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (BroneData_adapter.selectedDate.isEmpty() || BroneTimeAdapter.selectedTime.isEmpty()) {
+                    Toast.makeText(AllProductViewsActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 KProgressHUD progress = Utils.AppProgressBar(AllProductViewsActivity.this);
                 progress.setLabel(getResources().getString(R.string.wait));
                 progress.show();
+//                profile.getCinema_id()
                 String token = "Bearer " + Utils.getSharePreferences(AllProductViewsActivity.this, "token");
                 ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                BronMovie bronMovie=new BronMovie(profile.getId(), profile.getCinema_id(),
+                BronMovie bronMovie = new BronMovie(2, profile.getId(),
                         Integer.parseInt(Utils.getSharePreferences(AllProductViewsActivity.this, "user_id")),
-                        BroneData_adapter.selectedDate,BroneTimeAdapter.selectedTime, string_to_int,
-                        Integer.parseInt(profile.getAverage_check()), profile.getPromo_count());
+                        BroneData_adapter.selectedDate, BroneTimeAdapter.selectedTime, string_to_int,
+                        profile.getAverage_check(), 0.0);
                 Call<RequestBronFilm> requestBronFilmCall = apiInterface.add_ticket(bronMovie, token);
                 requestBronFilmCall.enqueue(new Callback<RequestBronFilm>() {
                     @Override
                     public void onResponse(Call<RequestBronFilm> call, Response<RequestBronFilm> response) {
-                        if (response.isSuccessful()){
+                        if (response.isSuccessful()) {
                             AppAlert alert = new AppAlert(AllProductViewsActivity.this);
                             alert.setTitle(AllProductViewsActivity.this.getResources().getString(R.string.access_get_card));
                             alert.hasCancel(false);
@@ -477,17 +478,21 @@ public class AllProductViewsActivity extends AppCompatActivity {
                             });
                             alert.show();
                         } else {
-
+                            Log.e("Error ", response.code() + "");
                         }
+                        dialog.dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<RequestBronFilm> call, Throwable t) {
+                        dialog.dismiss();
                         Utils.showCustomToast(getResources().getString(R.string.check_internet),
                                 R.drawable.ic_wifi_no_connection,
                                 AllProductViewsActivity.this,
                                 R.color.no_internet_back);
-                        progress.dismiss(); findViewById(R.id.getCard_progress).setVisibility(View.VISIBLE);
+                        progress.dismiss();
+                        findViewById(R.id.getCard_progress).setVisibility(View.VISIBLE);
+                        Log.e("Error ", t.getMessage() + "");
                     }
                 });
             }
@@ -621,10 +626,14 @@ public class AllProductViewsActivity extends AppCompatActivity {
         findViewById(R.id.brone_movie_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showCustomDialog();
+                if (Utils.getSharePreferences(AllProductViewsActivity.this, "token").equals("")){
+                    startActivity(new Intent(AllProductViewsActivity.this, Sig_Up_Activity.class).putExtra("type", "1"));
+                }else {
+                    showCustomDialog();
+                    }
+
             }
         });
-
 
 
         all_views_viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

@@ -76,6 +76,6 @@ public interface ApiInterface {
     @GET("/answers")
     Call<GetMessage> answer(@Header("Authorization") String token);
 
-    @POST("/add_ticket")
+    @POST("/add-ticket")
     Call<RequestBronFilm> add_ticket(@Body BronMovie body, @Header("Authorization") String token);
 }

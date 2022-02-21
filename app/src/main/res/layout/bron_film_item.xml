@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soup.neumorphism.NeumorphCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/CustomCardImgCarusel"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margins"
+    android:layout_marginTop="15dp"
+    android:layout_marginEnd="@dimen/margins"
+    app:neumorph_backgroundColor="@color/green_film"
+    android:clickable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:layout_marginStart="@dimen/margins"
+        android:layout_marginEnd="@dimen/margins">
+
+        <TextView
+            android:id="@+id/movie_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Movie name"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/img_movie"
+                    android:layout_width="95dp"
+                    android:layout_height="95dp"
+                    app:riv_corner_radius="6dp"
+                    android:paddingEnd="2dp"
+                    android:scaleType="fitXY"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_film_time"
+                        android:tint="@color/text_color"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12.01.2022/13:00"
+                        android:textSize="10sp"
+                        android:textColor="@color/text_color"
+                        android:id="@+id/date_time_film_txt"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_ticket_count"
+                        android:tint="@color/text_color"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2 tickets"
+                        android:textSize="10sp"
+                        android:textColor="@color/text_color"
+                        android:id="@+id/ticket_count_txt"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_filim_price"
+                        android:tint="@color/text_color"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Price: 20 TMT"
+                        android:textSize="10sp"
+                        android:textColor="@color/text_color"
+                        android:id="@+id/filim_price_txt"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_ticket_count"
+                        android:tint="@color/text_color"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ticket discount: 30%"
+                        android:textSize="10sp"
+                        android:textColor="@color/text_color"
+                        android:id="@+id/ticket_discount_txt"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_person"
+                android:tint="@color/text_color"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Full name / +99361234567"
+                android:textSize="10sp"
+                android:textColor="@color/text_color"
+                android:id="@+id/user_txt"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginStart="10dp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_film_total_price"
+                android:tint="@color/text_color"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Full name / +99361234567"
+                android:textSize="10sp"
+                android:textColor="@color/text_color"
+                android:id="@+id/total_price_txt"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginStart="10dp"/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</soup.neumorphism.NeumorphCardView>
