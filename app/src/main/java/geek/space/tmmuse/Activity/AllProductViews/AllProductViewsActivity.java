@@ -333,7 +333,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
             String[] dateTime = time.split("\\(");
             for (int l = 0; l < dateTime.length; l++) {
                 if (l % 2 == 0) {
-                    String[] myDate = dateTime[l].split("-");
+                    String[] myDate = dateTime[l].replace(".", "/").split("-");
                     for (String md : myDate) {
                         String[] myTimes = dateTime[l + 1].replace(")", "").split(",");
                         ArrayList<String> mt = new ArrayList<>();
@@ -450,13 +450,18 @@ public class AllProductViewsActivity extends AppCompatActivity {
                 KProgressHUD progress = Utils.AppProgressBar(AllProductViewsActivity.this);
                 progress.setLabel(getResources().getString(R.string.wait));
                 progress.show();
-//                profile.getCinema_id()
+//                profile.getCinema_id() BroneData_adapter.selectedDate, BroneTimeAdapter.selectedTime
                 String token = "Bearer " + Utils.getSharePreferences(AllProductViewsActivity.this, "token");
                 ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                BronMovie bronMovie = new BronMovie(2, profile.getId(),
+                BronMovie bronMovie = new BronMovie(
+                        2,
+                        profile.getId(),
                         Integer.parseInt(Utils.getSharePreferences(AllProductViewsActivity.this, "user_id")),
-                        BroneData_adapter.selectedDate, BroneTimeAdapter.selectedTime, string_to_int,
-                        profile.getAverage_check(), 0.0);
+                        BroneData_adapter.selectedDate,
+                        BroneTimeAdapter.selectedTime,
+                        string_to_int,
+                        profile.getAverage_check(),
+                        0.0);
                 Call<RequestBronFilm> requestBronFilmCall = apiInterface.add_ticket(bronMovie, token);
                 requestBronFilmCall.enqueue(new Callback<RequestBronFilm>() {
                     @Override
@@ -468,7 +473,10 @@ public class AllProductViewsActivity extends AppCompatActivity {
                             alert.setButtonListener(new AppAlert.ButtonListener() {
                                 @Override
                                 public void onOkListener() {
+                                    Intent intent = new Intent();
+                                    intent.putExtra("movie_price", string_to_int);
                                     alert.dismiss();
+                                    progress.dismiss();
                                 }
 
                                 @Override
@@ -479,6 +487,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
                             alert.show();
                         } else {
                             Log.e("Error ", response.code() + "");
+                            Log.e("Error ", BroneData_adapter.selectedDate + " " + BroneTimeAdapter.selectedTime);
                         }
                         dialog.dismiss();
                     }
@@ -626,11 +635,11 @@ public class AllProductViewsActivity extends AppCompatActivity {
         findViewById(R.id.brone_movie_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Utils.getSharePreferences(AllProductViewsActivity.this, "token").equals("")){
+                if (Utils.getSharePreferences(AllProductViewsActivity.this, "token").equals("")) {
                     startActivity(new Intent(AllProductViewsActivity.this, Sig_Up_Activity.class).putExtra("type", "1"));
-                }else {
+                } else {
                     showCustomDialog();
-                    }
+                }
 
             }
         });
@@ -738,27 +747,6 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
             }
         });
-
-//        call_layout_products.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Context context = AllProductViewsActivity.this;
-//                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(AllProductViewsActivity.this,
-//                        R.style.CustomBottomSheetDialogTheme);
-//                View bottomSheetDialogView = LayoutInflater.from(AllProductViewsActivity.this)
-//                        .inflate(R.layout.phone_bottom_sheet,
-//                                view.findViewById(R.id.phone_bottom));
-//                RecyclerView phone_number_rec;
-//                phone_number_rec = bottomSheetDialogView.findViewById(R.id.phone_number_rec);
-//                LayoutManager layoutManager = new LinearLayoutManager(AllProductViewsActivity.this);
-//                phone_number_rec.setLayoutManager(layoutManager);
-//                phone_number_rec.setAdapter(new ProfilePhoneAdapter(AllProductViewsActivity.this, profilePhones));
-//
-//                bottomSheetDialog.setContentView(bottomSheetDialogView);
-//                bottomSheetDialog.show();
-//            }
-//        });
-
 
     }
 

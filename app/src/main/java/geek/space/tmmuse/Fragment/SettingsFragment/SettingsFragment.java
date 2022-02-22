@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,8 +37,10 @@ import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.SharedPref;
 import geek.space.tmmuse.Common.Utils;
+import geek.space.tmmuse.Fragment.BronMovie.BroneMovieFragment;
 import geek.space.tmmuse.Fragment.HelpFragment.HelpFragment;
 import geek.space.tmmuse.Fragment.ProfileFragment.UserProfileFragment;
+import geek.space.tmmuse.Model.Film.BronMovie;
 import geek.space.tmmuse.R;
 import soup.neumorphism.NeumorphCardView;
 
@@ -45,7 +48,7 @@ import soup.neumorphism.NeumorphCardView;
 public class SettingsFragment extends Fragment {
     private View view;
     private Context context;
-    private NeumorphCardView dark_mode_card, profile_card, language_card, help_card,
+    private NeumorphCardView dark_mode_card, profile_card, language_card, help_card, bron_movie_card,
             feed_back_card, terms_use_card, about_us_card;
     private TextView logout_txt, dark_text, profile_text, language_text, language_chk_text,
             help_text, feed_bac_text, terms_use_text, about_us_text, settings_txt;
@@ -175,6 +178,16 @@ public class SettingsFragment extends Fragment {
 
         });
 
+        bron_movie_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BroneMovieFragment bronMovie = new BroneMovieFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                Main_Menu.fivesFragment = bronMovie;
+                Utils.hideAdd(bronMovie, bronMovie.getClass().getSimpleName(), fragmentManager, R.id.menu_frame);
+            }
+        });
+
         logout_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -237,6 +250,7 @@ public class SettingsFragment extends Fragment {
         terms_use_text = view.findViewById(R.id.terms_use_text);
         about_us_text = view.findViewById(R.id.about_us_text);
         settings_txt = view.findViewById(R.id.settings_txt);
+        bron_movie_card = view.findViewById(R.id.bron_movie_card);
 
         switch_dark_mode = view.findViewById(R.id.switch_dark_mode);
         sharedPref = new SharedPref(context);

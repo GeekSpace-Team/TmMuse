@@ -41,6 +41,7 @@ import geek.space.tmmuse.API.ApiInterface;
 import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
+import geek.space.tmmuse.Fragment.BronMovie.BroneMovieFragment;
 import geek.space.tmmuse.Fragment.CardFragment.CardFragment;
 import geek.space.tmmuse.Fragment.CategoryFragment.CategoryFragment;
 import geek.space.tmmuse.Fragment.HelpFragment.HelpFragment;
@@ -195,6 +196,12 @@ public class Main_Menu extends AppCompatActivity implements View.OnClickListener
             Utils.removeShow(new SettingsFragment(), SettingsFragment.class.getSimpleName(), getSupportFragmentManager(), R.id.menu_frame);
         }
 
+
+        BroneMovieFragment broneMovieFragment = (BroneMovieFragment) getSupportFragmentManager().findFragmentByTag(BroneMovieFragment.class.getSimpleName());
+        if (broneMovieFragment != null && broneMovieFragment.isVisible()) {
+            fivesFragment = new BroneMovieFragment();
+            Utils.removeShow(new SettingsFragment(), SettingsFragment.class.getSimpleName(), getSupportFragmentManager(), R.id.menu_frame);
+        }
 
     }
 

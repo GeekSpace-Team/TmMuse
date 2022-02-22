@@ -10,7 +10,8 @@ public class BronMovie {
     private Double ticket_price;
     private Double ticket_discount;
 
-    public BronMovie(Integer cinema_id, Integer profile_id, Integer user_id, String movie_date, String movie_time, Integer ticket_count, Double ticket_price, Double ticket_discount) {
+    public BronMovie(Integer cinema_id, Integer profile_id, Integer user_id, String movie_date,
+                     String movie_time, Integer ticket_count, Double ticket_price, Double ticket_discount) {
         this.cinema_id = cinema_id;
         this.profile_id = profile_id;
         this.user_id = user_id;

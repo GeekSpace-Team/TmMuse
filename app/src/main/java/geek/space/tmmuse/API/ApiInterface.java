@@ -5,6 +5,8 @@ import geek.space.tmmuse.Model.AllProfile.GetProfileTiny;
 import geek.space.tmmuse.Model.AllProfile.ResponseAllProfile;
 import geek.space.tmmuse.Model.AllProfile.GetProfile;
 import geek.space.tmmuse.Model.Film.BronMovie;
+import geek.space.tmmuse.Model.Film.BronMovieUsers;
+import geek.space.tmmuse.Model.Film.BronMovieUsersBody;
 import geek.space.tmmuse.Model.Film.RequestBronFilm;
 import geek.space.tmmuse.Model.GetCard.GetCardResponse;
 import geek.space.tmmuse.Model.GetCard.PostGetCard;
@@ -78,4 +80,8 @@ public interface ApiInterface {
 
     @POST("/add-ticket")
     Call<RequestBronFilm> add_ticket(@Body BronMovie body, @Header("Authorization") String token);
+
+    @GET("/get-current-ticket?")
+    Call<BronMovieUsersBody> get_current_ticket(@Query("user_id") String user_id,
+                                                @Header("Authorization") String token);
 }
