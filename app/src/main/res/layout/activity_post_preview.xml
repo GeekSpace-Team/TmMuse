@@ -47,29 +47,29 @@
               android:id="@+id/ic_eye"
               android:layout_width="20dp"
               android:layout_height="20dp"
+              android:layout_centerVertical="true"
               android:src="@drawable/ic_eye"
-              android:tint="#7F8FA7"
-              android:layout_centerVertical="true"/>
+              android:tint="#7F8FA7" />
 
           <TextView
               android:id="@+id/look_txt_counts"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
               android:layout_marginLeft="8dp"
               android:layout_toEndOf="@id/ic_eye"
               android:text="100 Views"
               android:textColor="#7F8FA7"
-              android:textSize="14sp"
-              android:layout_centerVertical="true"/>
+              android:textSize="14sp" />
 
           <ImageView
               android:id="@+id/close_promotion_img"
               android:layout_width="17dp"
               android:layout_height="17dp"
               android:layout_alignParentEnd="true"
+              android:layout_centerVertical="true"
               android:src="@drawable/ic_close_promotion"
-              android:tint="#7F8FA7"
-              android:layout_centerVertical="true"/>
+              android:tint="#7F8FA7" />
 
         </RelativeLayout>
 
@@ -88,6 +88,86 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+          <soup.neumorphism.NeumorphCardView
+              android:id="@+id/fig_up_card"
+              style="@style/Post_Preview"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:clickable="true"
+              android:padding="25dp"
+              app:neumorph_backgroundColor="#2B3238">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_fig_up" />
+
+          </soup.neumorphism.NeumorphCardView>
+
+          <soup.neumorphism.NeumorphCardView
+              android:id="@+id/fig_down_card"
+              style="@style/Post_Preview"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:clickable="true"
+              android:padding="25dp"
+              app:neumorph_backgroundColor="#2B3238">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_fig_down" />
+
+          </soup.neumorphism.NeumorphCardView>
+
+          <soup.neumorphism.NeumorphCardView
+              android:id="@+id/fig_download_card"
+              style="@style/Post_Preview"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:clickable="true"
+              android:padding="25dp"
+              app:neumorph_backgroundColor="#2B3238">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_share" />
+
+          </soup.neumorphism.NeumorphCardView>
+
+          <soup.neumorphism.NeumorphCardView
+              android:id="@+id/fig_insta_card"
+              style="@style/Post_Preview"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:clickable="true"
+              android:padding="25dp"
+              app:neumorph_backgroundColor="#2B3238">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_instagram" />
+
+          </soup.neumorphism.NeumorphCardView>
+
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/promotion_tit_txt"
@@ -103,13 +183,17 @@
             android:id="@+id/prom_desc_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/margins"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="@dimen/margins"
-            android:layout_gravity="center_vertical"
             android:gravity="center_horizontal"
             android:textColor="#FFF"
             android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
 
 
       </LinearLayout>
