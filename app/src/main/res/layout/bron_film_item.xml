@@ -85,7 +85,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/ic_ticket_count"
+                        android:src="@drawable/ic_ticket_expired"
                         android:tint="@color/text_color" />
 
                     <TextView

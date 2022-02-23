@@ -114,14 +114,12 @@ public class Profiles extends Fragment {
     }
 
     public static void setProfileListRequest(Integer page,Context context, ProgressBar progressBar ) {
-        KProgressHUD progress = Utils.AppProgressBar(context);
-        progress.setLabel(context.getResources().getString(R.string.wait));
-        progress.show();
         ApiInterface apiInterface = ApiClient.getClient()
                 .create(ApiInterface.class);
         GetProfile getProfile = new GetProfile(categoryID, sort, tags, limit, page);
         Call<ResponseAllProfile> allProfileCall = apiInterface.get_profile(getProfile);
         isLoading = true;
+        progressBar.setVisibility(View.VISIBLE);
         allProfileCall.enqueue(new Callback<ResponseAllProfile>() {
             @Override
             public void onResponse(Call<ResponseAllProfile> call, Response<ResponseAllProfile> response) {
@@ -130,7 +128,7 @@ public class Profiles extends Fragment {
                     if(response.body().getBody().getTags()!=null)
                         ProfileFilterFragment.tags_btns=response.body().getBody().getTags();
 
-                    if(response.body().getBody()==null){
+                    if(response.body().getBody().getProfiles().size()==0){
                         isLoading=false;
                         loadMore=false;
                     }
@@ -149,7 +147,7 @@ public class Profiles extends Fragment {
                     }
                 } else {
                 }
-                progress.dismiss();
+                progressBar.setVisibility(View.GONE);
                 isLoading = false;
             }
 
@@ -159,8 +157,8 @@ public class Profiles extends Fragment {
                         R.drawable.ic_wifi_no_connection,
                         context,
                         R.color.no_internet_back);
-                progress.dismiss();
                 isLoading=false;
+                progressBar.setVisibility(View.GONE);
                 Log.e("Error",t.getMessage());
             }
         });
@@ -237,6 +235,8 @@ public class Profiles extends Fragment {
                 if (!recyclerView.canScrollVertically(1)){
                     if (!isLoading && loadMore){
                         loadMore();
+                    } else {
+                        progress_bar.setVisibility(View.GONE);
                     }
                 }
             }

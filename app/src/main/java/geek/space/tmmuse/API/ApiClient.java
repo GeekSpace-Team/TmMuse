@@ -23,4 +23,16 @@ public class ApiClient {
         return retrofit;
     }
 
+    public static Retrofit cancelFilm(){
+        OkHttpClient okHttpClient=new OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60,TimeUnit.SECONDS)
+                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constant.BASE_URL_CANCEL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+        return retrofit;
+    }
 }

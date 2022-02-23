@@ -3,12 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view_profile"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:layout_marginLeft="@dimen/margins"
-    android:layout_marginRight="@dimen/margins"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="15dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
     android:clickable="true"
-    app:cardCornerRadius="12dp">
+    app:cardElevation="6dp"
+    app:cardCornerRadius="12dp"
+    android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +20,7 @@
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/profile_adapter_img"
             android:layout_width="100dp"
-            android:layout_height="match_parent"
+            android:layout_height="125dp"
             android:padding="1.5dp"
             android:scaleType="fitXY"
             app:riv_corner_radius_bottom_left="12dp"

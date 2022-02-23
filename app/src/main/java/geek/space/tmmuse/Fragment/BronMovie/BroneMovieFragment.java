@@ -8,11 +8,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -57,12 +59,11 @@ public class BroneMovieFragment extends Fragment {
         setFont();
         setListener();
         setBronMovie();
-       setBronMovieAapter();
         return view;
     }
 
     private void setBronMovieAapter() {
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(context, 2);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(context, 1);
         bron_film_rec.setLayoutManager(mLayoutManager);
         bron_film_rec.setAdapter(new BroneMovieAdapter(context, bronMovieUsers));
     }
@@ -80,9 +81,10 @@ public class BroneMovieFragment extends Fragment {
             @Override
             public void onResponse(Call<BronMovieUsersBody> call, Response<BronMovieUsersBody> response) {
                 if (response.isSuccessful()){
-
+                    bronMovieUsers = response.body().getBody();
+                    setBronMovieAapter();
                 } else {
-
+                    Log.e("Error",response.code()+"");
                 }
                 progress.dismiss();
             }
@@ -94,6 +96,8 @@ public class BroneMovieFragment extends Fragment {
                         context,
                         R.color.no_internet_back);
                 progress.dismiss();
+                Log.e("Error",t.getMessage());
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,8 +31,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.LayoutManager;
 import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -61,9 +64,12 @@ import geek.space.tmmuse.Model.AllProfile.ProfilePhone;
 import geek.space.tmmuse.Model.Film.BronMovie;
 import geek.space.tmmuse.Model.Film.MovieTime;
 import geek.space.tmmuse.Model.Film.RequestBronFilm;
+import geek.space.tmmuse.Model.GetPromoCode.GetPromoCodeBody;
+import geek.space.tmmuse.Model.GetPromoCode.GetPromoCodes;
 import geek.space.tmmuse.Model.PromotionAndOffers.PromotionAndOffers;
 import geek.space.tmmuse.Model.TestModelViewPager.TestModelViewPager;
 import geek.space.tmmuse.R;
+import geek.space.tmmuse.View.AppBarStateChangeListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -75,6 +81,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private RelativeLayout sliderContainer, view_bottom_rel;
     private ViewPager all_views_viewPager;
     private WormDotsIndicator dots_indicator;
+    private Toolbar tool_bar;
     private TextView product_text_count_down, product_text_call, product_text_instagram,
             product_text_web, product_text_location, certificate_txt, promo_txt,
             address_txt, address_desc_txt, deliver_desc_txt, average_check_txt, own_promotion_desc_txt,
@@ -94,7 +101,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private NestedScrollView bottomsheet;
     private RoundedImageView vr_img;
 
-    private ApiInterface apiInterface;
+    private static ApiInterface apiInterface;
 
     private TestAdapterViewPager imagesAdapter;
     private PromotionAndOffersAdapter promotionAndOffersAdapter;
@@ -116,10 +123,15 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private int string_to_int;
     private String largeVrImageUrl = "";
     AllProfile profile = null;
+    private AppBarLayout appBarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
         setContentView(R.layout.activity_all_product_views);
         initViews();
         setFont();
@@ -211,8 +223,69 @@ public class AllProductViewsActivity extends AppCompatActivity {
                     } else {
                         certificate_layout.setVisibility(View.GONE);
                     }
+
                     if (response.body().getBody().getProfile().getIs_promo() != null && profile.getIs_promo()) {
                         promo_layout.setVisibility(View.VISIBLE);
+                        promo_layout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                                String token = "Bearer " + Utils.getSharePreferences(AllProductViewsActivity.this, "token");
+                                Integer profile_id = profile.getId();
+                                GetPromoCodeBody getPromoCodeBody = new GetPromoCodeBody(profile_id);
+                                Call<GetPromoCodes> getPromoCodesCall = apiInterface.get_promo_codes(token, getPromoCodeBody);
+                                getPromoCodesCall.enqueue(new Callback<GetPromoCodes>() {
+                                    @Override
+                                    public void onResponse(Call<GetPromoCodes> call, Response<GetPromoCodes> response) {
+                                        if (response.isSuccessful()) {
+                                            Context context = AllProductViewsActivity.this;
+                                            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(AllProductViewsActivity.this,
+                                                    R.style.CustomBottomSheetDialogTheme);
+                                            View bottomSheetDialogView = LayoutInflater.from(AllProductViewsActivity.this)
+                                                    .inflate(R.layout.promocode_bottom_sheet,
+                                                            view.findViewById(R.id.bottom_sheet_promo));
+
+                                            TextView promo_text, your_promo_txt, code_number_txt, close_bottom_txt;
+
+                                            promo_text = bottomSheetDialogView.findViewById(R.id.promo_text);
+                                            your_promo_txt = bottomSheetDialogView.findViewById(R.id.your_promo_txt);
+                                            code_number_txt = bottomSheetDialogView.findViewById(R.id.code_number_txt);
+                                            close_bottom_txt = bottomSheetDialogView.findViewById(R.id.close_bottom_txt);
+
+                                            GetPromoCodes getPromoCodes = response.body();
+                                            if (getPromoCodes.getBody()!=null){
+                                                Integer code = getPromoCodes.getBody();
+                                                code_number_txt.setText(code+"");
+                                            }
+
+                                            your_promo_txt.setTypeface(Font.getInstance(context).getMontserrat_800());
+                                            promo_text.setTypeface(Font.getInstance(context).getMontserrat_700());
+                                            code_number_txt.setTypeface(Font.getInstance(context).getMontserrat_700());
+                                            close_bottom_txt.setTypeface(Font.getInstance(context).getMontserrat_600());
+
+                                            close_bottom_txt.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    bottomSheetDialog.dismiss();
+                                                }
+                                            });
+
+                                            bottomSheetDialog.setContentView(bottomSheetDialogView);
+                                            bottomSheetDialog.show();
+
+                                        } else {
+                                            Log.e("Error",response.code() + "");
+                                            Toast.makeText(AllProductViewsActivity.this, response.code() + "", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<GetPromoCodes> call, Throwable t) {
+
+                                    }
+                                });
+                            }
+                        });
                     } else {
                         promo_layout.setVisibility(View.GONE);
                     }
@@ -264,6 +337,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
                             cuisine_layout.setVisibility(View.GONE);
                         }
                     }
+
 
                     if (profile.getAverage_check() != null) {
                         average_check_layout.setVisibility(View.VISIBLE);
@@ -328,32 +402,35 @@ public class AllProductViewsActivity extends AppCompatActivity {
     }
 
     private void splitTime(String movieTime) {
-        String[] times = movieTime.split("\\*");
-        for (String time : times) {
-            String[] dateTime = time.split("\\(");
-            for (int l = 0; l < dateTime.length; l++) {
-                if (l % 2 == 0) {
-                    String[] myDate = dateTime[l].replace(".", "/").split("-");
-                    for (String md : myDate) {
-                        String[] myTimes = dateTime[l + 1].replace(")", "").split(",");
-                        ArrayList<String> mt = new ArrayList<>();
-                        mt.addAll(Arrays.asList(myTimes));
-                        movieTimes.add(new MovieTime(md, mt));
+        try {
+            String[] times = movieTime.split("\\*");
+            for (String time : times) {
+                String[] dateTime = time.split("\\(");
+                for (int l = 0; l < dateTime.length; l++) {
+                    if (l % 2 == 0) {
+                        String[] myDate = dateTime[l].replace(".", "/").split("-");
+                        for (String md : myDate) {
+                            String[] myTimes = dateTime[l + 1].replace(")", "").split(",");
+                            ArrayList<String> mt = new ArrayList<>();
+                            mt.addAll(Arrays.asList(myTimes));
+                            movieTimes.add(new MovieTime(md, mt));
+                        }
                     }
+
                 }
-
             }
-        }
 
 
-        for (MovieTime md : movieTimes) {
-            System.out.println(md.getDate());
-            for (String mt : md.getTimes()) {
-                System.out.println("Times: " + mt);
+            for (MovieTime md : movieTimes) {
+                System.out.println(md.getDate());
+                for (String mt : md.getTimes()) {
+                    System.out.println("Times: " + mt);
+                }
             }
+
+        } catch (Exception ex){
+            ex.printStackTrace();
         }
-
-
     }
 
     public void showCustomDialog() {
@@ -560,6 +637,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private void initViews() {
 
         view = findViewById(R.id.bottomsheet);
+        tool_bar = findViewById(R.id.tool_bar);
         sliderContainer = findViewById(R.id.sliderContainer);
         wifi_layout = findViewById(R.id.wifi_layout);
         instagram_layout = findViewById(R.id.instagram_layout);
@@ -628,6 +706,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
         gallery_layout = findViewById(R.id.gallery_layout);
         wifi_txt = findViewById(R.id.wifi_txt);
         wifi_desc_txt = findViewById(R.id.wifi_desc_txt);
+        appBarLayout = findViewById(R.id.appBarLayout);
     }
 
     private void setListener() {
@@ -712,42 +791,17 @@ public class AllProductViewsActivity extends AppCompatActivity {
             bottomSheetDialog.show();
         });
 
-        promo_layout.setOnClickListener(new View.OnClickListener() {
+
+        appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
-            public void onClick(View view) {
-                Context context = AllProductViewsActivity.this;
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(AllProductViewsActivity.this,
-                        R.style.CustomBottomSheetDialogTheme);
-                View bottomSheetDialogView = LayoutInflater.from(AllProductViewsActivity.this)
-                        .inflate(R.layout.promocode_bottom_sheet,
-                                view.findViewById(R.id.bottom_sheet_promo));
-
-                TextView promo_text, your_promo_txt, code_number_txt, close_bottom_txt;
-
-                promo_text = bottomSheetDialogView.findViewById(R.id.promo_text);
-                your_promo_txt = bottomSheetDialogView.findViewById(R.id.your_promo_txt);
-                code_number_txt = bottomSheetDialogView.findViewById(R.id.code_number_txt);
-                close_bottom_txt = bottomSheetDialogView.findViewById(R.id.close_bottom_txt);
-
-                your_promo_txt.setTypeface(Font.getInstance(context).getMontserrat_800());
-                promo_text.setTypeface(Font.getInstance(context).getMontserrat_700());
-                code_number_txt.setTypeface(Font.getInstance(context).getMontserrat_700());
-                close_bottom_txt.setTypeface(Font.getInstance(context).getMontserrat_600());
-
-                close_bottom_txt.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        bottomSheetDialog.dismiss();
-                    }
-                });
-
-                bottomSheetDialog.setContentView(bottomSheetDialogView);
-                bottomSheetDialog.show();
-
-
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                if(state==State.COLLAPSED){
+                    tool_bar.setBackgroundColor(getResources().getColor(R.color.card_background));
+                } else {
+                    tool_bar.setBackgroundColor(getResources().getColor(R.color.transparent));
+                }
             }
         });
-
     }
 
     // НАстройка языкого панеля

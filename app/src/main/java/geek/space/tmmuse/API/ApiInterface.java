@@ -5,12 +5,14 @@ import geek.space.tmmuse.Model.AllProfile.GetProfileTiny;
 import geek.space.tmmuse.Model.AllProfile.ResponseAllProfile;
 import geek.space.tmmuse.Model.AllProfile.GetProfile;
 import geek.space.tmmuse.Model.Film.BronMovie;
-import geek.space.tmmuse.Model.Film.BronMovieUsers;
 import geek.space.tmmuse.Model.Film.BronMovieUsersBody;
+import geek.space.tmmuse.Model.Film.CancelBronFilm;
 import geek.space.tmmuse.Model.Film.RequestBronFilm;
 import geek.space.tmmuse.Model.GetCard.GetCardResponse;
 import geek.space.tmmuse.Model.GetCard.PostGetCard;
 import geek.space.tmmuse.Model.GetCard.SendGetCard;
+import geek.space.tmmuse.Model.GetPromoCode.GetPromoCodeBody;
+import geek.space.tmmuse.Model.GetPromoCode.GetPromoCodes;
 import geek.space.tmmuse.Model.Help.PostHelp;
 import geek.space.tmmuse.Model.Home.Home;
 import geek.space.tmmuse.Model.Interest.GetInterest;
@@ -23,11 +25,14 @@ import geek.space.tmmuse.Model.UserRegister.CheckUserCode;
 import geek.space.tmmuse.Model.UserRegister.ResponseCheckUser;
 import geek.space.tmmuse.Model.UserRegister.StringResponse;
 import geek.space.tmmuse.Model.UserRegister.UserPostRegister;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -84,4 +89,12 @@ public interface ApiInterface {
     @GET("/get-current-ticket?")
     Call<BronMovieUsersBody> get_current_ticket(@Query("user_id") String user_id,
                                                 @Header("Authorization") String token);
+
+    @POST("/get-promo-codes")
+    Call<GetPromoCodes> get_promo_codes(@Header("Authorization") String token,
+                                        @Body GetPromoCodeBody profile_id);
+    @PUT("/ticket-status-update?")
+    Call<ResponseBody> ticket_status_update(@Header("Authorization") String token,
+                                            @Query("id") Integer id,
+                                            @Body CancelBronFilm cancelBronFilm);
 }

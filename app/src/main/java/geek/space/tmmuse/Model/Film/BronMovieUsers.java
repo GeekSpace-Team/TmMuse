@@ -11,7 +11,7 @@ public class BronMovieUsers {
     private String movie_time;
     private Integer ticket_count;
     private Integer ticket_discount;
-    private Integer ticket_price;
+    private Double ticket_price;
     private Integer status;
     private String nameTM;
     private String nameRU;
@@ -23,11 +23,7 @@ public class BronMovieUsers {
     private String phone_number;
     private ArrayList<ImgProfile> image = new ArrayList<>();
 
-    public BronMovieUsers(Integer id, Integer profile_id, String movie_date, String movie_time,
-                          Integer ticket_count, Integer ticket_discount, Integer ticket_price,
-                          Integer status, String nameTM, String nameRU, String short_descTM,
-                          String short_descRU, String descriptionTM, String descriptionRU,
-                          String fullname, String phone_number, ArrayList<ImgProfile> image) {
+    public BronMovieUsers(Integer id, Integer profile_id, String movie_date, String movie_time, Integer ticket_count, Integer ticket_discount, Double ticket_price, Integer status, String nameTM, String nameRU, String short_descTM, String short_descRU, String descriptionTM, String descriptionRU, String fullname, String phone_number, ArrayList<ImgProfile> image) {
         this.id = id;
         this.profile_id = profile_id;
         this.movie_date = movie_date;
@@ -95,11 +91,11 @@ public class BronMovieUsers {
         this.ticket_discount = ticket_discount;
     }
 
-    public Integer getTicket_price() {
+    public Double getTicket_price() {
         return ticket_price;
     }
 
-    public void setTicket_price(Integer ticket_price) {
+    public void setTicket_price(Double ticket_price) {
         this.ticket_price = ticket_price;
     }
 

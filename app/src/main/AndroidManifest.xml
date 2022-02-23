@@ -25,6 +25,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Activity.AllProductViews.AllProductViewsActivity"
+            android:theme="@style/ProfilePage"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Activity.GetCard.GetCardActivity"
@@ -37,7 +38,8 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".Activity.Intro_Page.Perrmision_Activity" />
         <activity android:name=".Activity.Intro_Page.Whats_New" />
-        <activity android:name=".Activity.Splash.Splash_Screen">
+        <activity android:name=".Activity.Splash.Splash_Screen"
+            android:theme="@style/ProfilePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
