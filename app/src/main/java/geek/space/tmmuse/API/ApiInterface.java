@@ -4,6 +4,7 @@ import geek.space.tmmuse.Model.AboutUs.Constant;
 import geek.space.tmmuse.Model.AllProfile.GetProfileTiny;
 import geek.space.tmmuse.Model.AllProfile.ResponseAllProfile;
 import geek.space.tmmuse.Model.AllProfile.GetProfile;
+import geek.space.tmmuse.Model.Certificate.InsertCertificate;
 import geek.space.tmmuse.Model.Film.BronMovie;
 import geek.space.tmmuse.Model.Film.BronMovieUsersBody;
 import geek.space.tmmuse.Model.Film.CancelBronFilm;
@@ -101,4 +102,8 @@ public interface ApiInterface {
 
     @POST("/add-like-dislike")
     Call<ResponseBody> add_like_dislike(@Body PostLikeDislike postLikeDislike);
+
+    @POST("/create-certificate")
+    Call<ResponseBody> create_certificate(@Header("Authorization") String token,
+                                          @Body InsertCertificate insertCertificate);
 }

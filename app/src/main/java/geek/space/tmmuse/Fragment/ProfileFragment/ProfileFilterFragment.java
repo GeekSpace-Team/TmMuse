@@ -2,7 +2,6 @@ package geek.space.tmmuse.Fragment.ProfileFragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import geek.space.tmmuse.API.ApiClient;
 import geek.space.tmmuse.API.ApiInterface;
 import geek.space.tmmuse.Adapter.Tags.TagsAdapter;
 import geek.space.tmmuse.Common.Font.Font;
-import geek.space.tmmuse.Model.AllProfile.ResponseAllProfile;
 import geek.space.tmmuse.Model.Tags_Filter_Btn.Tags_Btn;
 import geek.space.tmmuse.R;
 import soup.neumorphism.NeumorphButton;
@@ -37,6 +35,7 @@ public class ProfileFilterFragment extends Fragment {
     private NeumorphButton latest_button, oldest_button;
     private ApiInterface apiInterface;
     private LinearLayout filterButton;
+
     public ProfileFilterFragment() {
         // Required empty public constructor
     }
@@ -57,14 +56,29 @@ public class ProfileFilterFragment extends Fragment {
         setTagsList();
         setTagAdapter();
         setListener();
+        setLatest_OldestBtn();
         return view;
+    }
+
+    private void setLatest_OldestBtn() {
+        if (Profiles.sort == 0) {
+            latest_button.setShapeType(2);
+            latest_button.setTextColor(context.getResources().getColor(R.color.aply_text_color));
+            oldest_button.setShapeType(0);
+            oldest_button.setTextColor(context.getResources().getColor(R.color.tex_color_btn_search));
+        } else {
+            oldest_button.setShapeType(2);
+            oldest_button.setTextColor(context.getResources().getColor(R.color.aply_text_color));
+            latest_button.setShapeType(0);
+            latest_button.setTextColor(context.getResources().getColor(R.color.tex_color_btn_search));
+        }
     }
 
     private void setListener() {
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Profiles.page=1;
+                Profiles.page = 1;
                 Profiles.setProfileListRequest(1, context, Profiles.get().getProgress_bar());
             }
         });
@@ -88,6 +102,20 @@ public class ProfileFilterFragment extends Fragment {
                 latest_button.setShapeType(0);
                 latest_button.setTextColor(context.getResources().getColor(R.color.tex_color_btn_search));
                 Profiles.sort = 1;
+            }
+        });
+
+        clear_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                oldest_button.setShapeType(0);
+                oldest_button.setTextColor(context.getResources().getColor(R.color.tex_color_btn_search));
+                latest_button.setShapeType(0);
+                latest_button.setTextColor(context.getResources().getColor(R.color.tex_color_btn_search));
+                Profiles.sort = 0;
+                Profiles.tags.clear();
+                Profiles.page = 1;
+                Profiles.setProfileListRequest(1, context, Profiles.get().getProgress_bar());
             }
         });
     }

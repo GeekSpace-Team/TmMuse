@@ -27,13 +27,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.LayoutManager;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.AppBarLayout;
@@ -47,7 +47,6 @@ import java.util.Arrays;
 
 import geek.space.tmmuse.API.ApiClient;
 import geek.space.tmmuse.API.ApiInterface;
-import geek.space.tmmuse.Activity.PostPreview.PostPreviewActivity;
 import geek.space.tmmuse.Activity.Sig_Up.Sig_Up_Activity;
 import geek.space.tmmuse.Activity.VrImage.VrImageActivity;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneData_adapter;
@@ -64,6 +63,7 @@ import geek.space.tmmuse.Model.AllProfile.AllProfile;
 import geek.space.tmmuse.Model.AllProfile.GetProfileTiny;
 import geek.space.tmmuse.Model.AllProfile.ImgProfile;
 import geek.space.tmmuse.Model.AllProfile.ProfilePhone;
+import geek.space.tmmuse.Model.Certificate.InsertCertificate;
 import geek.space.tmmuse.Model.Film.BronMovie;
 import geek.space.tmmuse.Model.Film.MovieTime;
 import geek.space.tmmuse.Model.Film.RequestBronFilm;
@@ -80,7 +80,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import soup.neumorphism.NeumorphButton;
-import soup.neumorphism.ShapeType;
 
 public class AllProductViewsActivity extends AppCompatActivity {
 
@@ -157,16 +156,13 @@ public class AllProductViewsActivity extends AppCompatActivity {
         id = intent.getIntExtra("ID", 0);
         apiInterface = ApiClient.getClient()
                 .create(ApiInterface.class);
-        Call<GetProfileTiny> getProfileTinyCall = apiInterface.get_profile_tiny(id+"");
+        Call<GetProfileTiny> getProfileTinyCall = apiInterface.get_profile_tiny(id + "");
         getProfileTinyCall.enqueue(new Callback<GetProfileTiny>() {
             @Override
             public void onResponse(Call<GetProfileTiny> call, Response<GetProfileTiny> response) {
                 if (response.isSuccessful() || response.body().getBody() != null) {
                     Log.e("Log", response.body().toString());
                     profile = response.body().getBody().getProfile();
-//                    if (profile == null) {
-//                        return;
-//                    }
                     if (profile.getNameTM() != null || profile.getNameRU() != null) {
                         name_profile_txt.setText(profile.getNameTM());
                         if (Utils.getLanguage(AllProductViewsActivity.this).equals("ru")) {
@@ -263,9 +259,9 @@ public class AllProductViewsActivity extends AppCompatActivity {
                                             close_bottom_txt = bottomSheetDialogView.findViewById(R.id.close_bottom_txt);
 
                                             GetPromoCodes getPromoCodes = response.body();
-                                            if (getPromoCodes.getBody()!=null){
+                                            if (getPromoCodes.getBody() != null) {
                                                 Integer code = getPromoCodes.getBody();
-                                                code_number_txt.setText(code+"");
+                                                code_number_txt.setText(code + "");
                                             }
 
                                             your_promo_txt.setTypeface(Font.getInstance(context).getMontserrat_800());
@@ -284,7 +280,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
                                             bottomSheetDialog.show();
 
                                         } else {
-                                            Log.e("Error",response.code() + "");
+                                            Log.e("Error", response.code() + "");
                                             Toast.makeText(AllProductViewsActivity.this, response.code() + "", Toast.LENGTH_SHORT).show();
                                         }
                                     }
@@ -387,6 +383,9 @@ public class AllProductViewsActivity extends AppCompatActivity {
                         postAdapter();
                     }
 
+                    if (profile.getView_count() != null) {
+                        look_txt_counts.setText(profile.getView_count() + "");
+                    }
 
                     setListener();
                 } else {
@@ -394,6 +393,8 @@ public class AllProductViewsActivity extends AppCompatActivity {
                             R.drawable.ic_wifi_no_connection,
                             AllProductViewsActivity.this,
                             R.color.no_internet_back);
+                    Log.e("Error: ", response.code() + "");
+                    Toast.makeText(AllProductViewsActivity.this, response.code(), Toast.LENGTH_SHORT).show();
 
                 }
                 progress.dismiss();
@@ -438,7 +439,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
                 }
             }
 
-        } catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -479,7 +480,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
         send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (string_to_int <= 0 || count_tickets_ed_text.equals("") || count_tickets_ed_text == null) {
+                if (string_to_int <= 0 || count_tickets_ed_text.getText().toString().equals("") || count_tickets_ed_text == null) {
                     Toast.makeText(AllProductViewsActivity.this, "Please enter how many tickets you want", Toast.LENGTH_SHORT).show();
                 } else {
                     showTicketsAcceptDialog();
@@ -791,6 +792,60 @@ public class AllProductViewsActivity extends AppCompatActivity {
             certificate_text = bottomSheetDialogView.findViewById(R.id.certificate_text);
             write_cert_txt = bottomSheetDialogView.findViewById(R.id.write_cert_txt);
             send_btn = bottomSheetDialogView.findViewById(R.id.send_btn);
+            send_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (certificate_ed_text.getText().toString().equals("") || certificate_ed_text.getText().toString().equals("0")) {
+                        Toast.makeText(context, R.string.enter_all_values, Toast.LENGTH_SHORT).show();
+                    } else {
+                        KProgressHUD progress = Utils.AppProgressBar(AllProductViewsActivity.this);
+                        progress.setLabel(getResources().getString(R.string.wait));
+                        progress.show();
+                        String token = "Bearer " + Utils.getSharePreferences(AllProductViewsActivity.this, "token");
+                        Integer profile_id = profile.getId();
+                        String amountTxt = certificate_ed_text.getText().toString();
+                        Integer amount = Integer.parseInt(amountTxt);
+                        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                        InsertCertificate insertCertificate = new InsertCertificate(amount, profile_id);
+                        Call<ResponseBody> responseBodyCall = apiInterface.create_certificate(token, insertCertificate);
+                        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.isSuccessful()) {
+                                    AppAlert appAlert = new AppAlert(AllProductViewsActivity.this);
+                                    appAlert.hasCancel(false);
+                                    appAlert.setTitle(AllProductViewsActivity.this.getResources().getString(R.string.access_get_card));
+                                    appAlert.setButtonListener(new AppAlert.ButtonListener() {
+                                        @Override
+                                        public void onOkListener() {
+                                            bottomSheetDialog.dismiss();
+                                            appAlert.dismiss();
+                                        }
+
+                                        @Override
+                                        public void onCancelListener() {
+
+                                        }
+                                    });
+                                    appAlert.show();
+                                }
+                                progress.dismiss();
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                Utils.showCustomToast(getResources().getString(R.string.check_internet),
+                                        R.drawable.ic_wifi_no_connection,
+                                        AllProductViewsActivity.this,
+                                        R.color.no_internet_back);
+                                progress.dismiss();
+                            }
+                        });
+                    }
+
+                    }
+
+            });
 
             certificate_ed_text.setTypeface(Font.getInstance(context).getMontserrat_800());
             certificate_text.setTypeface(Font.getInstance(context).getMontserrat_700());
@@ -809,7 +864,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                if(state==State.COLLAPSED){
+                if (state == State.COLLAPSED) {
                     tool_bar.setBackgroundColor(getResources().getColor(R.color.card_background));
                 } else {
                     tool_bar.setBackgroundColor(getResources().getColor(R.color.transparent));
@@ -821,14 +876,14 @@ public class AllProductViewsActivity extends AppCompatActivity {
         fing_up_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendLikeDislike(id,LikeDislikeDb.LIKE);
+                sendLikeDislike(id, LikeDislikeDb.LIKE);
             }
         });
 
         fing_down_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendLikeDislike(id,LikeDislikeDb.DISLIKE);
+                sendLikeDislike(id, LikeDislikeDb.DISLIKE);
             }
         });
     }
@@ -865,8 +920,8 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
     private void setLike() {
         LikeDislikeDb likeDislikeDb = new LikeDislikeDb(AllProductViewsActivity.this);
-        Cursor cursor=likeDislikeDb.getCountFirst(id+"","like");
-        if(cursor.getCount()>0){
+        Cursor cursor = likeDislikeDb.getCountFirst(id + "", "like");
+        if (cursor.getCount() > 0) {
             fing_up_layout.setBackground(getResources().getDrawable(R.drawable.like_back));
             fing_up_img_products.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.aply_text_color)));
         } else {
@@ -874,8 +929,8 @@ public class AllProductViewsActivity extends AppCompatActivity {
             fing_up_img_products.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.text_color)));
         }
 
-        cursor=likeDislikeDb.getCountFirst(id+"","dislike");
-        if(cursor.getCount()>0){
+        cursor = likeDislikeDb.getCountFirst(id + "", "dislike");
+        if (cursor.getCount() > 0) {
             fing_down_layout.setBackground(getResources().getDrawable(R.drawable.like_back));
             fig_down_img_products.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.aply_text_color)));
 
@@ -888,8 +943,8 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
     private void sendLikeDislike(Integer id, String type) {
         LikeDislikeDb likeDislikeDb = new LikeDislikeDb(AllProductViewsActivity.this);
-        Cursor cursor=likeDislikeDb.getCount(id,type);
-        if(cursor.getCount()>0){
+        Cursor cursor = likeDislikeDb.getCount(id, type);
+        if (cursor.getCount() > 0) {
             return;
         }
         apiInterface = ApiClient.getClient().create(ApiInterface.class);

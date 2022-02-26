@@ -6,22 +6,16 @@ public class Banner {
     private String link;
     private String order;
     private Integer profile_id;
+    private Integer position;
 
 
-    public Banner(int id, String image, String link, Integer profile_id, String order) {
+    public Banner(int id, String image, String link, String order, Integer profile_id, Integer position) {
         this.id = id;
         this.image = image;
         this.link = link;
+        this.order = order;
         this.profile_id = profile_id;
-        this.order = order;
-    }
-
-    public String getOrder() {
-        return order;
-    }
-
-    public void setOrder(String order) {
-        this.order = order;
+        this.position = position;
     }
 
     public int getId() {
@@ -48,11 +42,27 @@ public class Banner {
         this.link = link;
     }
 
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
     public Integer getProfile_id() {
         return profile_id;
     }
 
     public void setProfile_id(Integer profile_id) {
         this.profile_id = profile_id;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 }

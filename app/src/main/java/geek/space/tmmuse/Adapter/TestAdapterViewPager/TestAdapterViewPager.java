@@ -53,11 +53,6 @@ public class TestAdapterViewPager extends RecyclerView.Adapter<TestAdapterViewPa
             holder.itemView.setVisibility(View.GONE);
         }
         try {
-            if(isFirst){
-                Glide.with(context).load(Constant.BASE_URL_IMAGE+imgProfile.getLarge_image()).into(holder.product_img);
-                viewPager.setAdapter(new TestViewPagerAdapter(context, imgProfiles));
-                isFirst=false;
-            }
             holder.product_img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -28,11 +30,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
@@ -42,7 +45,10 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
+import com.zhpan.indicator.IndicatorView;
+import com.zhpan.indicator.enums.IndicatorSlideMode;
+import com.zhpan.indicator.enums.IndicatorStyle;
+import com.zhpan.indicator.option.IndicatorOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -91,12 +97,11 @@ public class HomeFragment extends Fragment {
     private String weatherUrl;
     private String appId = "d3b23cc239784b8b868f26d4220d6581";
 
-
-    private WormDotsIndicator dots_indicator;
+    private Handler sliderHandler = new Handler();
+    private IndicatorView dots_indicator;
     private ImgCaruselAdapter imgCaruselAdapter;
-    private static ViewPager img_carusel_view_pager;
+    private static ViewPager2 img_carusel_view_pager;
     private int dotsCount;
-    private Timer timer = new Timer();
     private RecyclerView rec_films, rec_promotions;
     private ArrayList<Film> filmList = new ArrayList<>();
     private FilmAdapter filmAdapter;
@@ -110,6 +115,8 @@ public class HomeFragment extends Fragment {
     public static boolean isFirst = true;
     private Dialog popup_in_start;
     private final int CLOSE_POPUP = 15000;
+    int currentPage = 0;
+    private Integer BANNER_DELAY = 5000;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -125,11 +132,13 @@ public class HomeFragment extends Fragment {
         initComponents();
         setFonts();
         getTemp();
-        setListener();
+
         request(page);
 
         return view;
     }
+
+
 
     private void request(int i) {
         KProgressHUD progress = Utils.AppProgressBar(context);
@@ -147,7 +156,7 @@ public class HomeFragment extends Fragment {
                         filmList = res.getBody().getNew_movies();
                         banners = res.getBody().getBanners();
                         promotionAndOffers = res.getBody().getPromotionAndOffers();
-                        if(res.getBody().getPopup()!=null && res.getBody().getPopup().size()>0)
+                        if (res.getBody().getPopup() != null && res.getBody().getPopup().size() > 0)
                             showPopup(res.getBody().getPopup());
 
                         if (res.getBody().getBanners() != null) {
@@ -172,6 +181,7 @@ public class HomeFragment extends Fragment {
                     Log.e("Error", response.errorBody().toString());
                 }
                 progress.dismiss();
+                setListener();
             }
 
             @Override
@@ -207,26 +217,7 @@ public class HomeFragment extends Fragment {
 
 
     private void setListener() {
-        img_carusel_view_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                for (int i = 0; i < dotsCount; i++) {
-                    dots_indicator.setDotsColor(getResources().getColor(R.color.card_background));
-                }
-                dots_indicator.setDotsColor(getResources().getColor(R.color.aply_text_color));
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
         all_promotions_txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -247,10 +238,61 @@ public class HomeFragment extends Fragment {
 
 
     private void setBanners() {
-        imgCaruselAdapter = new ImgCaruselAdapter(context, banners, img_carusel_view_pager);
-        img_carusel_view_pager.setAdapter(imgCaruselAdapter);
-        dots_indicator.setViewPager(img_carusel_view_pager);
+        setIndicators();
+        img_carusel_view_pager.setAdapter(new ImgCaruselAdapter(context, img_carusel_view_pager, banners));
+        img_carusel_view_pager.setClipToPadding(false);
+        img_carusel_view_pager.setClipChildren(false);
+        img_carusel_view_pager.setOffscreenPageLimit(3);
+        img_carusel_view_pager.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+        compositePageTransformer.addTransformer(new MarginPageTransformer(40));
+        compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
+            @Override
+            public void transformPage(@NonNull View page, float position) {
+                float r = 1 - Math.abs(position);
+                page.setScaleY(0.85f + r * 0.15f);
+            }
+        });
+        img_carusel_view_pager.setPageTransformer(compositePageTransformer);
 
+        img_carusel_view_pager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                sliderHandler.removeCallbacks(sliderRunnable);
+                sliderHandler.postDelayed(sliderRunnable, BANNER_DELAY); // slide duration 2 seconds
+                dots_indicator.onPageSelected(banners.get(position).getPosition());
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                dots_indicator.onPageScrolled(banners.get(position).getPosition(), positionOffset, positionOffsetPixels);
+            }
+        });
+
+
+
+    }
+
+    private void setIndicators() {
+        Integer pos = 0;
+        for (int i = 0; i < banners.size(); i++) {
+            Banner banner = banners.get(i);
+            banner.setPosition(pos);
+            banners.set(i, banner);
+            pos++;
+        }
+
+        IndicatorOptions options = new IndicatorOptions();
+        options.setSliderColor(context.getResources().getColor(R.color.text_color), context.getResources().getColor(R.color.aply_text_color));
+        options.setSliderHeight(context.getResources().getDimension(R.dimen.sliderCircle));
+        options.setSliderWidth(context.getResources().getDimension(R.dimen.sliderCircle), context.getResources().getDimension(R.dimen.sliderRound));
+        options.setSlideMode(IndicatorSlideMode.WORM);
+        options.setIndicatorStyle(IndicatorStyle.CIRCLE);
+        options.setPageSize(banners.size());
+        dots_indicator.setIndicatorOptions(options);
+        dots_indicator.notifyDataChanged();
     }
 
     private void setFonts() {
@@ -281,12 +323,14 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        sliderHandler.postDelayed(sliderRunnable, BANNER_DELAY);
         getTemp();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        sliderHandler.removeCallbacks(sliderRunnable);
         getTemp();
     }
 
@@ -311,42 +355,36 @@ public class HomeFragment extends Fragment {
         // Request a string response from the provided URL.
         final Location finalLocation = location;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, weatherUrl,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        try {
+                response -> {
+                    // Display the first 500 characters of the response string.
+                    try {
 
-                            JSONObject obj = new JSONObject(response);
-                            JSONArray arr = obj.getJSONArray("data");
+                        JSONObject obj = new JSONObject(response);
+                        JSONArray arr = obj.getJSONArray("data");
 
-                            JSONObject obj2 = arr.getJSONObject(0);
-                            JSONObject weatherArray = obj2.getJSONObject("weather");
+                        JSONObject obj2 = arr.getJSONObject(0);
+                        JSONObject weatherArray = obj2.getJSONObject("weather");
 
-                            weather_tp.setText(obj2.getString("temp") + ("°"));
-                            weather_desc.setText(weatherArray.getString("description"));
-                            loadImageFromAssets("weather_icons/" + weatherArray.getString("icon") + ".png");
-                            // load image
+                        weather_tp.setText(obj2.getString("temp") + ("°"));
+                        weather_desc.setText(weatherArray.getString("description"));
+                        loadImageFromAssets("weather_icons/" + weatherArray.getString("icon") + ".png");
+                        // load image
 
 
-                            Log.d("WEATHER", weatherArray.getString("description"));
+                        Log.d("WEATHER", weatherArray.getString("description"));
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        Log.d("WEATHER", response);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                try {
-                    weather_tp.setText("0" + "°");
-                    weather_desc.setText(getResources().getString(R.string.wait_to_weather));
-                    weather_desc.setTextColor(Color.RED);
-                    weather_tp.setTextColor(Color.RED);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+                    Log.d("WEATHER", response);
+                }, error -> {
+            try {
+                weather_tp.setText("0" + "°");
+                weather_desc.setText(getResources().getString(R.string.wait_to_weather));
+                weather_desc.setTextColor(Color.RED);
+                weather_tp.setTextColor(Color.RED);
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         });
         stringRequest.setTag(TAG);
@@ -369,24 +407,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    // AutoScroll Banner Carusel
-    public class MyTimerTask extends TimerTask {
-        @Override
-        public void run() {
-            if (getActivity() == null || banners == null) {
-                return;
-            }
-//            getActivity().runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    img_carusel_view_pager.setCurrentItem((img_carusel_view_pager.getCurrentItem() + 1) % banners.size());
-//                }
-//            });
-        }
-    }
-
-
-
     private void showPopup(ArrayList<Popup> popups) {
         if (isFirst) {
             popup_in_start.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -406,10 +426,10 @@ public class HomeFragment extends Fragment {
 
             popup_desc_text.setTypeface(Font.getInstance(context).getMontserrat_400());
             popup_tit_txt.setTypeface(Font.getInstance(context).getMontserrat_800());
-            if (popups.get(0).getTitleTM()!=null || popups.get(0).getTitleRU()!=null){
+            if (popups.get(0).getTitleTM() != null || popups.get(0).getTitleRU() != null) {
                 popup_tit_txt.setText(popups.get(0).getTitleTM());
                 popup_desc_text.setText(popups.get(0).getDescriptionTM());
-                if (Utils.getLanguage(context).equals("ru")){
+                if (Utils.getLanguage(context).equals("ru")) {
                     popup_tit_txt.setText(popups.get(0).getTitleRU());
                     popup_desc_text.setText(popups.get(0).getDescriptionRU());
                 }
@@ -430,7 +450,7 @@ public class HomeFragment extends Fragment {
                     }
                 }).load(Constant.BASE_URL_IMAGE + popups.get(0).getImage()).into(back_img_popup);
 
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -441,7 +461,7 @@ public class HomeFragment extends Fragment {
             window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
             window.setBackgroundDrawableResource(R.drawable.card_gradient);
             window.setGravity(Gravity.CENTER);
-            window.getAttributes().windowAnimations=R.style.DialogAnimationPopup;
+            window.getAttributes().windowAnimations = R.style.DialogAnimationPopup;
             popup_in_start.show();
 
 
@@ -458,5 +478,21 @@ public class HomeFragment extends Fragment {
 
             isFirst = false;
         }
+    }
+
+
+    private Runnable sliderRunnable = new Runnable() {
+        @Override
+        public void run() {
+            img_carusel_view_pager.setCurrentItem(img_carusel_view_pager.getCurrentItem() + 1);
+        }
+    };
+
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        img_carusel_view_pager.setCurrentItem(0);
     }
 }

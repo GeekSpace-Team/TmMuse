@@ -52,6 +52,7 @@ dependencies {
 
     // IndikatorView
     implementation 'com.tbuonomo:dotsindicator:4.2'
+    implementation 'com.github.zhpanvip:viewpagerindicator:1.2.1'
 
 //   VR Image
     implementation 'com.google.vr:sdk-base:1.160.0'

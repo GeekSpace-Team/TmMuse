@@ -67,7 +67,7 @@ public class AllProdfileAdapters extends RecyclerView.Adapter<AllProdfileAdapter
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, AllProductViewsActivity.class);
-                intent.putExtra("ID", allProfile.getId() + "");
+                intent.putExtra("ID", allProfile.getId());
                 context.startActivity(intent);
             }
         });

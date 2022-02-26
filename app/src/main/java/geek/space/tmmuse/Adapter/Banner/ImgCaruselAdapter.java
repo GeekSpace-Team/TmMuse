@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -18,42 +20,45 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import java.util.ArrayList;
 
 import geek.space.tmmuse.Activity.AllProductViews.AllProductViewsActivity;
+import geek.space.tmmuse.Adapter.ZoomImageAdapter.ImageViewerAdapter;
 import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Model.Banner.Banner;
 import geek.space.tmmuse.R;
 
-public class ImgCaruselAdapter extends PagerAdapter {
+public class ImgCaruselAdapter extends RecyclerView.Adapter<ImgCaruselAdapter.ViewHolder> {
 
     private Context context;
-    private LayoutInflater layoutInflater;
-    private ViewPager viewPager;
+    private ViewPager2 viewPager;
     private ArrayList<Banner> urls = new ArrayList<>();
 
-    public ImgCaruselAdapter(Context context, ArrayList<Banner> urls, ViewPager viewPager) {
+    public ImgCaruselAdapter(Context context, ViewPager2 viewPager, ArrayList<Banner> urls) {
         this.context = context;
-        this.urls = urls;
         this.viewPager = viewPager;
-        layoutInflater = LayoutInflater.from(context);
-    }
-
-    @Override
-    public int getCount() {
-        return urls.size();
+        this.urls = urls;
     }
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.img_carusel_adapter, null);
+    public ImgCaruselAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.img_carusel_adapter, parent, false);
+
+        return new ImgCaruselAdapter.ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ImgCaruselAdapter.ViewHolder holder, int position) {
         Banner banner = urls.get(position);
-        assert view != null;
-        final RoundedImageView imageView = (RoundedImageView) view
-                .findViewById(R.id.iv_carousel_image);
-        imageView.setOnClickListener(new View.OnClickListener() {
+
+        holder.iv_carousel_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
+                    if (banner.getProfile_id()!=null && banner.getProfile_id()>0){
+                        Intent intent = new Intent(context, AllProductViewsActivity.class);
+                        intent.putExtra("ID", banner.getProfile_id());
+                        context.startActivity(intent);
+                        return;
+                    }
                     if (banner.getLink() != null) {
                         Intent intent = new Intent();
                         intent.setAction(Intent.ACTION_VIEW);
@@ -68,34 +73,37 @@ public class ImgCaruselAdapter extends PagerAdapter {
                 }
 
 
+
             }
         });
         Glide.with(context)
                 .load(Constant.BASE_URL_IMAGE + banner.getImage())
-                .into(imageView);
-
-        container.addView(view, 0);
-
-        return view;
+                .into(holder.iv_carousel_image);
+        if (position == urls.size()- 2){
+            viewPager.post(runnable);
+        }
     }
 
     @Override
-    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((View) object);
+    public int getItemCount() {
+        return urls.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private RoundedImageView iv_carousel_image;
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            iv_carousel_image = itemView.findViewById(R.id.iv_carousel_image);
+        }
     }
 
 
-    @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return view.equals(object);
-    }
-
-    @Override
-    public void restoreState(Parcelable state, ClassLoader loader) {
-    }
-
-    @Override
-    public Parcelable saveState() {
-        return null;
-    }
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            urls.addAll(urls);
+            notifyDataSetChanged();
+        }
+    };
 }

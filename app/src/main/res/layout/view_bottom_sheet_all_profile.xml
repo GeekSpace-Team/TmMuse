@@ -36,7 +36,8 @@
                         android:padding="10dp"
                         android:text="Name Profile"
                         android:textColor="@color/text_color"
-                        android:textSize="24sp" />
+                        android:textSize="24sp"
+                        android:layout_toStartOf="@id/ic_eye"/>
 
                     <ImageView
                         android:id="@+id/ic_eye"

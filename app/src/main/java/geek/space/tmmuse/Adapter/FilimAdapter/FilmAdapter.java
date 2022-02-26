@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -63,7 +62,7 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
             public void onClick(View view) {
                 try{
                     Intent intent = new Intent(context, AllProductViewsActivity.class);
-                    intent.putExtra("ID", film.getId()+"");
+                    intent.putExtra("ID", film.getId());
                     intent.putExtra("image",Constant.BASE_URL+film.getImage().get(0).getSmall_image());
                     context.startActivity(intent);
                 } catch (Exception e){

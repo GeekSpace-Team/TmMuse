@@ -25,19 +25,16 @@
             app:title="@string/app_name"
             app:elevation="0dp">
 
+
             <RelativeLayout
                 android:id="@+id/page_rel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    tools:ignore="UselessParent">
+                    android:orientation="vertical">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -51,13 +48,14 @@
                             <androidx.viewpager.widget.ViewPager
                                 android:id="@+id/all_views_viewPager"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+                                android:layout_height="wrap_content" />
 
 
                         </RelativeLayout>
 
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="150dp"
                             android:layout_alignParentTop="true"
@@ -114,6 +112,7 @@
                 android:background="@color/transparent"
                 app:contentInsetLeft="0dp"
                 app:contentInsetStart="0dp"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
                 app:layout_collapseMode="pin">
 
                 <RelativeLayout
@@ -152,6 +151,9 @@
 
             </androidx.appcompat.widget.Toolbar>
 
+
+
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -171,7 +173,7 @@
             android:scrollbars="none"
             app:behavior_hideable="false"
             app:layout_anchorGravity="center"
-            app:layout_behavior="@string/sheetbehavior">
+           >
 
             <include layout="@layout/view_bottom_sheet_all_profile" />
 

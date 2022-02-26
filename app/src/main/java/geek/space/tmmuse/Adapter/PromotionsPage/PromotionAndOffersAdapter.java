@@ -85,6 +85,7 @@ public class PromotionAndOffersAdapter extends RecyclerView.Adapter<PromotionAnd
                 intent.putExtra("TITLE", promotion.getTitleTM() + "");
                 intent.putExtra("DESC", promotion.getDescriptionTM() + "");
                 intent.putExtra("ID", promotion.getId());
+                intent.putExtra("VIEW_COUNT", promotion.getView_count()+"");
                 if (Utils.getLanguage(context).equals("ru")){
                     intent.putExtra("TITLE", promotion.getDescriptionRU() + "");
                     intent.putExtra("DESC", promotion.getDescriptionRU() + "");
@@ -121,6 +122,7 @@ public class PromotionAndOffersAdapter extends RecyclerView.Adapter<PromotionAnd
             intent.putExtra("TITLE", promotion.getTitleTM() + "");
             intent.putExtra("DESC", promotion.getDescriptionTM() + "");
             intent.putExtra("ID", promotion.getId());
+            intent.putExtra("VIEW_COUNT", promotion.getView_count()+"");
             if (Utils.getLanguage(context).equals("ru")){
                 intent.putExtra("TITLE", promotion.getDescriptionRU() + "");
                 intent.putExtra("DESC", promotion.getDescriptionRU() + "");

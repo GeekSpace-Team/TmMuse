@@ -87,14 +87,11 @@ public class SettingsFragment extends Fragment {
         terms_use_card.setOnClickListener(view -> startActivity(new Intent(context, AboutUsActivity.class)
                 .putExtra("page_type", "privacy")));
 
-        help_card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                HelpFragment helpFragment = new HelpFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                Main_Menu.fivesFragment = helpFragment;
-                Utils.hideAdd(helpFragment, helpFragment.getClass().getSimpleName(), fragmentManager, R.id.menu_frame);
-            }
+        help_card.setOnClickListener(view -> {
+            HelpFragment helpFragment = new HelpFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            Main_Menu.fivesFragment = helpFragment;
+            Utils.hideAdd(helpFragment, helpFragment.getClass().getSimpleName(), fragmentManager, R.id.menu_frame);
         });
 
         language_card.setOnClickListener(view -> {
@@ -178,37 +175,31 @@ public class SettingsFragment extends Fragment {
 
         });
 
-        bron_movie_card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                BroneMovieFragment bronMovie = new BroneMovieFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                Main_Menu.fivesFragment = bronMovie;
-                Utils.hideAdd(bronMovie, bronMovie.getClass().getSimpleName(), fragmentManager, R.id.menu_frame);
-            }
+        bron_movie_card.setOnClickListener(view -> {
+            BroneMovieFragment bronMovie = new BroneMovieFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            Main_Menu.fivesFragment = bronMovie;
+            Utils.hideAdd(bronMovie, bronMovie.getClass().getSimpleName(), fragmentManager, R.id.menu_frame);
         });
 
-        logout_txt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AppAlert alert=new AppAlert(context);
-                alert.setTitle(context.getResources().getString(R.string.pay_attention));
-                alert.setDescription(context.getResources().getString(R.string.pay_attention_desc));
-                alert.setButtonListener(new AppAlert.ButtonListener() {
-                    @Override
-                    public void onOkListener() {
-                        Utils.setSharePreference(context, "token", "");
-                        alert.dismiss();
-                    }
+        logout_txt.setOnClickListener(view -> {
+            AppAlert alert=new AppAlert(context);
+            alert.setTitle(context.getResources().getString(R.string.pay_attention));
+            alert.setDescription(context.getResources().getString(R.string.pay_attention_desc));
+            alert.setButtonListener(new AppAlert.ButtonListener() {
+                @Override
+                public void onOkListener() {
+                    Utils.setSharePreference(context, "token", "");
+                    alert.dismiss();
+                }
 
-                    @Override
-                    public void onCancelListener() {
-                        alert.dismiss();
-                    }
-                });
-                alert.show();
+                @Override
+                public void onCancelListener() {
+                    alert.dismiss();
+                }
+            });
+            alert.show();
 
-            }
         });
 
     }

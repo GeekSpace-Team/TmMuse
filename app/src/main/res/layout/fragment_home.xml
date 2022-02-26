@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/card_gradient"
     android:fillViewport="true"
-    tools:context=".Fragment.HomeFragment.HomeFragment">
+    tools:context=".Fragment.HomeFragment.HomeFragment"
+    android:overScrollMode="never">
 
 
     <LinearLayout
@@ -81,7 +82,7 @@
         </RelativeLayout>
 
 
-        <androidx.viewpager.widget.ViewPager
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/img_view_pager"
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -92,19 +93,13 @@
             android:background="@drawable/home_img_carusel_back"
             android:overScrollMode="never" />
 
-        <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+        <com.zhpan.indicator.IndicatorView
             android:id="@+id/dots_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            app:dotsColor="@color/aply_text_color"
-            app:dotsCornerRadius="8dp"
-            app:dotsSize="10dp"
-            app:dotsSpacing="4dp"
-            app:dotsStrokeColor="@color/text_color"
-            app:dotsStrokeWidth="2dp" />
+            android:layout_weight="1" />
 
 
         <TextView
@@ -161,7 +156,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:overScrollMode="never" />
+            android:overScrollMode="never"
+            android:scrollbars="none"/>
 
 
 

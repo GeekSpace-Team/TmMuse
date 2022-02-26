@@ -55,7 +55,7 @@ public class TmMuseCardAdapter extends RecyclerView.Adapter<TmMuseCardAdapter.Vi
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, AllProductViewsActivity.class);
-                intent.putExtra("ID", body.getId()+"");
+                intent.putExtra("ID", body.getId());
                 context.startActivity(intent);
             }
         });

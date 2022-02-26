@@ -45,7 +45,7 @@ public class PostPreviewActivity extends AppCompatActivity {
     private RoundedImageView promotion_img;
     private ImageView close_promotion_img, dislike_img, like_img;
     private ImageView back_img_promotion;
-    private String title = "", desc = "", img = "";
+    private String title = "", desc = "", img = "", view_count="";
     private Integer id;
     private NeumorphCardView fig_up_card,fig_down_card;
     private ApiInterface apiInterface;
@@ -97,8 +97,10 @@ public class PostPreviewActivity extends AppCompatActivity {
         desc = getIntentProm.getStringExtra("DESC");
         img = getIntentProm.getStringExtra("IMG");
         id = getIntentProm.getIntExtra("ID", 0);
+        view_count = getIntentProm.getStringExtra("VIEW_COUNT");
         prom_desc_text.setText(desc);
         promotion_tit_txt.setText(title);
+        look_txt_counts.setText(view_count);
         Glide.with(this).load(img).into(promotion_img);
         Glide.with(this).asBitmap().listener(new RequestListener<Bitmap>() {
             @Override

@@ -9,4 +9,6 @@
     <dimen name="margins_edt">5dp</dimen>
     <dimen name="margins_settings_img">25dp</dimen>
     <dimen name="bottom_nav_ic">18dp</dimen>
+    <dimen name="sliderCircle">15dp</dimen>
+    <dimen name="sliderRound">15dp</dimen>
 </resources>

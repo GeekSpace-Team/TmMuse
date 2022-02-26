@@ -113,13 +113,18 @@ public class Profiles extends Fragment {
         return progress_bar;
     }
 
+    public DrawerLayout getDraw_profile(){
+        return draw_profile;
+    }
+
     public static void setProfileListRequest(Integer page,Context context, ProgressBar progressBar ) {
         ApiInterface apiInterface = ApiClient.getClient()
                 .create(ApiInterface.class);
-        GetProfile getProfile = new GetProfile(categoryID, sort, tags, limit, page);
+        GetProfile getProfile = new GetProfile(Profiles.categoryID, Profiles.sort, Profiles.tags, Profiles.limit, page);
         Call<ResponseAllProfile> allProfileCall = apiInterface.get_profile(getProfile);
         isLoading = true;
         progressBar.setVisibility(View.VISIBLE);
+        Profiles.get().getDraw_profile().closeDrawer(GravityCompat.END);
         allProfileCall.enqueue(new Callback<ResponseAllProfile>() {
             @Override
             public void onResponse(Call<ResponseAllProfile> call, Response<ResponseAllProfile> response) {

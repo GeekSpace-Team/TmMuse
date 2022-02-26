@@ -78,5 +78,4 @@ public class ImageViewerAdapter extends PagerAdapter {
         container.removeView((RelativeLayout) object);
     }
 
-
 }
