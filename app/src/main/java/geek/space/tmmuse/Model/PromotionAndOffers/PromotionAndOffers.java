@@ -3,7 +3,7 @@ package geek.space.tmmuse.Model.PromotionAndOffers;
 import java.util.ArrayList;
 
 public class PromotionAndOffers {
-    private int id;
+    private Integer id;
     private String titleTM;
     private String titleRU;
     private String descriptionTM;
@@ -17,9 +17,7 @@ public class PromotionAndOffers {
     private String instagram;
     private ArrayList<Numbers> numbers = new ArrayList<>();
 
-    public PromotionAndOffers(int id, String titleTM, String titleRU, String descriptionTM, String descriptionRU,
-                              String image, String promotion, String view_count, String like, String dislike,
-                              int profile_id, String instagram, ArrayList<Numbers> numbers) {
+    public PromotionAndOffers(Integer id, String titleTM, String titleRU, String descriptionTM, String descriptionRU, String image, String promotion, String view_count, String like, String dislike, int profile_id, String instagram, ArrayList<Numbers> numbers) {
         this.id = id;
         this.titleTM = titleTM;
         this.titleRU = titleRU;
@@ -35,11 +33,11 @@ public class PromotionAndOffers {
         this.numbers = numbers;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

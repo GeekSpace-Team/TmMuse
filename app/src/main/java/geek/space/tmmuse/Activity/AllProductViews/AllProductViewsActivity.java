@@ -3,6 +3,8 @@ package geek.space.tmmuse.Activity.AllProductViews;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,6 +47,7 @@ import java.util.Arrays;
 
 import geek.space.tmmuse.API.ApiClient;
 import geek.space.tmmuse.API.ApiInterface;
+import geek.space.tmmuse.Activity.PostPreview.PostPreviewActivity;
 import geek.space.tmmuse.Activity.Sig_Up.Sig_Up_Activity;
 import geek.space.tmmuse.Activity.VrImage.VrImageActivity;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneData_adapter;
@@ -66,14 +69,18 @@ import geek.space.tmmuse.Model.Film.MovieTime;
 import geek.space.tmmuse.Model.Film.RequestBronFilm;
 import geek.space.tmmuse.Model.GetPromoCode.GetPromoCodeBody;
 import geek.space.tmmuse.Model.GetPromoCode.GetPromoCodes;
+import geek.space.tmmuse.Model.LikeDislike.PostLikeDislike;
 import geek.space.tmmuse.Model.PromotionAndOffers.PromotionAndOffers;
 import geek.space.tmmuse.Model.TestModelViewPager.TestModelViewPager;
 import geek.space.tmmuse.R;
+import geek.space.tmmuse.Service.LikeDislikeDb;
 import geek.space.tmmuse.View.AppBarStateChangeListener;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import soup.neumorphism.NeumorphButton;
+import soup.neumorphism.ShapeType;
 
 public class AllProductViewsActivity extends AppCompatActivity {
 
@@ -100,6 +107,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private FrameLayout root_prom;
     private NestedScrollView bottomsheet;
     private RoundedImageView vr_img;
+    private ImageView fing_up_img_products, fig_down_img_products;
 
     private static ApiInterface apiInterface;
 
@@ -115,6 +123,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
 
     private String profileId = "", imageUrl = "";
+    private Integer id;
     private String count_tickets;
     private int dotsCount;
     float oldOffSet = 0f;
@@ -137,6 +146,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
         setFont();
         getLang();
         setAllProfileList();
+        setLike();
     }
 
     private void setAllProfileList() {
@@ -144,10 +154,10 @@ public class AllProductViewsActivity extends AppCompatActivity {
         progress.setLabel(this.getResources().getString(R.string.wait));
         progress.show();
         Intent intent = getIntent();
-        String id = intent.getStringExtra("ID");
+        id = intent.getIntExtra("ID", 0);
         apiInterface = ApiClient.getClient()
                 .create(ApiInterface.class);
-        Call<GetProfileTiny> getProfileTinyCall = apiInterface.get_profile_tiny(id);
+        Call<GetProfileTiny> getProfileTinyCall = apiInterface.get_profile_tiny(id+"");
         getProfileTinyCall.enqueue(new Callback<GetProfileTiny>() {
             @Override
             public void onResponse(Call<GetProfileTiny> call, Response<GetProfileTiny> response) {
@@ -637,6 +647,9 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private void initViews() {
 
         view = findViewById(R.id.bottomsheet);
+
+        fing_up_img_products = findViewById(R.id.fing_up_img_products);
+        fig_down_img_products = findViewById(R.id.fig_down_img_products);
         tool_bar = findViewById(R.id.tool_bar);
         sliderContainer = findViewById(R.id.sliderContainer);
         wifi_layout = findViewById(R.id.wifi_layout);
@@ -691,6 +704,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
         tm_muse_card_txt = findViewById(R.id.tm_muse_card_txt);
         tm_muse_card_desc_txt = findViewById(R.id.tm_muse_card_desc_txt);
         fing_down_layout = findViewById(R.id.fing_down_layout);
+        fing_up_layout = findViewById(R.id.fing_up_layout);
         brone_movie_layout = findViewById(R.id.brone_movie_layout);
         site_layout = findViewById(R.id.site_layout);
         location_layout = findViewById(R.id.location_layout);
@@ -802,6 +816,21 @@ public class AllProductViewsActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        fing_up_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendLikeDislike(id,LikeDislikeDb.LIKE);
+            }
+        });
+
+        fing_down_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendLikeDislike(id,LikeDislikeDb.DISLIKE);
+            }
+        });
     }
 
     // НАстройка языкого панеля
@@ -831,5 +860,58 @@ public class AllProductViewsActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         post_rec.setLayoutManager(mLayoutManager);
         post_rec.setAdapter(new PromotionAndOffersAdapter(this, promotionAndOffers));
+    }
+
+
+    private void setLike() {
+        LikeDislikeDb likeDislikeDb = new LikeDislikeDb(AllProductViewsActivity.this);
+        Cursor cursor=likeDislikeDb.getCountFirst(id+"","like");
+        if(cursor.getCount()>0){
+            fing_up_layout.setBackground(getResources().getDrawable(R.drawable.like_back));
+            fing_up_img_products.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.aply_text_color)));
+        } else {
+            fing_up_layout.setBackground(getResources().getDrawable(R.drawable.all_product_images_back));
+            fing_up_img_products.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.text_color)));
+        }
+
+        cursor=likeDislikeDb.getCountFirst(id+"","dislike");
+        if(cursor.getCount()>0){
+            fing_down_layout.setBackground(getResources().getDrawable(R.drawable.like_back));
+            fig_down_img_products.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.aply_text_color)));
+
+        } else {
+            fing_down_layout.setBackground(getResources().getDrawable(R.drawable.all_product_images_back));
+            fig_down_img_products.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.text_color)));
+        }
+    }
+
+
+    private void sendLikeDislike(Integer id, String type) {
+        LikeDislikeDb likeDislikeDb = new LikeDislikeDb(AllProductViewsActivity.this);
+        Cursor cursor=likeDislikeDb.getCount(id,type);
+        if(cursor.getCount()>0){
+            return;
+        }
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        String table_type = "profile";
+        PostLikeDislike postLikeDislike = new PostLikeDislike(id, type, table_type);
+        Call<ResponseBody> responseBodyCall = apiInterface.add_like_dislike(postLikeDislike);
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+
+                    likeDislikeDb.insert(id, type);
+                    setLike();
+                } else {
+                    Log.e("Error ", response.code() + "");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Error", t.getMessage());
+            }
+        });
     }
 }

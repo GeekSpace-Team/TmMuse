@@ -176,7 +176,7 @@
                         android:padding="8dp">
 
                         <ImageView
-                            android:id="@+id/fing_вщцт_img_products"
+                            android:id="@+id/fig_down_img_products"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"

@@ -1,14 +1,16 @@
 package geek.space.tmmuse.Activity.PostPreview;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,18 +25,30 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.makeramen.roundedimageview.RoundedImageView;
 
-import geek.space.tmmuse.Activity.AllProductViews.AllProductViewsActivity;
+import geek.space.tmmuse.API.ApiClient;
+import geek.space.tmmuse.API.ApiInterface;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
+import geek.space.tmmuse.Model.LikeDislike.PostLikeDislike;
 import geek.space.tmmuse.R;
+import geek.space.tmmuse.Service.LikeDislikeDb;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import soup.neumorphism.NeumorphCardView;
+import soup.neumorphism.ShapeType;
 
 public class PostPreviewActivity extends AppCompatActivity {
 
     private TextView look_txt_counts, promotion_tit_txt, prom_desc_text, like_count_txt, dis_like_count_txt;
     private RoundedImageView promotion_img;
-    private ImageView close_promotion_img;
+    private ImageView close_promotion_img, dislike_img, like_img;
     private ImageView back_img_promotion;
     private String title = "", desc = "", img = "";
+    private Integer id;
+    private NeumorphCardView fig_up_card,fig_down_card;
+    private ApiInterface apiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +58,30 @@ public class PostPreviewActivity extends AppCompatActivity {
         initComponents();
         setFonts();
         setListener();
+        setLike();
 
+    }
+
+    private void setLike() {
+        LikeDislikeDb likeDislikeDb = new LikeDislikeDb(PostPreviewActivity.this);
+        Cursor cursor=likeDislikeDb.getCountFirst(id+"","like");
+        if(cursor.getCount()>0){
+            fig_up_card.setShapeType(ShapeType.PRESSED);
+            like_img.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.aply_text_color)));
+        } else {
+            fig_up_card.setShapeType(0);
+            like_img.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.text_color)));
+        }
+
+        cursor=likeDislikeDb.getCountFirst(id+"","dislike");
+        if(cursor.getCount()>0){
+            fig_down_card.setShapeType(ShapeType.PRESSED);
+            dislike_img.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.aply_text_color)));
+
+        } else {
+            fig_down_card.setShapeType(0);
+            dislike_img.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.text_color)));
+        }
     }
 
     private void setListener() {
@@ -59,6 +96,7 @@ public class PostPreviewActivity extends AppCompatActivity {
         title = getIntentProm.getStringExtra("TITLE");
         desc = getIntentProm.getStringExtra("DESC");
         img = getIntentProm.getStringExtra("IMG");
+        id = getIntentProm.getIntExtra("ID", 0);
         prom_desc_text.setText(desc);
         promotion_tit_txt.setText(title);
         Glide.with(this).load(img).into(promotion_img);
@@ -70,15 +108,56 @@ public class PostPreviewActivity extends AppCompatActivity {
 
             @Override
             public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                Bitmap blur= Utils.blurRenderScript(resource,20,PostPreviewActivity.this);
+                Bitmap blur = Utils.blurRenderScript(resource, 20, PostPreviewActivity.this);
                 back_img_promotion.setImageBitmap(blur);
                 return true;
             }
         }).load(img).into(back_img_promotion);
 
+        fig_up_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendLikeDislike(id,LikeDislikeDb.LIKE);
+            }
+        });
+
+        fig_down_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendLikeDislike(id,LikeDislikeDb.DISLIKE);
+            }
+        });
 
 
+    }
 
+    private void sendLikeDislike(Integer id, String type) {
+        LikeDislikeDb likeDislikeDb = new LikeDislikeDb(PostPreviewActivity.this);
+        Cursor cursor=likeDislikeDb.getCount(id,type);
+        if(cursor.getCount()>0){
+            return;
+        }
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        String table_type = "profile";
+        PostLikeDislike postLikeDislike = new PostLikeDislike(id, type, table_type);
+        Call<ResponseBody> responseBodyCall = apiInterface.add_like_dislike(postLikeDislike);
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+
+                    likeDislikeDb.insert(id, type);
+                    setLike();
+                } else {
+                    Log.e("Error ", response.code() + "");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Error", t.getMessage());
+            }
+        });
     }
 
     private void setFonts() {
@@ -94,6 +173,10 @@ public class PostPreviewActivity extends AppCompatActivity {
         promotion_img = findViewById(R.id.promotion_img);
         back_img_promotion = findViewById(R.id.back_img_promotion);
         close_promotion_img = findViewById(R.id.close_promotion_img);
+        fig_up_card = findViewById(R.id.fig_up_card);
+        fig_down_card = findViewById(R.id.fig_down_card);
+        like_img = findViewById(R.id.like_img);
+        dislike_img = findViewById(R.id.dislike_img);
     }
 
     private void makeStatusbarTransparent() {

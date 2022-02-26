@@ -17,6 +17,7 @@ import geek.space.tmmuse.Model.Help.PostHelp;
 import geek.space.tmmuse.Model.Home.Home;
 import geek.space.tmmuse.Model.Interest.GetInterest;
 import geek.space.tmmuse.Model.Interest.PostInterest;
+import geek.space.tmmuse.Model.LikeDislike.PostLikeDislike;
 import geek.space.tmmuse.Model.Message.GetMessage;
 import geek.space.tmmuse.Model.SearchHistory.GetSearchHistory;
 import geek.space.tmmuse.Model.SearchHistory.SearchHistory;
@@ -97,4 +98,7 @@ public interface ApiInterface {
     Call<ResponseBody> ticket_status_update(@Header("Authorization") String token,
                                             @Query("id") Integer id,
                                             @Body CancelBronFilm cancelBronFilm);
+
+    @POST("/add-like-dislike")
+    Call<ResponseBody> add_like_dislike(@Body PostLikeDislike postLikeDislike);
 }

@@ -82,8 +82,9 @@ public class PromotionAndOffersAdapter extends RecyclerView.Adapter<PromotionAnd
             public void onClick(View view) {
                 Intent intent = new Intent(context, PostPreviewActivity.class);
                 intent.putExtra("IMG", Constant.BASE_URL_IMAGE + promotion.getImage() + "");
-                intent.putExtra("TITLE", promotion.getDescriptionTM() + "");
+                intent.putExtra("TITLE", promotion.getTitleTM() + "");
                 intent.putExtra("DESC", promotion.getDescriptionTM() + "");
+                intent.putExtra("ID", promotion.getId());
                 if (Utils.getLanguage(context).equals("ru")){
                     intent.putExtra("TITLE", promotion.getDescriptionRU() + "");
                     intent.putExtra("DESC", promotion.getDescriptionRU() + "");
@@ -119,6 +120,7 @@ public class PromotionAndOffersAdapter extends RecyclerView.Adapter<PromotionAnd
             intent.putExtra("IMG", Constant.BASE_URL_IMAGE + promotion.getImage() + "");
             intent.putExtra("TITLE", promotion.getTitleTM() + "");
             intent.putExtra("DESC", promotion.getDescriptionTM() + "");
+            intent.putExtra("ID", promotion.getId());
             if (Utils.getLanguage(context).equals("ru")){
                 intent.putExtra("TITLE", promotion.getDescriptionRU() + "");
                 intent.putExtra("DESC", promotion.getDescriptionRU() + "");
@@ -159,6 +161,7 @@ public class PromotionAndOffersAdapter extends RecyclerView.Adapter<PromotionAnd
             name_prom_offer_txt = itemView.findViewById(R.id.name_prom_offer_txt);
             name_prom_offer_txt.setTypeface(Font.getInstance(context).getMontserrat_600());
             percent_btn.setTypeface(Font.getInstance(context).getMontserrat_500());
+
         }
     }
 }

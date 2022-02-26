@@ -104,6 +104,7 @@
               app:neumorph_backgroundColor="#2B3238">
 
             <ImageView
+                android:id="@+id/like_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -122,6 +123,7 @@
               app:neumorph_backgroundColor="#2B3238">
 
             <ImageView
+                android:id="@+id/dislike_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
