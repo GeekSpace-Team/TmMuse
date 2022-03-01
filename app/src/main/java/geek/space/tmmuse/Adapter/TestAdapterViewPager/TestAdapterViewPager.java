@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
@@ -59,7 +60,9 @@ public class TestAdapterViewPager extends RecyclerView.Adapter<TestAdapterViewPa
                     viewPager.setCurrentItem(position);
                 }
             });
-            Glide.with(context).load(Constant.BASE_URL_IMAGE+imgProfile.getLarge_image()).into(holder.product_img);
+            Glide.with(context).load(Constant.BASE_URL_IMAGE+imgProfile.getLarge_image())
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_error_photo))
+                    .into(holder.product_img);
         } catch (Exception e){
             e.printStackTrace();
         }

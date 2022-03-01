@@ -211,7 +211,8 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_call" />
+                            android:src="@drawable/ic_call"
+                            android:tint="@color/text_color"/>
 
                         <TextView
                             android:id="@+id/product_text_call"
@@ -243,7 +244,8 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_instagram" />
+                            android:src="@drawable/ic_instagram"
+                            android:tint="@color/text_color"/>
 
                         <TextView
                             android:id="@+id/product_text_instagram"
@@ -274,7 +276,8 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_earth" />
+                            android:src="@drawable/ic_earth"
+                            android:tint="@color/text_color"/>
 
                         <TextView
                             android:id="@+id/product_text_web"
@@ -305,7 +308,8 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_map" />
+                            android:src="@drawable/ic_map"
+                            android:tint="@color/text_color"/>
 
                         <TextView
                             android:id="@+id/product_text_location"
@@ -338,7 +342,8 @@
                         android:layout_weight="1"
                         android:background="@drawable/all_product_images_back"
                         android:gravity="center"
-                        android:visibility="gone">
+                        android:visibility="gone"
+                        android:layout_marginEnd="10dp">
 
                         <ImageView
                             android:layout_width="25dp"
@@ -364,7 +369,8 @@
                         android:layout_weight="1"
                         android:background="@drawable/all_product_images_back"
                         android:gravity="center"
-                        android:visibility="gone">
+                        android:visibility="gone"
+                        android:layout_marginEnd="10dp">
 
                         <ImageView
                             android:layout_width="25dp"
@@ -937,9 +943,11 @@
 
                 <!--Post Layout-->
                 <LinearLayout
+                    android:id="@+id/post_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
 
                     <TextView

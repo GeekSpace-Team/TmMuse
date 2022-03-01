@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import geek.space.tmmuse.Activity.AllProductViews.AllProductViewsActivity;
 import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Common.Font.Font;
+import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Model.GetCard.GetCardBody;
 import geek.space.tmmuse.R;
 import soup.neumorphism.NeumorphButton;
@@ -46,6 +48,7 @@ public class TmMuseCardAdapter extends RecyclerView.Adapter<TmMuseCardAdapter.Vi
         holder.name_tm_muse_card_txt.setText(body.getNameRU());
         try {
             Glide.with(context).load(Constant.BASE_URL_IMAGE + body.getImages().get(0).getLarge_image())
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_error_photo))
                     .into(holder.tm_muse_card_img);
         } catch (Exception e){
             e.printStackTrace();

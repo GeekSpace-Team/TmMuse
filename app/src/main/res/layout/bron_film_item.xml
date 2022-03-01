@@ -2,7 +2,7 @@
 <soup.neumorphism.NeumorphCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bron_cardView"
-    style="@style/CustomCardImgCarusel"
+    style="@style/CustomCategoryVidget"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/margins"

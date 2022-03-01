@@ -12,10 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 
+import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Model.SearchPage.SearchKeyWord;
 import geek.space.tmmuse.Model.SearchPage.SearchPage;
@@ -42,7 +44,9 @@ public class SearchPageAdapter extends RecyclerView.Adapter<SearchPageAdapter.Vi
         SearchPage search = searchPages.get(position);
         holder.profile_adapter_desc.setText(search.getDesc());
         holder.profile_adapter_name.setText(search.getName());
-        Glide.with(context).load(search.getImage()).into(holder.profile_adapter_img);
+        Glide.with(context).load(Constant.BASE_URL_IMAGE + search.getImage())
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_error_photo))
+                .into(holder.profile_adapter_img);
     }
 
     @Override

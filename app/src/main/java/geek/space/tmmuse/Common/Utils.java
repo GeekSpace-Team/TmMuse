@@ -4,16 +4,13 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.os.StrictMode;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,22 +30,24 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
+import geek.space.tmmuse.API.ApiClient;
+import geek.space.tmmuse.API.ApiInterface;
 import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
 import geek.space.tmmuse.Adapter.ZoomImageAdapter.ImageViewerAdapter;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Fragment.ProfileFragment.Profiles;
+import geek.space.tmmuse.Model.ViewCound.AddViewCount;
 import geek.space.tmmuse.R;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import soup.neumorphism.NeumorphButton;
 import soup.neumorphism.NeumorphImageView;
 
 import static android.content.Context.MODE_PRIVATE;
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static geek.space.tmmuse.Common.SharedPref.APP_PREFERENCES;
 
 public class Utils {
@@ -178,7 +177,7 @@ public class Utils {
         return result;
     }
 
-// ViewPage scrolling with RecyclerView
+    // ViewPage scrolling with RecyclerView
     public static void showImageViewer(Context context, ArrayList<String> images, ArrayList<String> largeImages) {
         Dialog dialog = new Dialog(context);
         View view = LayoutInflater.from(context).inflate(R.layout.image_viewer, null, false);
@@ -189,7 +188,7 @@ public class Utils {
 //        window.getAttributes().windowAnimations = R.style.DialogAnimation;
 
         ViewPager pager = dialog.findViewById(R.id.pager);
-        ImageView back=dialog.findViewById(R.id.back);
+        ImageView back = dialog.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -201,22 +200,20 @@ public class Utils {
         pager.setAdapter(adapter);
 
 
-
         LinearLayout linear = dialog.findViewById(R.id.linear);
-        HorizontalScrollView horizontalScrollView=dialog.findViewById(R.id.rec);
+        HorizontalScrollView horizontalScrollView = dialog.findViewById(R.id.rec);
 
-        if(images.size()<2){
+        if (images.size() < 2) {
             horizontalScrollView.setVisibility(View.GONE);
         }
 
 
-
-        for (int i=0;i<images.size();i++) {
+        for (int i = 0; i < images.size(); i++) {
             String img = images.get(i);
             View selector = LayoutInflater.from(context).inflate(R.layout.image_selector, null, false);
             ImageView image = selector.findViewById(R.id.image);
             LinearLayout unselect = selector.findViewById(R.id.unselect);
-            if(i==0){
+            if (i == 0) {
                 unselect.setVisibility(View.GONE);
             }
             Glide.with(context)
@@ -246,7 +243,7 @@ public class Utils {
                 oldUnselectView.setVisibility(View.VISIBLE);
                 old[0] = position;
                 unselect.setVisibility(View.GONE);
-                horizontalScrollView.scrollTo(unselectView.getLeft(),unselectView.getTop());
+                horizontalScrollView.scrollTo(unselectView.getLeft(), unselectView.getTop());
 
             }
 
@@ -263,23 +260,23 @@ public class Utils {
     }
 
     public static String getLanguage(Context myContext) {
-        SharedPreferences mySharedPref=myContext.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        SharedPreferences mySharedPref = myContext.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
         return mySharedPref.getString("My_Lang", "");
     }
 
-    public static void setSharePreference (Context context, String name, String value){
+    public static void setSharePreference(Context context, String name, String value) {
         SharedPreferences.Editor editor = context.getSharedPreferences(name, MODE_PRIVATE).edit();
         editor.putString(name, value);
         editor.apply();
     }
 
-    public static String getSharePreferences(Context context, String name){
+    public static String getSharePreferences(Context context, String name) {
         SharedPreferences preferences = context.getSharedPreferences(name, MODE_PRIVATE);
         String value = preferences.getString(name, "");
         return value;
     }
 
-    public static KProgressHUD AppProgressBar(Context context){
+    public static KProgressHUD AppProgressBar(Context context) {
         return KProgressHUD.create(context)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setCancellable(true)
@@ -287,8 +284,8 @@ public class Utils {
                 .setDimAmount(0.5f);
     }
 
-    public static void showCustomToast(String textStr,int imageId,Context context,int backgroundId){
-        LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+    public static void showCustomToast(String textStr, int imageId, Context context, int backgroundId) {
+        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View layout = inflater.inflate(R.layout.toast_layout, null, false);
 
         ImageView image = (ImageView) layout.findViewById(R.id.image);
@@ -300,12 +297,32 @@ public class Utils {
         text.setTypeface(Font.getInstance(context).getMontserrat_700());
 
         Toast toast = new Toast(context);
-        toast.setGravity(Gravity.TOP|Gravity.FILL_HORIZONTAL, 20, 20);
+        toast.setGravity(Gravity.TOP | Gravity.FILL_HORIZONTAL, 20, 20);
         toast.setDuration(Toast.LENGTH_LONG);
 
         toast.setView(layout);
         toast.show();
+    }
 
+    public static void add_click_count(Integer id, String type, Context context) {
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        String token = "Bearer " + Utils.getSharePreferences(context, "token");
+        Integer user_id = Integer.parseInt(Utils.getSharePreferences(context, "user_id"));
+        AddViewCount addViewCount = new AddViewCount(id, type, user_id);
+        Call<ResponseBody> responseBodyCall = apiInterface.add_view_count(token, addViewCount);
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                } else {
+                    Log.e("Error ", response.code() + "");
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Error ", t.getMessage());
+            }
+        });
     }
 }

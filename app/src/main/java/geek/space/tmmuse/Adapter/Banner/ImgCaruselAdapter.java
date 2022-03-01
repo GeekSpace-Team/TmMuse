@@ -15,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import geek.space.tmmuse.Activity.AllProductViews.AllProductViewsActivity;
 import geek.space.tmmuse.Adapter.ZoomImageAdapter.ImageViewerAdapter;
 import geek.space.tmmuse.Common.Constant;
+import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Model.Banner.Banner;
 import geek.space.tmmuse.R;
 
@@ -54,6 +56,7 @@ public class ImgCaruselAdapter extends RecyclerView.Adapter<ImgCaruselAdapter.Vi
             public void onClick(View view) {
                 try {
                     if (banner.getProfile_id()!=null && banner.getProfile_id()>0){
+                        Utils.add_click_count(banner.getId(), "banner", context);
                         Intent intent = new Intent(context, AllProductViewsActivity.class);
                         intent.putExtra("ID", banner.getProfile_id());
                         context.startActivity(intent);
@@ -65,8 +68,6 @@ public class ImgCaruselAdapter extends RecyclerView.Adapter<ImgCaruselAdapter.Vi
                         intent.addCategory(Intent.CATEGORY_BROWSABLE);
                         intent.setData(Uri.parse(banner.getLink()));
                         context.startActivity(intent);
-                    } else {
-                        context.startActivity(new Intent(context, AllProductViewsActivity.class));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -78,6 +79,7 @@ public class ImgCaruselAdapter extends RecyclerView.Adapter<ImgCaruselAdapter.Vi
         });
         Glide.with(context)
                 .load(Constant.BASE_URL_IMAGE + banner.getImage())
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_error_photo))
                 .into(holder.iv_carousel_image);
         if (position == urls.size()- 2){
             viewPager.post(runnable);

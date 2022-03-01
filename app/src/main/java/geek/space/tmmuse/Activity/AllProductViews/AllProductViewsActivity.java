@@ -1,11 +1,13 @@
 package geek.space.tmmuse.Activity.AllProductViews;
 
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -36,6 +38,7 @@ import androidx.recyclerview.widget.RecyclerView.LayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -47,6 +50,7 @@ import java.util.Arrays;
 
 import geek.space.tmmuse.API.ApiClient;
 import geek.space.tmmuse.API.ApiInterface;
+import geek.space.tmmuse.Activity.ShareActivity.ShareActivity;
 import geek.space.tmmuse.Activity.Sig_Up.Sig_Up_Activity;
 import geek.space.tmmuse.Activity.VrImage.VrImageActivity;
 import geek.space.tmmuse.Adapter.FilimAdapter.BroneData_adapter;
@@ -98,7 +102,8 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private LinearLayout certificate_layout, promo_layout, images_layout,
             call_layout_products, instagram_layout, fing_up_layout, fing_down_layout, brone_movie_layout,
             site_layout, location_layout, film_desc_layout, film_time_layout, payment_layout, work_time_another_layout,
-            deliver_layout, cuisine_layout, average_check_layout, own_promotion_layout, tm_muse_card_layout, gallery_layout, wifi_layout;
+            deliver_layout, cuisine_layout, average_check_layout, own_promotion_layout, tm_muse_card_layout, gallery_layout,
+            wifi_layout, post_layout;
     private View view_Stick;
     private HorizontalScrollView img_horizontal_scroll;
     private RecyclerView post_rec, movie_time_rec, images_profile_rec, gallery_rec;
@@ -106,7 +111,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private FrameLayout root_prom;
     private NestedScrollView bottomsheet;
     private RoundedImageView vr_img;
-    private ImageView fing_up_img_products, fig_down_img_products;
+    private ImageView fing_up_img_products, fig_down_img_products, share_img_profile;
 
     private static ApiInterface apiInterface;
 
@@ -181,26 +186,9 @@ public class AllProductViewsActivity extends AppCompatActivity {
                     }
                     if (response.body().getBody().getPhone_numbers() != null) {
                         profilePhones = response.body().getBody().getPhone_numbers();
-                        call_layout_products.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Context context = AllProductViewsActivity.this;
-                                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(AllProductViewsActivity.this,
-                                        R.style.CustomBottomSheetDialogTheme);
-                                View bottomSheetDialogView = LayoutInflater.from(AllProductViewsActivity.this)
-                                        .inflate(R.layout.phone_bottom_sheet,
-                                                view.findViewById(R.id.phone_bottom));
-                                RecyclerView phone_number_rec;
-                                phone_number_rec = bottomSheetDialogView.findViewById(R.id.phone_number_rec);
-                                LayoutManager layoutManager = new LinearLayoutManager(AllProductViewsActivity.this);
-                                phone_number_rec.setLayoutManager(layoutManager);
-                                phone_number_rec.setAdapter(new ProfilePhoneAdapter(AllProductViewsActivity.this, profilePhones));
 
-                                bottomSheetDialog.setContentView(bottomSheetDialogView);
-                                bottomSheetDialog.show();
-                            }
-                        });
                     }
+
                     if (response.body().getBody().getProfile().getInstagram() != null) {
                         if (profile.getInstagram().isEmpty()) {
                             instagram_layout.setVisibility(View.GONE);
@@ -232,66 +220,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
                     if (response.body().getBody().getProfile().getIs_promo() != null && profile.getIs_promo()) {
                         promo_layout.setVisibility(View.VISIBLE);
-                        promo_layout.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                                String token = "Bearer " + Utils.getSharePreferences(AllProductViewsActivity.this, "token");
-                                Integer profile_id = profile.getId();
-                                GetPromoCodeBody getPromoCodeBody = new GetPromoCodeBody(profile_id);
-                                Call<GetPromoCodes> getPromoCodesCall = apiInterface.get_promo_codes(token, getPromoCodeBody);
-                                getPromoCodesCall.enqueue(new Callback<GetPromoCodes>() {
-                                    @Override
-                                    public void onResponse(Call<GetPromoCodes> call, Response<GetPromoCodes> response) {
-                                        if (response.isSuccessful()) {
-                                            Context context = AllProductViewsActivity.this;
-                                            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(AllProductViewsActivity.this,
-                                                    R.style.CustomBottomSheetDialogTheme);
-                                            View bottomSheetDialogView = LayoutInflater.from(AllProductViewsActivity.this)
-                                                    .inflate(R.layout.promocode_bottom_sheet,
-                                                            view.findViewById(R.id.bottom_sheet_promo));
 
-                                            TextView promo_text, your_promo_txt, code_number_txt, close_bottom_txt;
-
-                                            promo_text = bottomSheetDialogView.findViewById(R.id.promo_text);
-                                            your_promo_txt = bottomSheetDialogView.findViewById(R.id.your_promo_txt);
-                                            code_number_txt = bottomSheetDialogView.findViewById(R.id.code_number_txt);
-                                            close_bottom_txt = bottomSheetDialogView.findViewById(R.id.close_bottom_txt);
-
-                                            GetPromoCodes getPromoCodes = response.body();
-                                            if (getPromoCodes.getBody() != null) {
-                                                Integer code = getPromoCodes.getBody();
-                                                code_number_txt.setText(code + "");
-                                            }
-
-                                            your_promo_txt.setTypeface(Font.getInstance(context).getMontserrat_800());
-                                            promo_text.setTypeface(Font.getInstance(context).getMontserrat_700());
-                                            code_number_txt.setTypeface(Font.getInstance(context).getMontserrat_700());
-                                            close_bottom_txt.setTypeface(Font.getInstance(context).getMontserrat_600());
-
-                                            close_bottom_txt.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View view) {
-                                                    bottomSheetDialog.dismiss();
-                                                }
-                                            });
-
-                                            bottomSheetDialog.setContentView(bottomSheetDialogView);
-                                            bottomSheetDialog.show();
-
-                                        } else {
-                                            Log.e("Error", response.code() + "");
-                                            Toast.makeText(AllProductViewsActivity.this, response.code() + "", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<GetPromoCodes> call, Throwable t) {
-
-                                    }
-                                });
-                            }
-                        });
                     } else {
                         promo_layout.setVisibility(View.GONE);
                     }
@@ -304,7 +233,9 @@ public class AllProductViewsActivity extends AppCompatActivity {
                             if (profile.getSite() != null) {
                                 movieTime = profile.getSite();
                                 splitTime(movieTime);
-
+                                brone_movie_layout.setVisibility(View.VISIBLE);
+                            } else {
+                                brone_movie_layout.setVisibility(View.GONE);
                             }
                         } else {
                             brone_movie_layout.setVisibility(View.GONE);
@@ -312,6 +243,8 @@ public class AllProductViewsActivity extends AppCompatActivity {
                             average_check_txt.setText(getResources().getString(R.string.average_check));
                         }
                     }
+
+
 
                     if (profile.getDelivery() != null && profile.getDelivery()) {
                         deliver_layout.setVisibility(View.VISIBLE);
@@ -344,6 +277,10 @@ public class AllProductViewsActivity extends AppCompatActivity {
                         }
                     }
 
+                    if (profile.getInstagram() != null) {
+                        instagram_layout.setVisibility(View.VISIBLE);
+
+                    }
 
                     if (profile.getAverage_check() != null) {
                         average_check_layout.setVisibility(View.VISIBLE);
@@ -363,12 +300,15 @@ public class AllProductViewsActivity extends AppCompatActivity {
                     }
 
                     if (response.body().getBody().getImages() != null) {
+                        gallery_layout.setVisibility(View.VISIBLE);
+                        imgProfiles = response.body().getBody().getImages();
                         galleryAdapter();
                         for (ImgProfile img : response.body().getBody().getImages()) {
                             if (img.getVR()) {
                                 try {
                                     Glide.with(AllProductViewsActivity.this)
                                             .load(Constant.BASE_URL_IMAGE + img.getLarge_image())
+                                            .apply(RequestOptions.placeholderOf(R.drawable.ic_error_photo))
                                             .into(vr_img);
                                     largeVrImageUrl = Constant.BASE_URL_IMAGE + img.getLarge_image();
                                 } catch (Exception e) {
@@ -377,10 +317,16 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
                             }
                         }
+                    } else {
+                        gallery_layout.setVisibility(View.GONE);
                     }
 
                     if (response.body().getBody().getPosts() != null) {
+                        post_layout.setVisibility(View.VISIBLE);
+                        promotionAndOffers = response.body().getBody().getPosts();
                         postAdapter();
+                    } else {
+                        post_layout.setVisibility(View.GONE);
                     }
 
                     if (profile.getView_count() != null) {
@@ -445,6 +391,9 @@ public class AllProductViewsActivity extends AppCompatActivity {
     }
 
     public void showCustomDialog() {
+        if(movieTimes.size()<=0){
+            return;
+        }
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -481,7 +430,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (string_to_int <= 0 || count_tickets_ed_text.getText().toString().equals("") || count_tickets_ed_text == null) {
-                    Toast.makeText(AllProductViewsActivity.this, "Please enter how many tickets you want", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AllProductViewsActivity.this, R.string.how_many_tickets, Toast.LENGTH_SHORT).show();
                 } else {
                     showTicketsAcceptDialog();
                     dialog.dismiss();
@@ -588,7 +537,7 @@ public class AllProductViewsActivity extends AppCompatActivity {
                                 AllProductViewsActivity.this,
                                 R.color.no_internet_back);
                         progress.dismiss();
-                        findViewById(R.id.getCard_progress).setVisibility(View.VISIBLE);
+//                        findViewById(R.id.getCard_progress).setVisibility(View.VISIBLE);
                         Log.e("Error ", t.getMessage() + "");
                     }
                 });
@@ -648,7 +597,8 @@ public class AllProductViewsActivity extends AppCompatActivity {
     private void initViews() {
 
         view = findViewById(R.id.bottomsheet);
-
+        share_img_profile = findViewById(R.id.share_img_profile);
+        post_layout = findViewById(R.id.post_layout);
         fing_up_img_products = findViewById(R.id.fing_up_img_products);
         fig_down_img_products = findViewById(R.id.fig_down_img_products);
         tool_bar = findViewById(R.id.tool_bar);
@@ -726,6 +676,25 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
     private void setListener() {
 
+        call_layout_products.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(AllProductViewsActivity.this,
+                        R.style.CustomBottomSheetDialogTheme);
+                View bottomSheetDialogView = LayoutInflater.from(AllProductViewsActivity.this)
+                        .inflate(R.layout.phone_bottom_sheet,
+                                view.findViewById(R.id.phone_bottom));
+                RecyclerView phone_number_rec;
+                phone_number_rec = bottomSheetDialogView.findViewById(R.id.phone_number_rec);
+                LayoutManager layoutManager = new LinearLayoutManager(AllProductViewsActivity.this);
+                phone_number_rec.setLayoutManager(layoutManager);
+                phone_number_rec.setAdapter(new ProfilePhoneAdapter(AllProductViewsActivity.this, profilePhones));
+
+                bottomSheetDialog.setContentView(bottomSheetDialogView);
+                bottomSheetDialog.show();
+            }
+        });
+
         findViewById(R.id.brone_movie_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -737,7 +706,6 @@ public class AllProductViewsActivity extends AppCompatActivity {
 
             }
         });
-
 
         all_views_viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -776,88 +744,93 @@ public class AllProductViewsActivity extends AppCompatActivity {
         }
 
         certificate_layout.setOnClickListener(view -> {
-            Context context = AllProductViewsActivity.this;
-            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(AllProductViewsActivity.this,
-                    R.style.CustomBottomSheetDialogTheme);
-            View bottomSheetDialogView = LayoutInflater.from(AllProductViewsActivity.this)
-                    .inflate(R.layout.cartificate_bottom_sheet,
-                            view.findViewById(R.id.bottom_sheet_certificate));
+            if (Utils.getSharePreferences(AllProductViewsActivity.this, "token").equals("")) {
+                startActivity(new Intent(AllProductViewsActivity.this, Sig_Up_Activity.class).putExtra("type", "1"));
+            } else {
+                Context context = AllProductViewsActivity.this;
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(AllProductViewsActivity.this,
+                        R.style.CustomBottomSheetDialogTheme);
+                View bottomSheetDialogView = LayoutInflater.from(AllProductViewsActivity.this)
+                        .inflate(R.layout.cartificate_bottom_sheet,
+                                view.findViewById(R.id.bottom_sheet_certificate));
 
-            TextView certificate_text, write_cert_txt, close_bottom_txt;
-            EditText certificate_ed_text;
-            NeumorphButton send_btn;
+                TextView certificate_text, write_cert_txt, close_bottom_txt;
+                EditText certificate_ed_text;
+                NeumorphButton send_btn;
 
-            close_bottom_txt = bottomSheetDialogView.findViewById(R.id.close_bottom_txt);
-            certificate_ed_text = bottomSheetDialogView.findViewById(R.id.certificate_ed_text);
-            certificate_text = bottomSheetDialogView.findViewById(R.id.certificate_text);
-            write_cert_txt = bottomSheetDialogView.findViewById(R.id.write_cert_txt);
-            send_btn = bottomSheetDialogView.findViewById(R.id.send_btn);
-            send_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (certificate_ed_text.getText().toString().equals("") || certificate_ed_text.getText().toString().equals("0")) {
-                        Toast.makeText(context, R.string.enter_all_values, Toast.LENGTH_SHORT).show();
-                    } else {
-                        KProgressHUD progress = Utils.AppProgressBar(AllProductViewsActivity.this);
-                        progress.setLabel(getResources().getString(R.string.wait));
-                        progress.show();
-                        String token = "Bearer " + Utils.getSharePreferences(AllProductViewsActivity.this, "token");
-                        Integer profile_id = profile.getId();
-                        String amountTxt = certificate_ed_text.getText().toString();
-                        Integer amount = Integer.parseInt(amountTxt);
-                        apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                        InsertCertificate insertCertificate = new InsertCertificate(amount, profile_id);
-                        Call<ResponseBody> responseBodyCall = apiInterface.create_certificate(token, insertCertificate);
-                        responseBodyCall.enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                if (response.isSuccessful()) {
-                                    AppAlert appAlert = new AppAlert(AllProductViewsActivity.this);
-                                    appAlert.hasCancel(false);
-                                    appAlert.setTitle(AllProductViewsActivity.this.getResources().getString(R.string.access_get_card));
-                                    appAlert.setButtonListener(new AppAlert.ButtonListener() {
-                                        @Override
-                                        public void onOkListener() {
-                                            bottomSheetDialog.dismiss();
-                                            appAlert.dismiss();
-                                        }
+                close_bottom_txt = bottomSheetDialogView.findViewById(R.id.close_bottom_txt);
+                certificate_ed_text = bottomSheetDialogView.findViewById(R.id.certificate_ed_text);
+                certificate_text = bottomSheetDialogView.findViewById(R.id.certificate_text);
+                write_cert_txt = bottomSheetDialogView.findViewById(R.id.write_cert_txt);
+                send_btn = bottomSheetDialogView.findViewById(R.id.send_btn);
+                send_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (certificate_ed_text.getText().toString().equals("") || certificate_ed_text.getText().toString().equals("0")) {
+                            Toast.makeText(context, R.string.enter_all_values, Toast.LENGTH_SHORT).show();
+                        } else {
+                            KProgressHUD progress = Utils.AppProgressBar(AllProductViewsActivity.this);
+                            progress.setLabel(getResources().getString(R.string.wait));
+                            progress.show();
+                            String token = "Bearer " + Utils.getSharePreferences(AllProductViewsActivity.this, "token");
+                            Integer profile_id = profile.getId();
+                            String amountTxt = certificate_ed_text.getText().toString();
+                            Integer amount = Integer.parseInt(amountTxt);
+                            apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                            InsertCertificate insertCertificate = new InsertCertificate(amount, profile_id);
+                            Call<ResponseBody> responseBodyCall = apiInterface.create_certificate(token, insertCertificate);
+                            responseBodyCall.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if (response.isSuccessful()) {
+                                        AppAlert appAlert = new AppAlert(AllProductViewsActivity.this);
+                                        appAlert.hasCancel(false);
+                                        appAlert.setTitle(AllProductViewsActivity.this.getResources().getString(R.string.access_get_card));
+                                        appAlert.setButtonListener(new AppAlert.ButtonListener() {
+                                            @Override
+                                            public void onOkListener() {
+                                                bottomSheetDialog.dismiss();
+                                                appAlert.dismiss();
+                                            }
 
-                                        @Override
-                                        public void onCancelListener() {
+                                            @Override
+                                            public void onCancelListener() {
 
-                                        }
-                                    });
-                                    appAlert.show();
+                                            }
+                                        });
+                                        appAlert.show();
+                                    }
+                                    progress.dismiss();
                                 }
-                                progress.dismiss();
-                            }
 
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                Utils.showCustomToast(getResources().getString(R.string.check_internet),
-                                        R.drawable.ic_wifi_no_connection,
-                                        AllProductViewsActivity.this,
-                                        R.color.no_internet_back);
-                                progress.dismiss();
-                            }
-                        });
-                    }
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    Utils.showCustomToast(getResources().getString(R.string.check_internet),
+                                            R.drawable.ic_wifi_no_connection,
+                                            AllProductViewsActivity.this,
+                                            R.color.no_internet_back);
+                                    progress.dismiss();
+                                }
+                            });
+                        }
 
                     }
 
-            });
+                });
 
-            certificate_ed_text.setTypeface(Font.getInstance(context).getMontserrat_800());
-            certificate_text.setTypeface(Font.getInstance(context).getMontserrat_700());
-            write_cert_txt.setTypeface(Font.getInstance(context).getMontserrat_400());
-            close_bottom_txt.setTypeface(Font.getInstance(context).getMontserrat_600());
-            send_btn.setTypeface(Font.getInstance(context).getMontserrat_700());
+                certificate_ed_text.setTypeface(Font.getInstance(context).getMontserrat_800());
+                certificate_text.setTypeface(Font.getInstance(context).getMontserrat_700());
+                write_cert_txt.setTypeface(Font.getInstance(context).getMontserrat_400());
+                close_bottom_txt.setTypeface(Font.getInstance(context).getMontserrat_600());
+                send_btn.setTypeface(Font.getInstance(context).getMontserrat_700());
 
-            close_bottom_txt.setOnClickListener(view1 -> bottomSheetDialog.dismiss());
+                close_bottom_txt.setOnClickListener(view1 -> bottomSheetDialog.dismiss());
 
 
-            bottomSheetDialog.setContentView(bottomSheetDialogView);
-            bottomSheetDialog.show();
+                bottomSheetDialog.setContentView(bottomSheetDialogView);
+                bottomSheetDialog.show();
+            }
+
         });
 
 
@@ -885,6 +858,115 @@ public class AllProductViewsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 sendLikeDislike(id, LikeDislikeDb.DISLIKE);
             }
+        });
+
+        share_img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    Intent intent = new Intent(AllProductViewsActivity.this, ShareActivity.class);
+                    intent.putExtra("IMG", Constant.BASE_URL_IMAGE + imgProfiles.get(0).getLarge_image() + "");
+                    intent.putExtra("TITLE", profile.getNameTM());
+                    if (Utils.getLanguage(AllProductViewsActivity.this).equals("ru")) {
+                        intent.putExtra("TITLE", profile.getNameRU());
+                    }
+                    intent.putExtra("PROMO_PRECENT", profile.getAverage_check() + "");
+                    intent.putExtra("TYPE", "profile");
+                    startActivity(intent);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        instagram_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("http://instagram.com/" + profile.getInstagram());
+                Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+
+                likeIng.setPackage("com.instagram.android");
+
+                try {
+                    startActivity(likeIng);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://instagram.com/" + profile.getInstagram())));
+                }
+            }
+        });
+
+        promo_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Utils.getSharePreferences(AllProductViewsActivity.this, "token").equals("")) {
+                    startActivity(new Intent(AllProductViewsActivity.this, Sig_Up_Activity.class).putExtra("type", ""));
+                } else {
+                    apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                    String token = "Bearer " + Utils.getSharePreferences(AllProductViewsActivity.this, "token");
+                    Integer profile_id = profile.getId();
+                    GetPromoCodeBody getPromoCodeBody = new GetPromoCodeBody(profile_id);
+                    Call<GetPromoCodes> getPromoCodesCall = apiInterface.get_promo_codes(token, getPromoCodeBody);
+                    getPromoCodesCall.enqueue(new Callback<GetPromoCodes>() {
+                        @Override
+                        public void onResponse(Call<GetPromoCodes> call, Response<GetPromoCodes> response) {
+                            if (response.isSuccessful()) {
+                                Context context = AllProductViewsActivity.this;
+                                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(AllProductViewsActivity.this,
+                                        R.style.CustomBottomSheetDialogTheme);
+                                View bottomSheetDialogView = LayoutInflater.from(AllProductViewsActivity.this)
+                                        .inflate(R.layout.promocode_bottom_sheet,
+                                                view.findViewById(R.id.bottom_sheet_promo));
+
+                                TextView promo_text, your_promo_txt, code_number_txt, close_bottom_txt;
+
+                                promo_text = bottomSheetDialogView.findViewById(R.id.promo_text);
+                                your_promo_txt = bottomSheetDialogView.findViewById(R.id.your_promo_txt);
+                                code_number_txt = bottomSheetDialogView.findViewById(R.id.code_number_txt);
+                                close_bottom_txt = bottomSheetDialogView.findViewById(R.id.close_bottom_txt);
+
+                                GetPromoCodes getPromoCodes = response.body();
+                                if (getPromoCodes.getBody() != null) {
+                                    Integer code = getPromoCodes.getBody();
+                                    code_number_txt.setText(code + "");
+                                }
+
+                                your_promo_txt.setTypeface(Font.getInstance(context).getMontserrat_800());
+                                promo_text.setTypeface(Font.getInstance(context).getMontserrat_700());
+                                code_number_txt.setTypeface(Font.getInstance(context).getMontserrat_700());
+                                close_bottom_txt.setTypeface(Font.getInstance(context).getMontserrat_600());
+
+                                close_bottom_txt.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        bottomSheetDialog.dismiss();
+                                    }
+                                });
+
+                                bottomSheetDialog.setContentView(bottomSheetDialogView);
+                                bottomSheetDialog.show();
+
+                            } else {
+                                Utils.showCustomToast(getResources().getString(R.string.check_internet),
+                                        R.drawable.ic_wifi_no_connection,
+                                        AllProductViewsActivity.this,
+                                        R.color.no_internet_back);
+                                Log.e("Error", response.code() + "");
+                                Toast.makeText(AllProductViewsActivity.this, response.code() + "", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<GetPromoCodes> call, Throwable t) {
+                            Utils.showCustomToast(getResources().getString(R.string.check_internet),
+                                    R.drawable.ic_wifi_no_connection,
+                                    AllProductViewsActivity.this,
+                                    R.color.no_internet_back);
+                        }
+                    });
+                }
+            }
+
         });
     }
 
@@ -924,19 +1006,23 @@ public class AllProductViewsActivity extends AppCompatActivity {
         if (cursor.getCount() > 0) {
             fing_up_layout.setBackground(getResources().getDrawable(R.drawable.like_back));
             fing_up_img_products.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.aply_text_color)));
+            product_text_count_up.setTextColor(getResources().getColor(R.color.aply_text_color));
         } else {
             fing_up_layout.setBackground(getResources().getDrawable(R.drawable.all_product_images_back));
             fing_up_img_products.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.text_color)));
+            product_text_count_up.setTextColor(getResources().getColor(R.color.text_color));
         }
 
         cursor = likeDislikeDb.getCountFirst(id + "", "dislike");
         if (cursor.getCount() > 0) {
             fing_down_layout.setBackground(getResources().getDrawable(R.drawable.like_back));
             fig_down_img_products.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.aply_text_color)));
+            product_text_count_down.setTextColor(getResources().getColor(R.color.aply_text_color));
 
         } else {
             fing_down_layout.setBackground(getResources().getDrawable(R.drawable.all_product_images_back));
             fig_down_img_products.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.text_color)));
+            product_text_count_down.setTextColor(getResources().getColor(R.color.text_color));
         }
     }
 
@@ -947,6 +1033,9 @@ public class AllProductViewsActivity extends AppCompatActivity {
         if (cursor.getCount() > 0) {
             return;
         }
+        KProgressHUD progress = new KProgressHUD(AllProductViewsActivity.this);
+        progress.setLabel(getResources().getString(R.string.wait));
+        progress.show();
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         String table_type = "profile";
         PostLikeDislike postLikeDislike = new PostLikeDislike(id, type, table_type);
@@ -960,12 +1049,14 @@ public class AllProductViewsActivity extends AppCompatActivity {
                     setLike();
                 } else {
                     Log.e("Error ", response.code() + "");
+                    progress.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("Error", t.getMessage());
+                progress.dismiss();
             }
         });
     }

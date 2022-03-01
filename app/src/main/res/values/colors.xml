@@ -19,8 +19,8 @@
     <color name="gradient_end_card">#E6EFF7</color>
 
 
-    <color name="gradient_prom_start">#00F6F6F6</color>
-    <color name="gradient_prom_center">#D4FAFAFA</color>
+    <color name="gradient_prom_start">#00FFFFFF</color>
+    <color name="gradient_prom_center">#D4F6F6F6</color>
     <color name="gradient_prom_end">#E5F6F6F6</color>
 
 

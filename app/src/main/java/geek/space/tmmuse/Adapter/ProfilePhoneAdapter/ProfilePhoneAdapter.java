@@ -1,10 +1,7 @@
 package geek.space.tmmuse.Adapter.ProfilePhoneAdapter;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -47,16 +42,16 @@ public class ProfilePhoneAdapter extends RecyclerView.Adapter<ProfilePhoneAdapte
         holder.call_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE},1001);
-                }
-                else
-                {
-                    String call_number = profilePhone.getNumber_profile();
-                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                    callIntent.setData(Uri.parse("tel:+"+call_number));
-                    context.startActivity(callIntent);
-                }
+//                if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+//                    ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE},1001);
+//                }
+//                else
+//                {
+                String call_number = profilePhone.getNumber_profile();
+                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                callIntent.setData(Uri.parse("tel:+" + call_number));
+                context.startActivity(callIntent);
+
 
             }
         });
@@ -71,6 +66,7 @@ public class ProfilePhoneAdapter extends RecyclerView.Adapter<ProfilePhoneAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView phone_numbers_txt;
         private NeumorphButton call_btn;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 

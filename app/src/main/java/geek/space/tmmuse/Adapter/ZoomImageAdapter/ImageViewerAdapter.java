@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -63,6 +64,7 @@ public class ImageViewerAdapter extends PagerAdapter {
         // setting the image in the imageView
         Glide.with(context)
                 .load(object)
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_error_photo))
                 .into(imageView);
 
         // Adding the View

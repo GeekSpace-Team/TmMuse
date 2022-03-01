@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/card_gradient"
     tools:context=".Activity.GetCard.GetCardActivity">
 
     <LinearLayout
+        android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginLeft="@dimen/margins"
         android:layout_marginTop="25dp"
         android:layout_marginRight="@dimen/margins"
-        android:id="@+id/header_layout">
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/go_back_img"
@@ -69,7 +70,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/header_layout"
         android:overScrollMode="never"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -112,9 +113,9 @@
                         android:layout_marginRight="8dp"
                         android:background="@android:color/transparent"
                         android:gravity="center_vertical"
+                        android:inputType="textNoSuggestions"
                         android:textColor="@color/text_color"
-                        android:textSize="14sp"
-                        android:inputType="textNoSuggestions"/>
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -156,9 +157,9 @@
                         android:layout_marginRight="15dp"
                         android:background="@android:color/transparent"
                         android:gravity="center_vertical"
+                        android:inputType="textNoSuggestions"
                         android:textColor="@color/text_color"
-                        android:textSize="14sp"
-                        android:inputType="textNoSuggestions" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
             </soup.neumorphism.NeumorphCardView>
@@ -174,14 +175,14 @@
                 android:textSize="16sp" />
 
             <soup.neumorphism.NeumorphCardView
+                android:id="@+id/birth_card"
                 style="@style/CustomShapeAppearance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/gradient_press"
-                app:neumorph_shapeType="pressed"
-                android:id="@+id/birth_card">
+                app:neumorph_shapeType="pressed">
 
 
                 <LinearLayout
@@ -197,13 +198,13 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:background="@android:color/transparent"
-                        android:gravity="center_vertical"
                         android:ems="10"
-                        android:textColor="@color/text_color"
-                        android:textSize="14sp"
                         android:enabled="false"
+                        android:gravity="center_vertical"
                         android:hint="31/05/2020"
-                        android:inputType="textNoSuggestions"/>
+                        android:inputType="textNoSuggestions"
+                        android:textColor="@color/text_color"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -227,11 +228,11 @@
 
 
                 <soup.neumorphism.NeumorphCardView
+                    android:id="@+id/male_card"
                     style="@style/CustomShapeAppearance"
                     android:layout_width="116dp"
                     android:layout_height="wrap_content"
-                    app:neumorph_shapeType="flat"
-                    android:id="@+id/male_card">
+                    app:neumorph_shapeType="flat">
 
                     <RadioButton
                         android:id="@+id/male_btn"
@@ -243,12 +244,12 @@
 
 
                 <soup.neumorphism.NeumorphCardView
+                    android:id="@+id/female_card"
                     style="@style/CustomShapeAppearance"
                     android:layout_width="116dp"
                     android:layout_height="wrap_content"
-                    app:neumorph_shapeType="flat"
                     android:layout_marginLeft="10dp"
-                    android:id="@+id/female_card">
+                    app:neumorph_shapeType="flat">
 
                     <RadioButton
                         android:id="@+id/female_btn"
@@ -256,7 +257,6 @@
                         android:layout_height="wrap_content"
                         android:text="@string/female" />
                 </soup.neumorphism.NeumorphCardView>
-
 
 
             </RadioGroup>
@@ -299,7 +299,7 @@
                         android:hint="tes@test.test"
                         android:inputType="textEmailAddress|textNoSuggestions"
                         android:textColor="@color/text_color"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -324,43 +324,53 @@
 
             <RadioGroup
                 android:id="@+id/sms_or_email_group"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
-                <soup.neumorphism.NeumorphCardView
-                    style="@style/CustomShapeAppearance"
-                    android:layout_width="116dp"
-                    android:layout_height="wrap_content"
-                    app:neumorph_shapeType="flat"
-                    android:id="@+id/sms_card">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <RadioButton
-                        android:id="@+id/sms_btn"
-                        android:layout_width="wrap_content"
+                    <soup.neumorphism.NeumorphCardView
+                        android:id="@+id/sms_card"
+                        style="@style/CustomShapeAppearance"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/tm_muse_message" />
+                        app:neumorph_shapeType="flat"
+                        android:layout_weight="1">
 
-                </soup.neumorphism.NeumorphCardView>
+                        <RadioButton
+                            android:id="@+id/sms_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tm_muse_message"
+                            android:maxLines="1"/>
+
+                    </soup.neumorphism.NeumorphCardView>
 
 
-
-                <soup.neumorphism.NeumorphCardView
-                    style="@style/CustomShapeAppearance"
-                    android:layout_width="116dp"
-                    android:layout_height="wrap_content"
-                    app:neumorph_shapeType="flat"
-                    android:layout_marginLeft="10dp"
-                    android:id="@+id/email_card">
-
-                    <RadioButton
-                        android:id="@+id/email_btn"
-                        android:layout_width="wrap_content"
+                    <soup.neumorphism.NeumorphCardView
+                        android:id="@+id/email_card"
+                        style="@style/CustomShapeAppearance"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="email" />
+                        android:layout_marginLeft="10dp"
+                        app:neumorph_shapeType="flat"
+                        android:layout_weight="1">
 
-                </soup.neumorphism.NeumorphCardView>
+                        <RadioButton
+                            android:id="@+id/email_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="email" />
+
+                    </soup.neumorphism.NeumorphCardView>
+
+                </LinearLayout>
+
+
 
             </RadioGroup>
 
@@ -377,14 +387,14 @@
                 android:text="@string/Send"
                 android:textColor="#FFF"
                 android:textSize="18sp"
-                app:neumorph_backgroundColor="@color/aply_text_color"
-                android:visibility="visible"/>
+                android:visibility="visible"
+                app:neumorph_backgroundColor="@color/aply_text_color" />
 
             <ProgressBar
+                android:id="@+id/getCard_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/getCard_progress"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

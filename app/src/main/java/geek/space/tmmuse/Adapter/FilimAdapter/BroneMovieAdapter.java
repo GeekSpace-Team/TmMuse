@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -73,7 +74,9 @@ public class BroneMovieAdapter extends RecyclerView.Adapter<BroneMovieAdapter.Vi
         holder.user_txt.setText(bronMovieUser.getFullname());
         holder.total_price_txt.setText("Total price: " + total_price_movie + "TMT");
         try {
-            Glide.with(context).load(Constant.BASE_URL_IMAGE + bronMovieUser.getImage().get(0).getSmall_image()).into(holder.img_movie);
+            Glide.with(context).load(Constant.BASE_URL_IMAGE + bronMovieUser.getImage().get(0).getSmall_image())
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_error_photo))
+                    .into(holder.img_movie);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -62,6 +64,7 @@ import java.util.TimerTask;
 
 import geek.space.tmmuse.API.ApiClient;
 import geek.space.tmmuse.API.ApiInterface;
+import geek.space.tmmuse.Activity.AllProductViews.AllProductViewsActivity;
 import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
 import geek.space.tmmuse.Activity.SearchActivity.SearchActivity;
 import geek.space.tmmuse.Adapter.Banner.ImgCaruselAdapter;
@@ -112,7 +115,7 @@ public class HomeFragment extends Fragment {
     private FrameLayout frameLayout;
     private ApiInterface apiInterface;
     private Integer page = 1;
-    public static boolean isFirst = true;
+    private boolean isFirst = true;
     private Dialog popup_in_start;
     private final int CLOSE_POPUP = 15000;
     int currentPage = 0;
@@ -417,6 +420,28 @@ public class HomeFragment extends Fragment {
             TextView popup_tit_txt, popup_desc_text;
             RoundedImageView popup_img;
             ImageView back_img_popup, close_popup_img;
+            Button more_btn = popup_in_start.findViewById(R.id.more_btn);
+            more_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (popups.get(0).getProfile_id() != null && popups.get(0).getProfile_id() != 0){
+                        Utils.add_click_count(popups.get(0).getId(), "popup", context);
+                        Intent intent = new Intent(context, AllProductViewsActivity.class);
+                        intent.putExtra("ID", popups.get(0).getProfile_id());
+                        context.startActivity(intent);
+                        return;
+                    } else if (popups.get(0).getSite_url()!=null){
+                        Utils.add_click_count(popups.get(0).getId(), "popup", context);
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);
+                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                        if (popups.get(0).getSite_url()!=null){
+                        intent.setData(Uri.parse(popups.get(0).getSite_url()));
+                        }
+                        context.startActivity(intent);
+                    }
+                }
+            });
             popup_img = popup_in_start.findViewById(R.id.popup_img);
             back_img_popup = popup_in_start.findViewById(R.id.back_img_popup);
             close_popup_img = popup_in_start.findViewById(R.id.close_popup_img);

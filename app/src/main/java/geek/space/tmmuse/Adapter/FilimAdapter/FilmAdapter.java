@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -52,7 +53,9 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
             holder.name_film.setText(film.getNameRU());
         }
         try {
-            Glide.with(context).load(Constant.BASE_URL_IMAGE+film.getImage().get(0).getSmall_image()).into(holder.films_img);
+            Glide.with(context).load(Constant.BASE_URL_IMAGE+film.getImage().get(0).getSmall_image())
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_error_photo))
+                    .into(holder.films_img);
         } catch (Exception e){
             e.printStackTrace();
         }

@@ -40,9 +40,9 @@
                 android:id="@+id/icon"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_alignEnd="@id/prom_precent_text"
+                android:layout_toStartOf="@id/prom_precent_text"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="40dp"
+                android:layout_marginRight="10dp"
                 android:src="@drawable/ic_precent"
                 android:tint="@color/aply_text_color" />
 
@@ -110,6 +110,7 @@ molestiae quas vel sint commodi"
                 android:padding="25dp">
 
                 <ImageView
+                    android:id="@+id/like_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -127,6 +128,7 @@ molestiae quas vel sint commodi"
                 android:padding="25dp">
 
                 <ImageView
+                    android:id="@+id/dislike_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -135,7 +137,7 @@ molestiae quas vel sint commodi"
             </soup.neumorphism.NeumorphCardView>
 
             <soup.neumorphism.NeumorphCardView
-                android:id="@+id/fig_download_card"
+                android:id="@+id/share_card"
                 style="@style/CustomCategoryVidget"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

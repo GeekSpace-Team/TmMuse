@@ -13,6 +13,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -52,7 +53,9 @@ public class AllProdfileAdapters extends RecyclerView.Adapter<AllProdfileAdapter
         }
 
         try {
-            Glide.with(context).load(Constant.BASE_URL_IMAGE + allProfile.getImage().get(0).getLarge_image()).into(holder.profile_adapter_img);
+            Glide.with(context).load(Constant.BASE_URL_IMAGE + allProfile.getImage().get(0).getLarge_image())
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_error_photo))
+                    .into(holder.profile_adapter_img);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

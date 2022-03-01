@@ -1,9 +1,9 @@
 package geek.space.tmmuse.API;
 
 import geek.space.tmmuse.Model.AboutUs.Constant;
+import geek.space.tmmuse.Model.AllProfile.GetProfile;
 import geek.space.tmmuse.Model.AllProfile.GetProfileTiny;
 import geek.space.tmmuse.Model.AllProfile.ResponseAllProfile;
-import geek.space.tmmuse.Model.AllProfile.GetProfile;
 import geek.space.tmmuse.Model.Certificate.InsertCertificate;
 import geek.space.tmmuse.Model.Film.BronMovie;
 import geek.space.tmmuse.Model.Film.BronMovieUsersBody;
@@ -27,6 +27,7 @@ import geek.space.tmmuse.Model.UserRegister.CheckUserCode;
 import geek.space.tmmuse.Model.UserRegister.ResponseCheckUser;
 import geek.space.tmmuse.Model.UserRegister.StringResponse;
 import geek.space.tmmuse.Model.UserRegister.UserPostRegister;
+import geek.space.tmmuse.Model.ViewCound.AddViewCount;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -34,7 +35,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -95,6 +95,7 @@ public interface ApiInterface {
     @POST("/get-promo-codes")
     Call<GetPromoCodes> get_promo_codes(@Header("Authorization") String token,
                                         @Body GetPromoCodeBody profile_id);
+
     @PUT("/ticket-status-update?")
     Call<ResponseBody> ticket_status_update(@Header("Authorization") String token,
                                             @Query("id") Integer id,
@@ -106,4 +107,12 @@ public interface ApiInterface {
     @POST("/create-certificate")
     Call<ResponseBody> create_certificate(@Header("Authorization") String token,
                                           @Body InsertCertificate insertCertificate);
+
+    @POST("/add-view-count")
+    Call<ResponseBody> add_view_count(@Header("Authorization") String token,
+                                      @Body AddViewCount addViewCount);
+
+    @POST("/add-click-count")
+    Call<ResponseBody> add_click_count(@Header("Authorization") String token,
+                                       @Body AddViewCount addViewCount);
 }

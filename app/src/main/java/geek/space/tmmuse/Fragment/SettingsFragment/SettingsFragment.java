@@ -51,7 +51,7 @@ public class SettingsFragment extends Fragment {
     private NeumorphCardView dark_mode_card, profile_card, language_card, help_card, bron_movie_card,
             feed_back_card, terms_use_card, about_us_card;
     private TextView logout_txt, dark_text, profile_text, language_text, language_chk_text,
-            help_text, feed_bac_text, terms_use_text, about_us_text, settings_txt;
+            help_text, feed_bac_text, terms_use_text, about_us_text, settings_txt,bron_movie_text;
     private SwitchCompat switch_dark_mode;
     SharedPref sharedPref;
     private String language = "";
@@ -81,6 +81,14 @@ public class SettingsFragment extends Fragment {
 
 
     private void setListener() {
+        if (Utils.getSharePreferences(context, "token").equals("")){
+            bron_movie_card.setVisibility(View.GONE);
+            logout_txt.setVisibility(View.GONE);
+        } else {
+            bron_movie_card.setVisibility(View.VISIBLE);
+            logout_txt.setVisibility(View.VISIBLE);
+        }
+
         about_us_card.setOnClickListener(view -> startActivity(new Intent(context, AboutUsActivity.class)
                 .putExtra("page_type", "about")));
 
@@ -220,6 +228,7 @@ public class SettingsFragment extends Fragment {
         feed_bac_text.setTypeface(Font.getInstance(context).getMontserrat_400());
         terms_use_text.setTypeface(Font.getInstance(context).getMontserrat_400());
         about_us_text.setTypeface(Font.getInstance(context).getMontserrat_400());
+        bron_movie_text.setTypeface(Font.getInstance(context).getMontserrat_400());
     }
 
     private void initComponents() {
@@ -242,6 +251,7 @@ public class SettingsFragment extends Fragment {
         about_us_text = view.findViewById(R.id.about_us_text);
         settings_txt = view.findViewById(R.id.settings_txt);
         bron_movie_card = view.findViewById(R.id.bron_movie_card);
+        bron_movie_text = view.findViewById(R.id.bron_movie_text);
 
         switch_dark_mode = view.findViewById(R.id.switch_dark_mode);
         sharedPref = new SharedPref(context);

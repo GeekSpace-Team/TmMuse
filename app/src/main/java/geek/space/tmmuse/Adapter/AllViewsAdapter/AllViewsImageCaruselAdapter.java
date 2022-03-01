@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class AllViewsImageCaruselAdapter extends PagerAdapter {
         try {
             Glide.with(context)
                     .load(Constant.BASE_URL_IMAGE + banner.getImage().get(0).getLarge_image())
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_error_photo))
                     .into(imageView);
         } catch (Exception e) {
             e.printStackTrace();

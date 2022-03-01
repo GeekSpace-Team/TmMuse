@@ -1,44 +1,23 @@
 package geek.space.tmmuse.Activity.Main_menu;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
-import com.makeramen.roundedimageview.RoundedImageView;
-
-import java.util.ArrayList;
-
-import geek.space.tmmuse.API.ApiClient;
 import geek.space.tmmuse.API.ApiInterface;
-import geek.space.tmmuse.Common.Constant;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Fragment.BronMovie.BronMovieDetailFragment;
@@ -53,13 +32,8 @@ import geek.space.tmmuse.Fragment.ProfileFragment.Profiles;
 import geek.space.tmmuse.Fragment.ProfileFragment.UserProfileFragment;
 import geek.space.tmmuse.Fragment.PromotionsOffersFragment.PromotionsOffersFragment;
 import geek.space.tmmuse.Fragment.SettingsFragment.SettingsFragment;
-import geek.space.tmmuse.Model.AllProfile.Popup;
-import geek.space.tmmuse.Model.Home.Home;
 import geek.space.tmmuse.R;
 import io.alterac.blurkit.BlurLayout;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import soup.neumorphism.NeumorphCardView;
 import soup.neumorphism.NeumorphImageView;
 

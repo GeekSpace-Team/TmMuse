@@ -132,7 +132,7 @@
           </soup.neumorphism.NeumorphCardView>
 
           <soup.neumorphism.NeumorphCardView
-              android:id="@+id/fig_download_card"
+              android:id="@+id/share_card"
               style="@style/Post_Preview"
               android:layout_width="match_parent"
               android:layout_height="match_parent"

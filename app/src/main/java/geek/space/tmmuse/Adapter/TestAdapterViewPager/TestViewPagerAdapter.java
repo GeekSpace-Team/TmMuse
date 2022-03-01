@@ -15,6 +15,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -54,6 +55,7 @@ public class TestViewPagerAdapter extends PagerAdapter {
         try {
             Glide.with(context)
                     .load(Constant.BASE_URL_IMAGE + imgProfile.getLarge_image())
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_error_photo))
                     .into(imageView);
         } catch (Exception e){
             e.printStackTrace();

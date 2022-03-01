@@ -41,11 +41,12 @@
                 android:layout_marginRight="8dp"
                 android:drawableStart="@drawable/ic_precent"
                 android:gravity="center"
-                android:padding="10dp"
+                android:padding="15dp"
                 android:text="50%"
                 android:textSize="12sp"
                 android:textColor="@color/aply_text_color"
-                app:neumorph_backgroundColor="#A6E3EDF7" />
+                app:neumorph_backgroundColor="#B9E3EDF7"
+                android:drawablePadding="5dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -58,14 +59,13 @@
                     android:id="@+id/name_prom_offer_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
                     android:padding="5dp"
                     android:text="PersonaLab VIP"
                     android:textColor="@color/text_color"
                     android:textSize="14sp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="15dp"/>
 
 
             </LinearLayout>

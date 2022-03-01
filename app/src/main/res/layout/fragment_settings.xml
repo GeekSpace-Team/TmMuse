@@ -35,13 +35,13 @@
 
 
             <soup.neumorphism.NeumorphCardView
+                android:id="@+id/dark_mode_card"
                 style="@style/SettingsCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margins"
                 android:layout_marginTop="18dp"
                 android:layout_marginRight="@dimen/margins"
-                android:id="@+id/dark_mode_card"
                 android:clickable="true">
 
 
@@ -56,6 +56,7 @@
                         android:layout_width="@dimen/margins_settings_img"
                         android:layout_height="@dimen/margins_settings_img"
                         android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/margins_settings_card_img"
                         android:contentDescription="@string/app_name"
@@ -67,9 +68,10 @@
                         android:id="@+id/dark_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_toEndOf="@id/dark_img"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:text="@string/dark_mode"
                         android:textColor="@color/text_color"
                         android:textSize="18sp" />
@@ -79,6 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         app:thumbTint="@color/text_color" />
 
 
@@ -89,12 +92,12 @@
 
 
             <soup.neumorphism.NeumorphCardView
+                android:id="@+id/profile_card"
                 style="@style/SettingsCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margins"
                 android:layout_marginRight="@dimen/margins"
-                android:id="@+id/profile_card"
                 android:clickable="true">
 
 
@@ -110,6 +113,7 @@
                         android:layout_height="@dimen/margins_settings_img"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/margins_settings_card_img"
                         android:contentDescription="@string/app_name"
@@ -121,6 +125,7 @@
                         android:id="@+id/profile_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_toEndOf="@id/person_img"
                         android:text="@string/profile"
@@ -131,6 +136,7 @@
                         android:layout_width="@dimen/margins_settings_img"
                         android:layout_height="@dimen/margins_settings_img"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:layout_weight="1"
                         android:src="@drawable/ic_right"
                         app:tint="@color/text_color" />
@@ -142,13 +148,14 @@
             </soup.neumorphism.NeumorphCardView>
 
             <soup.neumorphism.NeumorphCardView
+                android:id="@+id/bron_movie_card"
                 style="@style/SettingsCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margins"
                 android:layout_marginRight="@dimen/margins"
-                android:id="@+id/bron_movie_card"
-                android:clickable="true">
+                android:clickable="true"
+                android:visibility="gone">
 
 
                 <RelativeLayout
@@ -168,7 +175,8 @@
                         android:contentDescription="@string/app_name"
                         android:padding="5dp"
                         android:src="@drawable/ic_brone"
-                        app:tint="@color/text_color" />
+                        app:tint="@color/text_color"
+                        android:layout_centerVertical="true"/>
 
                     <TextView
                         android:id="@+id/bron_movie_text"
@@ -178,7 +186,8 @@
                         android:layout_toEndOf="@id/bron_movie_img"
                         android:text="@string/bron_movie"
                         android:textColor="@color/text_color"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:layout_centerVertical="true"/>
 
                     <ImageView
                         android:layout_width="@dimen/margins_settings_img"
@@ -186,7 +195,8 @@
                         android:layout_alignParentEnd="true"
                         android:layout_weight="1"
                         android:src="@drawable/ic_right"
-                        app:tint="@color/text_color" />
+                        app:tint="@color/text_color"
+                        android:layout_centerVertical="true"/>
 
 
                 </RelativeLayout>
@@ -196,12 +206,12 @@
 
 
             <soup.neumorphism.NeumorphCardView
+                android:id="@+id/language_card"
                 style="@style/SettingsCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margins"
                 android:layout_marginRight="@dimen/margins"
-                android:id="@+id/language_card"
                 android:clickable="true">
 
 
@@ -217,6 +227,7 @@
                         android:layout_height="@dimen/margins_settings_img"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/margins_settings_card_img"
                         android:contentDescription="@string/app_name"
@@ -228,6 +239,7 @@
                         android:id="@+id/language_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_toEndOf="@id/language_img"
                         android:text="@string/language"
@@ -238,6 +250,7 @@
                         android:id="@+id/language_chk_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_toStartOf="@id/rigth_lang_img"
@@ -251,6 +264,7 @@
                         android:layout_width="@dimen/margins_settings_img"
                         android:layout_height="@dimen/margins_settings_img"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:layout_weight="1"
                         android:src="@drawable/ic_right"
                         app:tint="@color/text_color" />
@@ -263,12 +277,12 @@
 
 
             <soup.neumorphism.NeumorphCardView
+                android:id="@+id/help_card"
                 style="@style/SettingsCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margins"
                 android:layout_marginRight="@dimen/margins"
-                android:id="@+id/help_card"
                 android:clickable="true">
 
 
@@ -284,6 +298,7 @@
                         android:layout_height="@dimen/margins_settings_img"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/margins_settings_card_img"
                         android:contentDescription="@string/app_name"
@@ -295,6 +310,7 @@
                         android:id="@+id/help_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_toEndOf="@id/help_img"
                         android:text="@string/help"
@@ -307,6 +323,7 @@
                         android:layout_width="@dimen/margins_settings_img"
                         android:layout_height="@dimen/margins_settings_img"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:layout_weight="1"
                         android:src="@drawable/ic_right"
                         app:tint="@color/text_color" />
@@ -319,18 +336,20 @@
 
 
             <soup.neumorphism.NeumorphCardView
+                android:id="@+id/feed_back_card"
                 style="@style/SettingsCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margins"
                 android:layout_marginRight="@dimen/margins"
-                android:id="@+id/feed_back_card"
                 android:clickable="true">
 
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:orientation="horizontal"
                     android:padding="20dp">
 
@@ -340,6 +359,7 @@
                         android:layout_height="@dimen/margins_settings_img"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/margins_settings_card_img"
                         android:contentDescription="@string/app_name"
@@ -351,6 +371,7 @@
                         android:id="@+id/feed_bac_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_toEndOf="@id/feed_back_img"
                         android:text="@string/feedback"
@@ -363,6 +384,7 @@
                         android:layout_width="@dimen/margins_settings_img"
                         android:layout_height="@dimen/margins_settings_img"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:layout_weight="1"
                         android:src="@drawable/ic_right"
                         app:tint="@color/text_color" />
@@ -375,12 +397,12 @@
 
 
             <soup.neumorphism.NeumorphCardView
+                android:id="@+id/terms_use_card"
                 style="@style/SettingsCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margins"
                 android:layout_marginRight="@dimen/margins"
-                android:id="@+id/terms_use_card"
                 android:clickable="true">
 
 
@@ -396,6 +418,7 @@
                         android:layout_height="@dimen/margins_settings_img"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/margins_settings_card_img"
                         android:contentDescription="@string/app_name"
@@ -407,6 +430,7 @@
                         android:id="@+id/terms_use_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_toEndOf="@id/terms_use_img"
                         android:text="@string/terms_use"
@@ -419,6 +443,7 @@
                         android:layout_width="@dimen/margins_settings_img"
                         android:layout_height="@dimen/margins_settings_img"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:layout_weight="1"
                         android:src="@drawable/ic_right"
                         app:tint="@color/text_color" />
@@ -431,12 +456,12 @@
 
 
             <soup.neumorphism.NeumorphCardView
+                android:id="@+id/about_us_card"
                 style="@style/SettingsCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margins"
                 android:layout_marginRight="@dimen/margins"
-                android:id="@+id/about_us_card"
                 android:clickable="true">
 
 
@@ -452,6 +477,7 @@
                         android:layout_height="@dimen/margins_settings_img"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/margins_settings_card_img"
                         android:contentDescription="@string/app_name"
@@ -463,6 +489,7 @@
                         android:id="@+id/about_us_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_toEndOf="@id/about_us_img"
                         android:text="@string/about"
@@ -475,6 +502,7 @@
                         android:layout_width="@dimen/margins_settings_img"
                         android:layout_height="@dimen/margins_settings_img"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:layout_weight="1"
                         android:src="@drawable/ic_right"
                         app:tint="@color/text_color" />

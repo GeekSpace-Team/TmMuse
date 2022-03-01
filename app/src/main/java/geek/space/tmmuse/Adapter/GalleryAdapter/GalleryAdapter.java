@@ -9,11 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 
 import geek.space.tmmuse.Common.Constant;
+import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Model.AllProfile.ImgProfile;
 import geek.space.tmmuse.Model.TestModelViewPager.TestModelViewPager;
 import geek.space.tmmuse.R;
@@ -36,9 +38,24 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        ImgProfile imgProfile = imgProfiles.get(position);
+        holder.gallery_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<String> imgs=new ArrayList<>();
+                for(ImgProfile m:imgProfiles){
+                    imgs.add(Constant.BASE_URL_IMAGE+m.getLarge_image());
+                }
+                Utils.showImageViewer(context, imgs, imgs);
+            }
+        });
+
         try {
 
-        Glide.with(context).load(Constant.BASE_URL_IMAGE +imgProfiles.get(position).getLarge_image()).into(holder.gallery_img);
+        Glide.with(context).load(Constant.BASE_URL_IMAGE +imgProfiles.get(position).getLarge_image())
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_error_photo))
+                .into(holder.gallery_img);
         } catch (Exception e){
             e.printStackTrace();
         }

@@ -143,6 +143,7 @@
     <string name="chek_info_card">Choose how you want get information about your card</string>
     <string name="chek_permission_for">Please accept permissions</string>
     <string name="two_click_exit">Please click BACK again to exit</string>
+    <string name="how_many_tickets">Please enter how many tickets you want</string>
 
 
     <string name="error_values">Nadogry kod girizildi</string>
