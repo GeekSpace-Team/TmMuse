@@ -44,6 +44,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -460,7 +461,9 @@ public class HomeFragment extends Fragment {
                 }
             }
             try {
-                Glide.with(context).load(Constant.BASE_URL_IMAGE + popups.get(0).getImage()).into(popup_img);
+                Glide.with(context).load(Constant.BASE_URL_IMAGE + popups.get(0).getImage())
+                        .apply(RequestOptions.placeholderOf(R.drawable.ic_error_photo))
+                        .into(popup_img);
                 Glide.with(context).asBitmap().listener(new RequestListener<Bitmap>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
@@ -473,7 +476,9 @@ public class HomeFragment extends Fragment {
                         back_img_popup.setImageBitmap(blur);
                         return true;
                     }
-                }).load(Constant.BASE_URL_IMAGE + popups.get(0).getImage()).into(back_img_popup);
+                }).load(Constant.BASE_URL_IMAGE + popups.get(0).getImage())
+                        .apply(RequestOptions.placeholderOf(R.drawable.ic_error_photo))
+                        .into(back_img_popup);
 
             } catch (Exception e) {
                 e.printStackTrace();

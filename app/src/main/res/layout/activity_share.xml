@@ -23,7 +23,8 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_back"
-                android:onClick="onBack"/>
+                android:onClick="onBack"
+                android:tint="@color/text_color"/>
 
             <ImageView
                 android:id="@+id/share_img"
@@ -31,7 +32,8 @@
                 android:onClick="share"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_share"
-                android:layout_alignParentEnd="true"/>
+                android:layout_alignParentEnd="true"
+                android:tint="@color/text_color"/>
 
         </RelativeLayout>
 

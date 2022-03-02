@@ -27,7 +27,7 @@ import geek.space.tmmuse.Fragment.CategoryFragment.CategoryFragment;
 import geek.space.tmmuse.Fragment.HelpFragment.HelpFragment;
 import geek.space.tmmuse.Fragment.HomeFragment.HomeFragment;
 import geek.space.tmmuse.Fragment.MessageFragment.MessageFragment;
-import geek.space.tmmuse.Fragment.OpenMessage.OpenMessageFragment;
+import geek.space.tmmuse.Fragment.MessageFragment.OpenMessageFragment;
 import geek.space.tmmuse.Fragment.ProfileFragment.Profiles;
 import geek.space.tmmuse.Fragment.ProfileFragment.UserProfileFragment;
 import geek.space.tmmuse.Fragment.PromotionsOffersFragment.PromotionsOffersFragment;

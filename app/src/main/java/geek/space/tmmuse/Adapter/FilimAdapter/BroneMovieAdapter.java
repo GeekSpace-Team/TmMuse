@@ -89,11 +89,15 @@ public class BroneMovieAdapter extends RecyclerView.Adapter<BroneMovieAdapter.Vi
             holder.bron_cardView.setBackgroundColor(context.getResources().getColor(R.color.red_film));
         }
 
+
         holder.bron_cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AppCompatActivity appCompatActivity = (AppCompatActivity) view.getContext();
                 BronMovieDetailFragment bronMovieDetailFragment = new BronMovieDetailFragment();
+                bronMovieDetailFragment.holder=holder;
+                bronMovieDetailFragment.bronMovieUsers=bronMovieUsers;
+                bronMovieDetailFragment.pos=position;
                 FragmentManager fragmentManager = appCompatActivity.getSupportFragmentManager();
                 Bundle bundle = new Bundle();
 

@@ -7,12 +7,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 
@@ -34,7 +37,7 @@ import retrofit2.Response;
 public class MessageFragment extends Fragment {
     private View view;
     private Context context;
-    private TextView inbox_txt, go_to_sig_up;
+    private TextView inbox_txt;
     private ArrayList<FirstMessage> messages = new ArrayList<>();
     private MessageAdapter messageAdapter;
     private RecyclerView incoming_msg_rec;
@@ -42,7 +45,8 @@ public class MessageFragment extends Fragment {
     private ProgressBar progress_bar;
     private boolean isLoading = false;
     public static Integer page = 1;
-
+    private LinearLayout no_inf_layout;
+    private SwipeRefreshLayout swiperefresh;
     public MessageFragment() {
     }
 
@@ -64,10 +68,14 @@ public class MessageFragment extends Fragment {
     }
 
     private void setListener() {
-        go_to_sig_up.setOnClickListener(new View.OnClickListener() {
+        swiperefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(context, Sig_Up_Activity.class).putExtra("type", "1"));
+            public void onRefresh() {
+                if(page == 2){
+                    page = -1 ;
+                }
+                page = page + 1;
+                setMessageList();
             }
         });
     }
@@ -96,12 +104,17 @@ public class MessageFragment extends Fragment {
                         messages.addAll(response.body().getBody().getFirst());
                         messages.addAll(response.body().getBody().getSecond());
                         messages.addAll(response.body().getBody().getThird());
+                        swiperefresh.setVisibility(View.VISIBLE);
+                        no_inf_layout.setVisibility(View.GONE);
                         setMessageAdapter();
                     }
                 } else {
-//
+                    Log.e("Error ", response.code() + "");
+                    swiperefresh.setVisibility(View.GONE);
+                    no_inf_layout.setVisibility(View.VISIBLE);
                 }
                 progress.dismiss();
+                swiperefresh.setRefreshing(false);
             }
 
             @Override
@@ -112,19 +125,20 @@ public class MessageFragment extends Fragment {
                         R.color.no_internet_back);
                 progress.dismiss();
                 Log.e("Error", t.getMessage() + "");
+                swiperefresh.setRefreshing(false);
             }
         });
     }
 
     private void setFont() {
         inbox_txt.setTypeface(Font.getInstance(context).getMontserrat_800());
-        go_to_sig_up.setTypeface(Font.getInstance(context).getMontserrat_600());
     }
 
     private void initComponents() {
         inbox_txt = view.findViewById(R.id.inbox_txt);
         incoming_msg_rec = view.findViewById(R.id.incoming_msg_rec);
-        go_to_sig_up = view.findViewById(R.id.go_to_sig_up);
+        no_inf_layout = view.findViewById(R.id.no_inf_layout);
+        swiperefresh = view.findViewById(R.id.swiperefresh);
     }
 
 }

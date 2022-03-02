@@ -238,7 +238,8 @@
                         android:id="@+id/male_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/male" />
+                        android:text="@string/male"
+                        android:textColor="@color/text_color"/>
 
                 </soup.neumorphism.NeumorphCardView>
 
@@ -255,7 +256,8 @@
                         android:id="@+id/female_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/female" />
+                        android:text="@string/female"
+                        android:textColor="@color/text_color"/>
                 </soup.neumorphism.NeumorphCardView>
 
 
@@ -346,7 +348,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/tm_muse_message"
-                            android:maxLines="1"/>
+                            android:maxLines="1"
+                            android:textColor="@color/text_color"/>
 
                     </soup.neumorphism.NeumorphCardView>
 
@@ -364,7 +367,8 @@
                             android:id="@+id/email_btn"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="email" />
+                            android:text="email"
+                            android:textColor="@color/text_color"/>
 
                     </soup.neumorphism.NeumorphCardView>
 

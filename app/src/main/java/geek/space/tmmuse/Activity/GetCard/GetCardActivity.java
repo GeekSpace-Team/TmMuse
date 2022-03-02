@@ -23,6 +23,7 @@ import java.util.List;
 
 import geek.space.tmmuse.API.ApiClient;
 import geek.space.tmmuse.API.ApiInterface;
+import geek.space.tmmuse.Activity.Constant.ConstantActivity;
 import geek.space.tmmuse.Activity.Sig_Up.Sig_Up_Activity;
 import geek.space.tmmuse.Common.AppAlert;
 import geek.space.tmmuse.Common.Font.Font;
@@ -75,6 +76,14 @@ public class GetCardActivity extends AppCompatActivity {
             findViewById(R.id.no_reg_layout).setVisibility(View.GONE);
             findViewById(R.id.if_token_have_scr).setVisibility(View.VISIBLE);
         }
+
+        accept_tex_box.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(GetCardActivity.this, ConstantActivity.class)
+                        .putExtra("page_type", "about"));
+            }
+        });
 
         day_birth_edit.setInputType(InputType.TYPE_NULL);
         birth_card.setOnClickListener(view -> {

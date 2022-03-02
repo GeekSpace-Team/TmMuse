@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/margins"
-    android:layout_marginTop="15dp"
     android:layout_marginEnd="@dimen/margins"
     android:clickable="true"
     app:neumorph_backgroundColor="@color/green_film">
@@ -17,7 +16,7 @@
         android:layout_marginStart="@dimen/margins"
         android:layout_marginEnd="@dimen/margins"
         android:orientation="vertical"
-        android:padding="15dp">
+        android:padding="25dp">
 
         <TextView
             android:id="@+id/movie_name"

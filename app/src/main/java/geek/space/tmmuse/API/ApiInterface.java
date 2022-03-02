@@ -1,6 +1,6 @@
 package geek.space.tmmuse.API;
 
-import geek.space.tmmuse.Model.AboutUs.Constant;
+import geek.space.tmmuse.Model.Constant.Constant;
 import geek.space.tmmuse.Model.AllProfile.GetProfile;
 import geek.space.tmmuse.Model.AllProfile.GetProfileTiny;
 import geek.space.tmmuse.Model.AllProfile.ResponseAllProfile;

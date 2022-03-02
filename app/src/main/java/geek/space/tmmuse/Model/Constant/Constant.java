@@ -1,4 +1,4 @@
-package geek.space.tmmuse.Model.AboutUs;
+package geek.space.tmmuse.Model.Constant;
 
 import java.util.ArrayList;
 

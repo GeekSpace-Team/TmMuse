@@ -31,7 +31,7 @@
         <activity
             android:name=".Activity.GetCard.GetCardActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".Activity.AboutUs.AboutUsActivity" />
+        <activity android:name=".Activity.Constant.ConstantActivity" />
         <activity android:name=".Activity.Main_menu.Main_Menu" />
         <activity android:name=".Activity.Interest.Interest_Activity" />
         <activity

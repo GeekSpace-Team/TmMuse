@@ -1,24 +1,16 @@
 package geek.space.tmmuse.Fragment.SettingsFragment;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
@@ -29,7 +21,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.Locale;
 
-import geek.space.tmmuse.Activity.AboutUs.AboutUsActivity;
+import geek.space.tmmuse.Activity.Constant.ConstantActivity;
 import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
 import geek.space.tmmuse.Activity.Sig_Up.Sig_Up_Activity;
 import geek.space.tmmuse.Common.AppAlert;
@@ -40,7 +32,6 @@ import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Fragment.BronMovie.BroneMovieFragment;
 import geek.space.tmmuse.Fragment.HelpFragment.HelpFragment;
 import geek.space.tmmuse.Fragment.ProfileFragment.UserProfileFragment;
-import geek.space.tmmuse.Model.Film.BronMovie;
 import geek.space.tmmuse.R;
 import soup.neumorphism.NeumorphCardView;
 
@@ -89,10 +80,10 @@ public class SettingsFragment extends Fragment {
             logout_txt.setVisibility(View.VISIBLE);
         }
 
-        about_us_card.setOnClickListener(view -> startActivity(new Intent(context, AboutUsActivity.class)
+        about_us_card.setOnClickListener(view -> startActivity(new Intent(context, ConstantActivity.class)
                 .putExtra("page_type", "about")));
 
-        terms_use_card.setOnClickListener(view -> startActivity(new Intent(context, AboutUsActivity.class)
+        terms_use_card.setOnClickListener(view -> startActivity(new Intent(context, ConstantActivity.class)
                 .putExtra("page_type", "privacy")));
 
         help_card.setOnClickListener(view -> {

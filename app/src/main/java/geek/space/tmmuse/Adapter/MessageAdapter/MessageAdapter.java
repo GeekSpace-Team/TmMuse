@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,14 +17,14 @@ import java.util.ArrayList;
 import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
-import geek.space.tmmuse.Fragment.OpenMessage.OpenMessageFragment;
+import geek.space.tmmuse.Fragment.MessageFragment.OpenMessageFragment;
 import geek.space.tmmuse.Model.Message.FirstMessage;
 import geek.space.tmmuse.R;
 import soup.neumorphism.NeumorphCardView;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<FirstMessage>messages;
+    private ArrayList<FirstMessage>messages = new ArrayList<>();
 
     public MessageAdapter(Context context, ArrayList<FirstMessage> messages) {
         this.context = context;
@@ -64,6 +63,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 }
                 AppCompatActivity appCompatActivity = (AppCompatActivity) view.getContext();
                 OpenMessageFragment openMessageFragment = new OpenMessageFragment();
+                openMessageFragment.firstMsg = messages;
+                openMessageFragment.position = position;
                 FragmentManager fragmentManager = appCompatActivity.getSupportFragmentManager();
                 Bundle bundle = new Bundle();
                 bundle.putString("MSG_NAME", message.getTittle());
@@ -97,6 +98,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             msg_name_txt.setTypeface(Font.getInstance(context).getMontserrat_700());
             msg_desc_txt.setTypeface(Font.getInstance(context).getMontserrat_400());
             data_income_txt.setTypeface(Font.getInstance(context).getMontserrat_500());
+
+
         }
     }
+
 }

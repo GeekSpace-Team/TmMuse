@@ -1,4 +1,4 @@
-package geek.space.tmmuse.Fragment.OpenMessage;
+package geek.space.tmmuse.Fragment.MessageFragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,11 +17,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
 import geek.space.tmmuse.Fragment.MessageFragment.MessageFragment;
 import geek.space.tmmuse.Fragment.SettingsFragment.SettingsFragment;
+import geek.space.tmmuse.Model.Message.FirstMessage;
 import geek.space.tmmuse.R;
 public class OpenMessageFragment extends Fragment {
     private Context context;
@@ -30,6 +33,8 @@ public class OpenMessageFragment extends Fragment {
     private String msg_name = "", msg_desc = "", msg_data = "";
     private ImageView go_to_img;
     private View msg_check_uncheck_view;
+    public ArrayList<FirstMessage> firstMsg = new ArrayList<>();
+    public Integer position;
 
 
     public OpenMessageFragment() {
@@ -74,6 +79,11 @@ public class OpenMessageFragment extends Fragment {
         name_mesg_txt.setText(msg_name);
         data_mesg_txt.setText(msg_data);
         desc_mesg_txt.setText(msg_desc);
+        if (firstMsg.get(position).getIs_read()!=null && firstMsg.get(position).getIs_read()){
+            msg_check_uncheck_view.setBackground(context.getResources().getDrawable(R.drawable.mesg_uncheked_back));
+        } else{
+            msg_check_uncheck_view.setBackground(context.getResources().getDrawable(R.drawable.mesg_checked_back));
+        }
     }
 
     private void setFonts() {

@@ -319,7 +319,8 @@
                 android:text="@string/cancel"
                 android:textColor="#FFF"
                 android:textSize="18sp"
-                app:neumorph_backgroundColor="#FF4C30" />
+                app:neumorph_backgroundColor="#FF4C30"
+                android:visibility="gone"/>
 
 
             <RelativeLayout

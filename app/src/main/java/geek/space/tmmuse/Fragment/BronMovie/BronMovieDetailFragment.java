@@ -13,14 +13,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.util.ArrayList;
 
 import geek.space.tmmuse.API.ApiClient;
 import geek.space.tmmuse.API.ApiInterface;
 import geek.space.tmmuse.Activity.Main_menu.Main_Menu;
+import geek.space.tmmuse.Adapter.FilimAdapter.BroneMovieAdapter;
 import geek.space.tmmuse.Common.AppAlert;
 import geek.space.tmmuse.Common.Font.Font;
 import geek.space.tmmuse.Common.Utils;
+import geek.space.tmmuse.Model.Film.BronMovieUsers;
 import geek.space.tmmuse.Model.Film.CancelBronFilm;
 import geek.space.tmmuse.R;
 import okhttp3.ResponseBody;
@@ -41,7 +46,9 @@ public class BronMovieDetailFragment extends Fragment {
             date_bron_txt1 = "", film_img1 = "";
     private NeumorphButton cancel_btn;
     private ApiInterface apiInterface;
-
+    public BroneMovieAdapter.ViewHolder holder;
+    public Integer pos;
+    public ArrayList<BronMovieUsers> bronMovieUsers = new ArrayList<>();
     public BronMovieDetailFragment() {
         // Required empty public constructor
     }
@@ -80,7 +87,9 @@ public class BronMovieDetailFragment extends Fragment {
         user_txt.setText(user_txt1);
         date_bron_txt.setText(date_bron_txt1);
         try {
-            Glide.with(context).load(film_img1).into(film_img);
+            Glide.with(context).load(film_img1)
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_error_photo))
+                    .into(film_img);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -117,6 +126,14 @@ public class BronMovieDetailFragment extends Fragment {
                                     if (cancelBronFilm.getStatus()==3){
                                         cancel_btn.setVisibility(View.GONE);
                                         alert.dismiss();
+                                        bronMovieUsers.get(pos).setStatus(3);
+                                        holder.getBindingAdapter().notifyItemChanged(pos);
+
+                                        BroneMovieFragment broneMovieFragment = new BroneMovieFragment();
+                                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                        Main_Menu.fivesFragment = broneMovieFragment;
+                                        Utils.removeShow(broneMovieFragment, broneMovieFragment.getClass().getSimpleName(), fragmentManager, R.id.menu_frame);
+
                                     }
                                     alert.dismiss();
                                 } else {
@@ -141,6 +158,12 @@ public class BronMovieDetailFragment extends Fragment {
                 alert.show();
             }
         });
+
+        if (bronMovieUsers.get(pos).getStatus()==3){
+            cancel_btn.setVisibility(View.GONE);
+        } else{
+            cancel_btn.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setFont() {

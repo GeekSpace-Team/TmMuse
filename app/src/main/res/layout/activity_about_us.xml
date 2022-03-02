@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/card_gradient"
-    tools:context=".Activity.AboutUs.AboutUsActivity">
+    tools:context=".Activity.Constant.ConstantActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -84,4 +84,6 @@ dependencies {
 
     // File provider - telefondan file bilen ishleshmek ucin rugsat alyp beryar
     implementation 'com.zhy.base:fileprovider:1.0.0'
+
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 }

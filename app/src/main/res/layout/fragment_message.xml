@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/card_gradient"
     tools:context=".Fragment.MessageFragment.MessageFragment">
 
     <LinearLayout
-        android:id="@+id/no_reg_layout"
+        android:id="@+id/no_inf_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
@@ -19,26 +20,26 @@
         <ImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/ic_no_reg"
+            android:src="@drawable/ic_empty_explorer"
             android:tint="@color/text_color" />
 
         <TextView
             android:id="@+id/go_to_sig_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/first_you_must_sign_up"
+            android:text="@string/no_data"
             android:textColor="@color/text_color"
             android:textSize="16sp" />
 
 
     </LinearLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:nestedScrollingEnabled="true"
-        android:overScrollMode="never"
-        android:scrollbars="none">
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:nestedScrollingEnabled="true"-->
+<!--        android:overScrollMode="never"-->
+<!--        android:scrollbars="none">-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,14 +58,25 @@
                 android:textColor="@color/text_color"
                 android:textSize="24sp" />
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/incoming_msg_rec"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swiperefresh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:overScrollMode="never"
-                android:visibility="gone"/>
+                android:visibility="visible">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/incoming_msg_rec"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="15dp"
+                    android:overScrollMode="never"/>
+
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+
+
 
 
 
@@ -76,7 +88,7 @@
         </LinearLayout>
 
 
-    </ScrollView>
+<!--    </ScrollView>-->
 
 
 </RelativeLayout>
