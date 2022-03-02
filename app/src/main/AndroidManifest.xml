@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="geek.space.tmmuse">
+    package="com.muse.muse">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -18,29 +18,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.ShareActivity.ShareActivity"></activity>
-        <activity android:name=".Activity.VrImage.VrImageActivity" />
-        <activity android:name=".Activity.PostPreview.PostPreviewActivity" />
+        <activity android:name="com.muse.muse.Activity.ShareActivity.ShareActivity"></activity>
+        <activity android:name="com.muse.muse.Activity.VrImage.VrImageActivity" />
+        <activity android:name="com.muse.muse.Activity.PostPreview.PostPreviewActivity" />
         <activity
-            android:name=".Activity.SearchActivity.SearchActivity"
+            android:name="com.muse.muse.Activity.SearchActivity.SearchActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Activity.AllProductViews.AllProductViewsActivity"
+            android:name="com.muse.muse.Activity.AllProductViews.AllProductViewsActivity"
             android:theme="@style/ProfilePage"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Activity.GetCard.GetCardActivity"
+            android:name="com.muse.muse.Activity.GetCard.GetCardActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".Activity.Constant.ConstantActivity" />
-        <activity android:name=".Activity.Main_menu.Main_Menu" />
-        <activity android:name=".Activity.Interest.Interest_Activity" />
+        <activity android:name="com.muse.muse.Activity.Constant.ConstantActivity" />
+        <activity android:name="com.muse.muse.Activity.Main_menu.Main_Menu" />
+        <activity android:name="com.muse.muse.Activity.Interest.Interest_Activity" />
         <activity
-            android:name=".Activity.Sig_Up.Sig_Up_Activity"
+            android:name="com.muse.muse.Activity.Sig_Up.Sig_Up_Activity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".Activity.Intro_Page.Perrmision_Activity" />
-        <activity android:name=".Activity.Intro_Page.Whats_New" />
+        <activity android:name="com.muse.muse.Activity.Intro_Page.Perrmision_Activity" />
+        <activity android:name="com.muse.muse.Activity.Intro_Page.Whats_New" />
         <activity
-            android:name=".Activity.Splash.Splash_Screen"
+            android:name="com.muse.muse.Activity.Splash.Splash_Screen"
             android:theme="@style/ProfilePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
