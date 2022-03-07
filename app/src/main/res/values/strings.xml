@@ -33,7 +33,7 @@
     <string name="inbox"> Gelýän bukja </string>
     <string name="tm_muse_card"> TmMuse Card </string>
     <string name="get_card"> Kart alyň </string>
-    <string name="tm_muse_card_desc"> TmMuse kartasyny alyň we aşakdaky mahabat  teklipleri ulanyň. Şu ýere basyň:<font color='#CD2791'> <u><b>Kart alyň</b></u></font>></string>
+    <string name="tm_muse_card_desc"> TmMuse kartasyny alyň we aşakdaky mahabat  teklipleri ulanyň. Şu ýere basyň:<font color='#CD2791'> <u><b>Kart alyň</b></u></font></string>
     <string name="data_birth"> Doglan senesi: </string>
     <string name="gender"> Jyns </string>
     <string name="pass_inf"> Pasport maglumatlary: </string>
