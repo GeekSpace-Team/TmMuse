@@ -133,25 +133,24 @@
     <string name="terminal_have"> bar </string>
 
     <string name="access_get_card">Siziň bilen ýakyn wagtda habarlaşarys</string>
-    <string name="first_you_must_sign_up">First you must <font color='#CD2791'> <u><b>sign up</b></u></font> </string>
-    <string name="biraz_gara_y">Biraz garaşyň...</string>
-    <string name="wait">Please wait...</string>
-    <string name="chek_brith">Set day of birthday</string>
-    <string name="chek_gender">Please choose your gender</string>
-    <string name="chek_email">Write your email</string>
-    <string name="chek_permission">You must accept permission</string>
-    <string name="chek_info_card">Choose how you want get information about your card</string>
-    <string name="chek_permission_for">Please accept permissions</string>
-    <string name="two_click_exit">Please click BACK again to exit</string>
-    <string name="how_many_tickets">Please enter how many tickets you want</string>
-
+    <string name = "first_you_must_sign_up"> Ilki bilen <font color = '#CD2791'> <u> <b> ýazylmaly </b> </u> </font> </string>
+    <string name = "wait"> Garaşmagyňyzy haýyş edýäris ... </string>
+    <string name = "chek_brith"> Doglan günüňizi belläň </string>
+    <string name = "chek_gender"> Jynsyňyzy saýlaň </string>
+    <string name = "chek_email"> E-poçtaňyzy ýazyň </string>
+    <string name = "chek_permission"> Rugsat kabul etmeli </string>
+    <string name = "chek_info_card"> Kartyňyz barada maglumat almak isleýäniňizi saýlaň </string>
+    <string name = "chek_permission_for"> Rugsatlary kabul ediň </string>
+    <string name = "two_click_exit"> Çykmak üçin Yza gaýdyp basyň </string>
+    <string name = "how_many_tickets"> Näçe bilet isleýändigiňizi ýazyň </string>
+    <string name = "ticket_details"> Bilet jikme-jiklikleri </string>
+    <string name = "no_data"> Maglumat ýok </string>
 
     <string name="error_values">Nadogry kod girizildi</string>
     <string name="enter_number">Telefon belginizi doly girizin</string>
     <string name="get_sms">Sms arkaly gelen kody ashakdaky oyjuklere girizin!</string>
     <string name="enter_all_values">Maglumatlary doly girizin</string>
-    <string name="ticket_details">Ticket details</string>
-    <string name="no_data">No data</string>
+
 
 
 </resources>

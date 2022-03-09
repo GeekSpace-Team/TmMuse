@@ -125,4 +125,25 @@
     <string name="select_phone_number">Выберите номер телефона</string>
     <string name="terminal_have">бар</string>
     <string name = "access_get_card"> Мы свяжемся с Вами в ближайшее время </string>
+
+    <string name="first_you_must_sign_up">Сначала вы должны <font color='#CD2791'> <u><b>зарегистрироваться</b></u></font> </string>
+    <string name="wait">Пожалуйста, подождите...</string>
+    <string name="chek_brith">Установить день рождения</string>
+    <string name="chek_gender">Пожалуйста, выберите свой пол</string>
+    <string name="chek_email">Напишите свой адрес электронной почты</string>
+    <string name="chek_permission">Вы должны принять разрешение</string>
+    <string name="chek_info_card">Выберите способ получения информации о вашей карте</string>
+    <string name="chek_permission_for">Пожалуйста, примите разрешения</string>
+    <string name="two_click_exit">Пожалуйста, нажмите НАЗАД еще раз, чтобы выйти</string>
+    <string name="how_many_tickets">Укажите, сколько билетов вы хотите</string>
+
+
+    <string name = "error_values"> Введен неверный код </string>
+    <string name = "enter_number"> Полностью введите свой номер телефона </string>
+    <string name="get_sms"> Введите код, пришедший по SMS, в поля ниже! </string>
+    <string name = "enter_all_values"> Введите полные данные </string>
+
+    <string name = "ticket_details"> Информация о билете </string>
+    <string name = "no_data"> Нет данных </string>
+
 </resources>

@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "443778796963",
-    "firebase_url": "https://muse-9d1e1.firebaseio.com",
-    "project_id": "muse-9d1e1",
-    "storage_bucket": "muse-9d1e1.appspot.com"
+    "project_number": "94307148611",
+    "project_id": "tmmuse2",
+    "storage_bucket": "tmmuse2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:443778796963:android:0c462d135bb373fd9b1e16",
+        "mobilesdk_app_id": "1:94307148611:android:f178cb0fb25e4ae3dc05f6",
         "android_client_info": {
           "package_name": "com.muse.muse"
         }
       },
       "oauth_client": [
         {
-          "client_id": "443778796963-orq8dm5geqs73pv4dis8adqh9t47hv02.apps.googleusercontent.com",
+          "client_id": "94307148611-cd73h0id6ftf3h55ne3qlfg6jirlcuoh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC6pNd8sk0erKNgqyc-0sjwtr8vdpi95XQ"
+          "current_key": "AIzaSyBya3glj3l7pabtPSgX6DOa90y-yIhKjkE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "443778796963-orq8dm5geqs73pv4dis8adqh9t47hv02.apps.googleusercontent.com",
+              "client_id": "94307148611-cd73h0id6ftf3h55ne3qlfg6jirlcuoh.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "443778796963-0vsfbf9f3ljct2rohmebld2ed95ls0og.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.muse.muse"
-              }
             }
           ]
         }

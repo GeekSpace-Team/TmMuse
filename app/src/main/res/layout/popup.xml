@@ -114,7 +114,8 @@ molestiae quas vel sint commodi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_fig_up" />
+                    android:src="@drawable/ic_fig_up"
+                    android:tint="@color/text_color"/>
 
             </soup.neumorphism.NeumorphCardView>
 
@@ -132,7 +133,8 @@ molestiae quas vel sint commodi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_fig_down" />
+                    android:src="@drawable/ic_fig_down"
+                    android:tint="@color/text_color"/>
 
             </soup.neumorphism.NeumorphCardView>
 
@@ -149,7 +151,8 @@ molestiae quas vel sint commodi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_share" />
+                    android:src="@drawable/ic_share"
+                    android:tint="@color/text_color"/>
 
             </soup.neumorphism.NeumorphCardView>
 
@@ -166,7 +169,8 @@ molestiae quas vel sint commodi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_instagram" />
+                    android:src="@drawable/ic_instagram"
+                    android:tint="@color/text_color"/>
 
             </soup.neumorphism.NeumorphCardView>
 
