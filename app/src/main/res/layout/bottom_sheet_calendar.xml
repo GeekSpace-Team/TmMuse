@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/calendar_rel"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="30dp"
     android:background="@drawable/bottom_sheet_language_back">
 
     <DatePicker
         android:id="@+id/calendar_picker"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="18dp" />
+        android:padding="18dp"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>

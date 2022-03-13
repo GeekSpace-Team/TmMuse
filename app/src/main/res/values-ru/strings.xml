@@ -108,7 +108,7 @@
     <string name="code_inncorect"> Код был введен неправильно </string>
     <string name="clear_history_all">Отчистить историю</string>
     <string name="search_history">История поиска</string>
-    <string name="tm_muse_message">TM MUSE "\n" сообщение</string>
+    <string name="tm_muse_message">TM MUSE сообщение</string>
 
     <string name="enter_informations">Введите информацию:</string>
     <string name="select_date_and_time">Выберите дату и время:</string>
@@ -145,5 +145,8 @@
 
     <string name = "ticket_details"> Информация о билете </string>
     <string name = "no_data"> Нет данных </string>
+
+    <string name="terminal">Терминал</string>
+    <string name="cash">наличными</string>
 
 </resources>

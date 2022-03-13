@@ -192,19 +192,18 @@
 
                     <TextView
                         android:id="@+id/day_birth_edit"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="8dp"
                         android:background="@android:color/transparent"
                         android:ems="10"
-                        android:enabled="false"
                         android:gravity="center_vertical"
                         android:hint="31/05/2020"
                         android:inputType="textNoSuggestions"
                         android:textColor="@color/text_color"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"/>
 
                 </LinearLayout>
 
@@ -338,14 +337,14 @@
                     <soup.neumorphism.NeumorphCardView
                         android:id="@+id/sms_card"
                         style="@style/CustomShapeAppearance"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:neumorph_shapeType="flat"
                         android:layout_weight="1">
 
                         <RadioButton
                             android:id="@+id/sms_btn"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/tm_muse_message"
                             android:maxLines="1"
@@ -357,7 +356,7 @@
                     <soup.neumorphism.NeumorphCardView
                         android:id="@+id/email_card"
                         style="@style/CustomShapeAppearance"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         app:neumorph_shapeType="flat"
@@ -365,7 +364,7 @@
 
                         <RadioButton
                             android:id="@+id/email_btn"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="email"
                             android:textColor="@color/text_color"/>

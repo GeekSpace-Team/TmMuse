@@ -116,7 +116,7 @@
     <string name="female"> aýal </string>
     <string name="clear_history_all">Taryhy arassala</string>
     <string name="search_history">Gözleg taryhy</string>
-    <string name="tm_muse_message">TM MUSE "\n" habary</string>
+    <string name="tm_muse_message">TM MUSE habary</string>
     <string name="enter_informations"> Maglumatlary giriziň: </string>
     <string name="select_date_and_time"> Sene we wagty saýlaň: </string>
     <string name="enter_count_off_ticket"> Hasaplaşyk peteklerini giriziň: </string>
@@ -151,6 +151,10 @@
     <string name="get_sms">Sms arkaly gelen kody ashakdaky oyjuklere girizin!</string>
     <string name="enter_all_values">Maglumatlary doly girizin</string>
 
+    <string name="terminal">terminal</string>
+    <string name="cash">nagyt</string>
+    <string name="free_time">Free time</string>
+    <string name="cooming_soon">Comming soon</string>
 
 
 </resources>
