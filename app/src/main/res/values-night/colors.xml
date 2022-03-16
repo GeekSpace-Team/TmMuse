@@ -6,7 +6,8 @@
 
 
     <color name="card_background">#191D21</color>
-    <color name="text_color">#7F8FA7</color>
+    <color name="text_color">#FFFFFF</color>
+    <color name="dots_second_color">#7F8FA7</color>
     <color name="aply_text_color">#CD2791</color>
 
 

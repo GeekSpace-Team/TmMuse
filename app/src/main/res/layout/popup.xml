@@ -25,8 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/margins"
-                android:padding="18dp"
+                android:padding="16dp"
                 android:text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
             molestiae quas vel sint commodi"
                 android:textColor="@color/text_color"

@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margins"
@@ -28,7 +28,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/filt_shop"
                     android:textColor="@color/text_color"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    />
 
                 <TextView
                     android:id="@+id/clear_txt"
@@ -37,11 +38,12 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:text="@string/clear_history"
-                    android:textColor="@color/text_color"
-                    android:textSize="12sp" />
+                    android:textColor="@color/aply_text_color"
+                    android:textSize="12sp"
+                    android:layout_alignParentEnd="true"/>
 
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tags_id"
@@ -58,7 +60,8 @@
                 android:layout_height="2dp"
                 android:layout_marginLeft="@dimen/margins"
                 android:layout_marginRight="@dimen/margins"
-                android:background="@color/text_color" />
+                android:background="@color/text_color"
+                android:layout_marginTop="5dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/tags_rec"
@@ -85,7 +88,8 @@
                 android:layout_height="2dp"
                 android:layout_marginLeft="@dimen/margins"
                 android:layout_marginRight="@dimen/margins"
-                android:background="@color/text_color" />
+                android:background="@color/text_color"
+                android:layout_marginTop="5dp"/>
 
 
             <LinearLayout

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="margins">16dp</dimen>
+    <dimen name="margins_home">8dp</dimen>
+    <dimen name="margins_home_elements">2dp</dimen>
+    <dimen name="margins_home_el">10dp</dimen>
     <dimen name="margins_left">2dp</dimen>
     <dimen name="margins_save_btn">50dp</dimen>
     <dimen name="margins_five">5dp</dimen>
@@ -9,6 +12,6 @@
     <dimen name="margins_edt">5dp</dimen>
     <dimen name="margins_settings_img">35dp</dimen>
     <dimen name="bottom_nav_ic">18dp</dimen>
-    <dimen name="sliderCircle">15dp</dimen>
-    <dimen name="sliderRound">15dp</dimen>
+    <dimen name="sliderCircle">10dp</dimen>
+    <dimen name="sliderRound">10dp</dimen>
 </resources>

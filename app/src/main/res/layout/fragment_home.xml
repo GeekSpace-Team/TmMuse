@@ -16,14 +16,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:descendantFocusability="blocksDescendants"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/margins_home"
+        android:layout_marginRight="@dimen/margins_home">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margins"
-            android:layout_marginRight="@dimen/margins"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/margins_home_el"
+            android:layout_marginEnd="@dimen/margins_home_elements">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -70,12 +72,12 @@
             <soup.neumorphism.NeumorphImageButton
                 android:id="@+id/search_btn"
                 style="@style/CustomBottomImgNeuwSecond"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:clickable="true"
-                android:padding="20dp"
+                android:padding="25dp"
                 android:src="@drawable/ic_search"
                 android:tint="@color/text_color" />
 
@@ -86,9 +88,7 @@
             android:id="@+id/img_view_pager"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginLeft="@dimen/margins"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="@dimen/margins"
             android:layout_weight="1"
             android:background="@drawable/home_img_carusel_back"
             android:overScrollMode="never" />
@@ -99,19 +99,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
 
         <TextView
             android:id="@+id/nw_film_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margins"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:text="@string/nw_movies"
             android:textColor="@color/text_color"
-            android:textSize="22sp" />
+            android:textSize="22sp"
+            android:layout_marginStart="@dimen/margins_home_el"
+            android:layout_marginEnd="@dimen/margins_home_elements"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_films"
@@ -124,14 +125,15 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margins_home_el"
+            android:layout_marginEnd="@dimen/margins_home_el">
 
             <TextView
                 android:id="@+id/promotions_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/margins"
                 android:layout_marginTop="5dp"
                 android:text="@string/prom_and_offers"
                 android:textColor="@color/text_color"
@@ -143,10 +145,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/margins"
                 android:text="Ählisi"
                 android:textColor="@color/text_color"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:layout_marginEnd="@dimen/margins_home_el"/>
 
         </RelativeLayout>
 

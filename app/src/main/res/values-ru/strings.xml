@@ -74,7 +74,7 @@
     <string name="student">Студент</string>
     <string name="worker">Служаший</string>
     <string name="school_stu">Школьник</string>
-    <string name="filt_shop">Фильтровать и сортировать</string>
+    <string name="filt_shop">Фильтровать</string>
     <string name="tags"> Примечания </string>
     <string name="sort"> Cортировать </string>
     <string name="from_oldest"> Из самых старых </string>

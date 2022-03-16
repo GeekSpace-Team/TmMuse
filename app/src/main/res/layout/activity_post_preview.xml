@@ -14,6 +14,8 @@
       android:layout_height="match_parent"
       android:scaleType="centerCrop" />
 
+
+
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -30,17 +32,19 @@
         android:layout_height="wrap_content">
 
 
+
+
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginStart="@dimen/margins"
-          android:layout_marginEnd="@dimen/margins"
           android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="@dimen/margins"
+            android:layout_marginEnd="@dimen/margins"
             android:padding="15dp">
 
           <ImageView
@@ -89,6 +93,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginStart="@dimen/margins"
+            android:layout_marginEnd="@dimen/margins"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp">
@@ -108,7 +114,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_fig_up" />
+                android:src="@drawable/ic_fig_up"
+                android:tint="#FFF"/>
 
           </soup.neumorphism.NeumorphCardView>
 
@@ -127,7 +134,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_fig_down" />
+                android:src="@drawable/ic_fig_down"
+                android:tint="#FFF"/>
 
           </soup.neumorphism.NeumorphCardView>
 
@@ -145,7 +153,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_share" />
+                android:src="@drawable/ic_share"
+                android:tint="#FFF"/>
 
           </soup.neumorphism.NeumorphCardView>
 
@@ -163,7 +172,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_instagram" />
+                android:src="@drawable/ic_instagram"
+                android:tint="#FFF"/>
 
           </soup.neumorphism.NeumorphCardView>
 
@@ -172,6 +182,8 @@
 
 
         <TextView
+            android:layout_marginStart="@dimen/margins"
+            android:layout_marginEnd="@dimen/margins"
             android:id="@+id/promotion_tit_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -181,21 +193,24 @@
             android:textColor="#FFF"
             android:textSize="29sp" />
 
-        <TextView
-            android:id="@+id/prom_desc_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/margins"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="@dimen/margins"
-            android:gravity="center_horizontal"
-            android:textColor="#FFF"
-            android:textSize="14sp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+         <TextView
+             android:id="@+id/prom_desc_text"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center_vertical"
+             android:layout_marginStart="@dimen/margins"
+             android:layout_marginTop="10dp"
+             android:layout_marginEnd="@dimen/margins"
+             android:textColor="#FFF"
+             android:textSize="14sp"/>
+
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="50dp"/>
+
+
+
 
 
       </LinearLayout>

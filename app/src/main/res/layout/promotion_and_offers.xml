@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="195dp"
+    android:layout_height="220dp"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="5dp"
     android:padding="3dp">
@@ -46,7 +46,8 @@
                 android:textSize="12sp"
                 android:textColor="@color/aply_text_color"
                 app:neumorph_backgroundColor="#B9E3EDF7"
-                android:drawablePadding="5dp" />
+                android:drawablePadding="5dp"
+                app:neumorph_shapeType="pressed"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

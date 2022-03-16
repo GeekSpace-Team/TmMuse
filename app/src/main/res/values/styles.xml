@@ -250,4 +250,29 @@
         <item name="android:windowExitAnimation">@anim/slide_bottom</item>
     </style>
 
+
+
+
+    <!--BannerCardView start-->
+    <dimen name="design_default_corner_custom_radius_category_Banner">8dp</dimen>
+
+    <style name="CustomShapeAppearance.Banner" parent="">
+        <item name="neumorph_cornerFamily">rounded</item>
+        <item name="neumorph_cornerSize">@dimen/design_default_corner_custom_radius_category_Banner</item>
+    </style>
+
+    <style name="CustomCategoryVidget.Banner" parent="Widget">
+        <item name="android:padding">@dimen/design_custom_padding</item>
+        <item name="android:stateListAnimator">@animator/button_state_list_anim_neumorph</item>
+        <item name="neumorph_inset">5dp</item>
+        <item name="neumorph_shadowElevation">2dp</item>
+        <item name="neumorph_shadowColorLight">?colorShadowLight</item>
+        <item name="neumorph_shadowColorDark">?colorShadowDark</item>
+        <item name="neumorph_shapeType">flat</item>
+        <item name="neumorph_shapeAppearance">@style/CustomShapeAppearance.Category</item>
+    </style>
+
+
+    <!--Banner CardView end-->
+
 </resources>

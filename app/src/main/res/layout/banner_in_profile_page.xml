@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="260dp"
+    android:layout_height="200dp"
     android:layout_marginLeft="@dimen/margins"
     android:layout_marginRight="@dimen/margins"
     android:background="@drawable/profile_rec_adapter_back"
@@ -17,12 +17,13 @@
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/profile_banner_adapter_img"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:scaleType="fitXY"
+            android:layout_height="match_parent"
             app:riv_corner_radius_top_left="12dp"
-            app:riv_corner_radius_top_right="12dp" />
+            app:riv_corner_radius_top_right="12dp"
+            android:layout_above="@+id/rel"/>
 
         <RelativeLayout
+            android:id="@+id/rel"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"
