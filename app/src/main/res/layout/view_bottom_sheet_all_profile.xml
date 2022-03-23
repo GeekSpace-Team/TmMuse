@@ -90,7 +90,7 @@
                                 <com.makeramen.roundedimageview.RoundedImageView
                                     android:id="@+id/vr_img"
                                     android:layout_width="100dp"
-                                    android:layout_height="80dp"
+                                    android:layout_height="100dp"
                                     android:padding="2dp"
                                     android:scaleType="centerCrop"
                                     tools:ignore="TooDeepLayout"
@@ -99,7 +99,7 @@
 
                                 <LinearLayout
                                     android:layout_width="100dp"
-                                    android:layout_height="80dp"
+                                    android:layout_height="100dp"
                                     android:background="@drawable/vr_img_back"/>
 
 

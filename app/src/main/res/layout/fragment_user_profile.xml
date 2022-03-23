@@ -131,6 +131,12 @@
             </soup.neumorphism.NeumorphCardView>
 
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_cards_rec"/>
+
+
         </LinearLayout>
 
     </ScrollView>

@@ -14,11 +14,11 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/product_img"
-            android:layout_width="106dp"
-            android:layout_height="80dp"
+            android:layout_width="110dp"
+            android:layout_height="100dp"
             android:layout_marginStart="5dp"
             android:padding="2dp"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             app:riv_corner_radius="20dp" />
 
     </LinearLayout>

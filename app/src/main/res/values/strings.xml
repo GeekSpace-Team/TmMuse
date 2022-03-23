@@ -7,7 +7,7 @@
     <string name="in_func"> Funksiýada </string>
     <string name="ask_permission"> Rugsatlar gerek! </string>
     <string name="permission_desc"> Bu programmanyň käbir aýratynlyklaryny ulanmak üçin rugsat bermeli. Her rugsadyň düşündirişine serediň </string>
-    <string name="location"> Locationerleşýän ýeri </string>
+    <string name="location"> Lokaysin yerleşýän ýeri </string>
     <string name="location_desc"> locationerleşýän ýeriňiz boýunça howa maglumatyny görkeziň </string>
     <string name="storage"> Saklamak </string>
     <string name="storage_desc"> Dostlaryňyz bilen paýlaşmak üçin programma faýllarymyzy ýazdyryň </string>
@@ -59,7 +59,7 @@
     <string name="top_keywords"> Iň esasy açar sözler </string>
     <string name="search_result"> Gözleg netijesi </string>
     <string name="search"> Gözleg ... </string>
-    <string name="clear_history"> Taryhy arassala </string>
+    <string name="clear_history"> Arassala </string>
     <string name="search_not_found"> ​​Gözleg tapylmady </string>
     <string name="check_internet"> Internet birikmäňizi barlaň </string>
     <string name="low_connect"> Pes internet birikmesi </string>
@@ -79,8 +79,8 @@
     <string name="filt_shop">Filterlemek</string>
     <string name="tags">Bellikler</string>
     <string name="sort">Sort</string>
-    <string name="from_oldest">Iň gadymydan</string>
-    <string name="from_latest">Iň soňky</string>
+    <string name="from_oldest">Koneler</string>
+    <string name="from_latest">Tazeler</string>
     <string name="filter">Seljermek</string>
     <string name="wait_to_weather">Ýüklenýär....</string>
     <string name="btn_text_open_sheet" translatable="false">Ouvrir la feuille</string>
@@ -155,6 +155,7 @@
     <string name="cash">nagyt</string>
     <string name="free_time">Free time</string>
     <string name="cooming_soon">Comming soon</string>
+    <string name="all_promo">Ählisi</string>
 
 
 </resources>

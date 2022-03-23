@@ -47,4 +47,6 @@
     <color name="red_film">#FF4C30</color>
     <color name="yellow_film">#FFBE41</color>
 
+    <color name="skeleton">#a2878787</color>
+
 </resources>

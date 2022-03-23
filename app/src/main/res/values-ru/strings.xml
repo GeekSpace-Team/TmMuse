@@ -59,7 +59,7 @@
     <string name="top_keywords"> Популярные ключевые слова </string>
     <string name="search_result"> Результат поиска </string>
     <string name="search"> Искать… </string>
-    <string name="clear_history"> Очистить историю </string>
+    <string name="clear_history"> Очистить</string>
     <string name="search_not_found"> ​​Поиск не найден </string>
     <string name="check_internet"> Проверьте подключение к Интернету </string>
     <string name="low_connect"> Низкое интернет-соединение </string>
@@ -77,8 +77,8 @@
     <string name="filt_shop">Фильтровать</string>
     <string name="tags"> Примечания </string>
     <string name="sort"> Cортировать </string>
-    <string name="from_oldest"> Из самых старых </string>
-    <string name="from_latest"> Из последнего </string>
+    <string name="from_oldest">Старые</string>
+    <string name="from_latest">Новые</string>
     <string name="filter"> Выбрать </string>
     <string name="wait_to_weather">Загружается.....</string>
 
@@ -106,7 +106,7 @@
     <string name = "male"> мужчина </string>
     <string name = "female"> женщина </string>
     <string name="code_inncorect"> Код был введен неправильно </string>
-    <string name="clear_history_all">Отчистить историю</string>
+    <string name="clear_history_all">Отчистить</string>
     <string name="search_history">История поиска</string>
     <string name="tm_muse_message">TM MUSE сообщение</string>
 

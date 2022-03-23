@@ -240,7 +240,6 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="10dp"
                             android:gravity="center_vertical"
-                            android:text="Full name / +99361234567"
                             android:textColor="@color/text_color"
                             android:textSize="15sp" />
 
@@ -265,7 +264,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="10dp"
                             android:gravity="center_vertical"
-                            android:text="Full name / +99361234567"
+                            android:text="+99361234567"
                             android:textColor="@color/text_color"
                             android:textSize="15sp" />
 

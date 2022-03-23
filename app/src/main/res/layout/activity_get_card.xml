@@ -377,6 +377,15 @@
 
             </RadioGroup>
 
+            <WebView
+                android:id="@+id/web_view_const"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@android:color/transparent"
+                android:overScrollMode="never"
+                android:scrollbars="none"/>
+
             <soup.neumorphism.NeumorphButton
                 android:id="@+id/send_btn"
                 style="@style/SettingsCardView"

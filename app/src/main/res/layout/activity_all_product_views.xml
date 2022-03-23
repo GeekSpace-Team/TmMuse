@@ -54,32 +54,36 @@
                         </RelativeLayout>
 
 
-                        <LinearLayout
-                            android:visibility="gone"
-                            android:layout_width="wrap_content"
-                            android:layout_height="150dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginRight="-150dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerVertical="true"
-                            android:gravity="center_horizontal"
-                            android:orientation="vertical">
+<!--                        <LinearLayout-->
+<!--                            android:visibility="visible"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="150dp"-->
+<!--                            android:layout_alignParentTop="true"-->
+<!--                            android:layout_alignParentEnd="true"-->
+<!--                            android:layout_alignParentBottom="true"-->
+<!--                            android:layout_centerHorizontal="true"-->
+<!--                            android:layout_centerVertical="true"-->
+<!--                            android:gravity="center_horizontal"-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:rotation="-90">-->
 
                             <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
                                 android:id="@+id/dots_indicator"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:rotation="-90"
                                 app:dotsColor="@color/aply_text_color"
                                 app:dotsCornerRadius="8dp"
                                 app:dotsSize="10dp"
                                 app:dotsSpacing="4dp"
                                 app:dotsStrokeColor="@color/aply_text_color"
-                                app:dotsStrokeWidth="2dp" />
+                                app:dotsStrokeWidth="2dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerInParent="true"
+                                android:rotation="90"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="-20dp"/>
 
-                        </LinearLayout>
+<!--                        </LinearLayout>-->
 
 
                     </RelativeLayout>

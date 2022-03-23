@@ -41,7 +41,8 @@
                     android:layout_marginRight="@dimen/margins"
                     android:text="@string/skip"
                     android:textColor="@color/aply_text_color"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    android:layout_gravity="center"/>
 
             </LinearLayout>
 
