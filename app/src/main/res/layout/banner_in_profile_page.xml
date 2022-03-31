@@ -20,7 +20,8 @@
             android:layout_height="match_parent"
             app:riv_corner_radius_top_left="12dp"
             app:riv_corner_radius_top_right="12dp"
-            android:layout_above="@+id/rel"/>
+            android:layout_above="@+id/rel"
+            android:scaleType="centerCrop"/>
 
         <RelativeLayout
             android:id="@+id/rel"

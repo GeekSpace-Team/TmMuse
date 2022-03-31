@@ -86,7 +86,7 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_centerInParent="true">
 
             <ImageView
@@ -107,30 +107,40 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/profile_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:visibility="visible"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/profile_rec"
+            <LinearLayout
+                android:id="@+id/profile_layout"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="90"
-                android:overScrollMode="never" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/profile_rec"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:overScrollMode="never" />
+
+
+            </LinearLayout>
 
             <ProgressBar
                 android:id="@+id/progress_bar"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="10"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
+
 
         </LinearLayout>
+
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

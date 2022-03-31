@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@color/card_background"
+    android:fitsSystemWindows="true"
     tools:context=".Activity.AllProductViews.AllProductViewsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -21,9 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentScrim="@color/transparent"
+            app:elevation="0dp"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
-            app:title="@string/app_name"
-            app:elevation="0dp">
+            app:title="@string/app_name">
 
 
             <RelativeLayout
@@ -54,36 +54,21 @@
                         </RelativeLayout>
 
 
-<!--                        <LinearLayout-->
-<!--                            android:visibility="visible"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="150dp"-->
-<!--                            android:layout_alignParentTop="true"-->
-<!--                            android:layout_alignParentEnd="true"-->
-<!--                            android:layout_alignParentBottom="true"-->
-<!--                            android:layout_centerHorizontal="true"-->
-<!--                            android:layout_centerVertical="true"-->
-<!--                            android:gravity="center_horizontal"-->
-<!--                            android:orientation="vertical"-->
-<!--                            android:rotation="-90">-->
-
-                            <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
-                                android:id="@+id/dots_indicator"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:dotsColor="@color/aply_text_color"
-                                app:dotsCornerRadius="8dp"
-                                app:dotsSize="10dp"
-                                app:dotsSpacing="4dp"
-                                app:dotsStrokeColor="@color/aply_text_color"
-                                app:dotsStrokeWidth="2dp"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerInParent="true"
-                                android:rotation="90"
-                                android:layout_centerVertical="true"
-                                android:layout_marginRight="-20dp"/>
-
-<!--                        </LinearLayout>-->
+                        <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                            android:id="@+id/dots_indicator"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:rotation="90"
+                            app:dotsColor="@color/aply_text_color"
+                            app:dotsCornerRadius="8dp"
+                            app:dotsSize="10dp"
+                            app:dotsSpacing="4dp"
+                            app:dotsStrokeColor="@color/aply_text_color"
+                            app:dotsStrokeWidth="2dp"
+                            android:visibility="gone"/>
 
 
                     </RelativeLayout>
@@ -116,8 +101,8 @@
                 android:background="@color/transparent"
                 app:contentInsetLeft="0dp"
                 app:contentInsetStart="0dp"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-                app:layout_collapseMode="pin">
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
 
                 <RelativeLayout
                     android:id="@+id/toolbar"
@@ -134,28 +119,26 @@
                         android:id="@+id/onback_img_profile"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/margins"
                         android:layout_marginTop="24dp"
                         android:onClick="onBack"
                         android:src="@drawable/ic_back"
-                        android:tint="@color/text_color"
-                        android:layout_centerVertical="true"/>
+                        android:tint="@color/text_color" />
 
                     <ImageView
                         android:id="@+id/share_img_profile"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginTop="24dp"
                         android:layout_marginRight="@dimen/margins"
                         android:src="@drawable/ic_share"
-                        android:tint="@color/text_color"
-                        android:layout_centerVertical="true"/>
+                        android:tint="@color/text_color" />
                 </RelativeLayout>
 
             </androidx.appcompat.widget.Toolbar>
-
-
 
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -176,8 +159,7 @@
             android:overScrollMode="never"
             android:scrollbars="none"
             app:behavior_hideable="false"
-            app:layout_anchorGravity="center"
-           >
+            app:layout_anchorGravity="center">
 
             <include layout="@layout/view_bottom_sheet_all_profile" />
 

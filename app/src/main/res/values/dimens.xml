@@ -14,4 +14,5 @@
     <dimen name="bottom_nav_ic">18dp</dimen>
     <dimen name="sliderCircle">10dp</dimen>
     <dimen name="sliderRound">10dp</dimen>
+    <dimen name="qrCode">300dp</dimen>
 </resources>

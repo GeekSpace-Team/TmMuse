@@ -3,13 +3,14 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     signingConfigs {
-        release{
+        release {
             storeFile file(MYAPP_UPLOAD_STORE_FILE)
             storePassword 'Interpol1994'
             keyAlias 'tm_muse'
             keyPassword 'Interpol1994'
         }
     }
+
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
@@ -37,6 +38,16 @@ android {
             targetCompatibility JavaVersion.VERSION_1_8
         }
     }
+    def BASE_URL = '"' + BASE_URL1 + '"' ?: '"Define BASE URL"';
+    def BASE_URL_CANCEL = '"' + BASE_URL_CANCEL2 + '"' ?: '"Define SMS BASE URL"';
+    def BASE_URL_IMAGE = '"' + BASE_URL_IMAGE3 + '"' ?: '"Define SMS BASE URL"';
+
+    android.buildTypes.each { type ->
+        type.buildConfigField 'String', 'Base_URL', BASE_URL1
+        type.buildConfigField 'String', 'BASE_URL_CANCEL', BASE_URL_CANCEL2
+        type.buildConfigField 'String', 'BASE_URL_IMAGE', BASE_URL_IMAGE3
+    }
+
 }
 
 dependencies {
@@ -102,4 +113,7 @@ dependencies {
     // Скелетон
     implementation 'com.ethanhua:skeleton:1.1.2'
     implementation 'io.supercharge:shimmerlayout:2.1.0'
+
+    //QrCode
+    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
 }

@@ -55,7 +55,7 @@
     <style name="CustomCategoryVidget" parent="Widget">
         <item name="android:padding">@dimen/design_custom_padding</item>
         <item name="android:stateListAnimator">@animator/button_state_list_anim_neumorph</item>
-        <item name="neumorph_inset">@dimen/design_default_inset</item>
+        <item name="neumorph_inset">5dp</item>
         <item name="neumorph_shadowElevation">2dp</item>
         <item name="neumorph_shadowColorLight">?colorShadowLight</item>
         <item name="neumorph_shadowColorDark">?colorShadowDark</item>
