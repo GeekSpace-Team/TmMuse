@@ -83,7 +83,7 @@
     <string name="wait_to_weather">Загружается.....</string>
 
     <string name = "see_more"> Подробнее </string>
-    <string name = "call"> Позвонить </string>
+    <string name = "call"> Вызов </string>
     <string name = "map"> Карта </string>
     <string name = "insta"> \@insta </string>
     <string name = "certificate"> Сертификат </string>

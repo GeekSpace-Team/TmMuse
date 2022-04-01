@@ -47,7 +47,7 @@
                     android:text="@string/next"
                     android:textColor="@color/aply_text_color"
                     android:textSize="18sp"
-                    android:visibility="visible"/>
+                    android:visibility="visible" />
 
                 <ProgressBar
                     android:id="@+id/progress_bar"

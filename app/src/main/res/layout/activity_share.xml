@@ -109,8 +109,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="25dp"
                 android:layout_marginEnd="25dp"
-                android:src="@drawable/ic_tm_muse_ico"
-                android:tint="@color/aply_text_color" />
+                android:src="@drawable/ic_logo_for_share"/>
 
         </RelativeLayout>
 
