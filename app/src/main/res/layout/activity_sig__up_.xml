@@ -181,7 +181,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="15dp"
                             android:gravity="center_vertical"
-                            android:text="Get code"
+                            android:text="@string/get_code"
                             android:textColor="@color/aply_text_color"
                             android:textSize="14sp"
                             android:visibility="visible"/>

@@ -60,7 +60,6 @@
                         android:layout_alignStart="@id/back_to_card"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="40dp"
-                        android:text="@string/hello_blank_fragment"
                         android:textColor="@color/text_color"
                         android:textSize="24sp" />
 

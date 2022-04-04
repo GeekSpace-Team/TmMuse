@@ -3,119 +3,142 @@
 
 
     <string name="whats_new">Что нового</string>
-    <string name="in_design"> В дизайне </string>
-    <string name="in_func"> В функциональности </string>
-    <string name="ask_permission"> Нам нужны разрешения! </string>
-    <string name="permission_desc"> Для использования определенных функций этого приложения вам необходимо предоставить разрешения. См. Описание каждого разрешения </string>
-    <string name="location"> Местоположение </string>
-    <string name="location_desc"> Отображение информации о погоде по вашему местоположению </string>
-    <string name="storage"> Хранилище </string>
-    <string name="storage_desc"> Сохраните файлы нашего приложения, чтобы поделиться с друзьями </string>
-    <string name="allow_btn"> Разрешено </string>
-    <string name="skip"> Пропустить </string>
-    <string name="sgn_up"> Зарегистрироваться </string>
-    <string name="sign_up_desc"> Если пользователь зарегистрируется в нашем приложении, он сможет получить больше функций из приложения. </string>
-    <string name="full_name"> Полное имя: </string>
-    <string name="ph_number"> Номер телефона: </string>
-    <string name="sms_code"> Введите код здесь </string>
-    <string name="save"> Сохранить </string>
-    <string name="slc_interest"> Выберите интересы </string>
-    <string name="next"> Далее </string>
-    <string name="nw_movies"> Новые фильмы </string>
-    <string name="prom_and_offers"> Акции и предложения </string>
-    <string name="category"> Категория </string>
-    <string name="afisha"> Афиша </string>
-    <string name="interesting"> Интересно </string>
-    <string name="cafe_res"> Кафе и рестораны </string>
-    <string name="shops"> Магазины </string>
-    <string name="beauty_sport"> Красота и спорт </string>
-    <string name="news"> Новости </string>
-    <string name="inbox"> Входящие </string>
-    <string name="tm_muse_card"> Карта TmMuse </string>
-    <string name="get_card"> Получить карту </string>
-    <string name="tm_muse_card_desc"> Получите карту TmMuse и используйте следующие акции предложения. Нажмите здесь: <u><b>Получить карту</b></u></string>
-    <string name="data_birth"> Дата рождения: </string>
-    <string name="gender"> Пол </string>
-    <string name="pass_inf"> Информация о паспорте: </string>
-    <string name="job"> Работа: </string>
-    <string name="accept"> Я принимаю <font color='#CD2791'> <u><b>условия обработки персональных данных</b></u></font> </string>
-    <string name="reciv_about_card"> Получать информацию о карте от: </string>
-    <string name="Send"> Отправить </string>
-    <string name="u_must_sign"> Сначала вы должны зарегистрироваться </string>
-    <string name="settings"> Настройки </string>
-    <string name="dark_mode"> Темный режим </string>
-    <string name="profile"> Профиль </string>
-    <string name="language"> Язык </string>
-    <string name="help"> Справка </string>
-    <string name="feedback"> Отзыв </string>
-    <string name="terms_use"> Условия использования </string>
-    <string name="about"> О нас </string>
-    <string name="log_out"> Выйти </string>
-    <string name="slc_language"> Выбрать язык </string>
-    <string name="pay_attention"> Обратите внимание! </string>
-    <string name="pay_attention_desc"> Если нажать OK, вы выйдете из системы и все ваши данные будут удалены из приложения! </string>
-    <string name="cancel"> Отменить </string>
-    <string name="ok"> ОК </string>
-    <string name="top_keywords"> Популярные ключевые слова </string>
-    <string name="search_result"> Результат поиска </string>
-    <string name="search"> Искать… </string>
-    <string name="clear_history"> Очистить</string>
-    <string name="search_not_found"> ​​Поиск не найден </string>
-    <string name="check_internet"> Проверьте подключение к Интернету </string>
-    <string name="low_connect"> Низкое интернет-соединение </string>
-    <string name="per_need"> Требуется разрешение </string>
-    <string name="per_need_des"> Это разрешение необходимо для хорошей работы в этой программе </string>
+    <string name="in_design">В дизайне </string>
+    <string name="in_func">В функциональности </string>
+    <string name="ask_permission">К вашему вниманию! </string>
 
-    <string name="hello_blank_fragment"> Привет, пустой фрагмент </string>
-    <string name="email"> Электронная почта: </string>
-    <string name="your_message"> Ваше сообщение </string>
-    <string name="after_call"> После отправки запроса мы звоним на ваш номер телефона. </string>
-    <string name="sel_lang"> Выбор языка </string>
+    <string name="location">Местоположение</string>
+
+    <string name="storage">Хранилище</string>
+
+    <string name="allow_btn">Разрешено</string>
+    <string name="skip">Далее </string>
+    <string name="sgn_up">Регистрация </string>
+    <string name="sign_up_desc">Зарегистрируйтесь в нашем приложении, чтобы получить больше доступа к функциям приложения. </string>
+    <string name="full_name">Полное имя:</string>
+    <string name="ph_number">Номер телефона: </string>
+    <string name="sms_code">Введите код: </string>
+    <string name="save">Сохранить</string>
+    <string name="slc_interest">Выберите интересы</string>
+    <string name="next">Далее</string>
+    <string name="nw_movies">Новые фильмы </string>
+    <string name="prom_and_offers">Акции и предложения </string>
+    <string name="category">Категории </string>
+    <string name="afisha">Афиша </string>
+    <string name="interesting">Интересное </string>
+    <string name="cafe_res">Кафе и рестораны </string>
+    <string name="shops">Магазины </string>
+    <string name="beauty_sport">Красота и спорт </string>
+    <string name="news"> Новости </string>
+    <string name="inbox">Входящие письма </string>
+    <string name="tm_muse_card">Мультикарта TmMuse </string>
+    <string name="get_card">Анкета на получение мультикарты </string>
+    <string name="tm_muse_card_desc">Чтобы получить доступ к скидкам по мультикарте TmMuse, заполните анкету.  <u><b>Для заполнения анкеты нажмите здесь:</b></u></string>
+    <string name="data_birth">Дата рождения: </string>
+    <string name="gender">Пол: </string>
+    <!--    Эта информация, которая будет размещена в поле, после клика в графе принимаю.-->
+    <!--    Владелец дисконтной карты добровольно предоставляет для обработки свои персональные данные как данные обладателя дисконтной карты, включая информацию о фамилии, имени, отчестве, поле, дате рождения, контактных телефонах и адресах электронной почты.-->
+
+    <!--    В случае утраты, повреждения карты, дисконтная карта восстанавливается при условии оплаты за изготовление карты и правильного заполнения Анкеты.-->
+
+    <!--    Скидка по дисконтной карте начинает действовать с момента регистрации карты. При желании, владелец дисконтной карты не имеет право переоформить дисконтную карту на другое лицо.-->
+
+    <!--    Подписывая Анкету, каждый покупатель тем самым подтверждает свое согласие на использование предоставленной информации Компанией в маркетинговых и/или рекламных целях, методами, которые не нарушают действующее законодательство Туркменистана.-->
+
+    <!--    Клиент при получении карты обязан заполнить прилагаемую Анкету и расписаться в ней, что означает согласие Клиента с настоящими Правилами. Клиент имеет право подтвердить согласие на получение телефонных, почтовых и смс - сообщений о рекламных акциях, проводимых собственником. В случае не заполнения Анкеты полностью или частично, собственник вправе отказать Клиенту в выдаче Дисконтной карты.-->
+
+
+    <string name="accept">Я принимаю <font color='#CD2791'> <u><b>условия обработки персональных данных</b></u></font> </string>
+    <string name="reciv_about_card">Получать информацию о карте через: </string>
+    <string name="Send">Отправить</string>
+    <string name="u_must_sign">Сначала вы должны зарегистрироваться</string>
+    <string name="settings">Настройки</string>
+    <string name="dark_mode">Тёмный режим</string>
+    <string name="profile">Ваш профиль</string>
+    <string name="language">Язык</string>
+    <string name="help">Помощь</string>
+    <string name="feedback">Оставить отзыв</string>
+    <string name="terms_use">Условия пользования</string>
+
+    <!--    Дисконтная карта не является банковской, платежной или кредитной. Дисконтная карта является собственностью «TmMuse» - доменное имя: muse.com.tm (далее - Компания).-->
+
+    <!--    Клиент, должен заполнить Анкету (персональные данные) владельца дисконтной карты «Ты особенный».-->
+
+    <!--    С момента получения карты ее владелец становится участником дисконтной программы «Ты особенный» и на него будет распространяться действие настоящих Правил со всеми периодически вносимыми в них изменениями и дополнениями.-->
+
+    <!--    Дисконтная карта является номерной и при передаче владельцем дисконтной карты третьему лицу, дисконтная карта может быть не принята в заведениях, являющимися партнерами Компании. Дисконтная карта предоставляет возможность совершать покупки/получать услуги/посещать заведения с фиксированной скидкой и действует только в заведениях являющимися партнерами Компании.-->
+
+    <!--    Дисконтная карта должна быть предъявлена до оформления кассового чека. В случае если карта была предъявлена после оформления чека, скидка на купленный товар не предоставляется.-->
+
+    <!--    Дисконтная карта «Ты особенный» предоставляет ее владельцу, указанному в Анкете, право на получение скидок при приобретении услуг при условии соблюдения изложенных Правил. Кроме того, каждый владелец дисконтной карты сможет получать информацию о скидках, специальных предложениях, участвовать в акциях и розыгрышах призов в течение всего срока пользования дисконтной картой.-->
+
+    <string name="about">О нас</string>
+    <string name="log_out">Выйти </string>
+    <string name="slc_language">Выбрать язык </string>
+    <string name="pay_attention">Обратите внимание! </string>
+    <string name="pay_attention_desc">Если нажать OK, вы выйдете из системы и все ваши данные будут удалены из приложения! </string>
+    <string name="cancel">Отменить </string>
+    <string name="ok">ОК </string>
+    <string name="top_keywords">Популярные ключевые слова </string>
+    <string name="search_result">Результат поиска </string>
+    <string name="search">Искать… </string>
+    <string name="clear_history">Очистить</string>
+    <string name="search_not_found">Поиск не найден </string>
+    <string name="check_internet">Проверьте подключение к Интернету </string>
+    <string name="low_connect">Низкое интернет-соединение </string>
+    <string name="per_need">Требуется разрешение </string>
+    <string name="per_need_des">Разрешение необходимо для хорошей работы в программе </string>
+
+
+    <string name="email">Электронная почта: </string>
+    <string name="your_message">Ваше сообщение: </string>
+    <string name="after_call">После отправки запроса мы позвоним вам </string>
+    <string name="sel_lang">Выбор языка </string>
     <string name="student">Студент</string>
-    <string name="worker">Служаший</string>
+    <string name="worker">Служащий</string>
     <string name="school_stu">Школьник</string>
     <string name="filt_shop">Фильтровать</string>
-    <string name="tags"> Примечания </string>
-    <string name="sort"> Cортировать </string>
+    <string name="tags">Примечания </string>
+    <string name="sort">Cортировать </string>
     <string name="from_oldest">Старые</string>
     <string name="from_latest">Новые</string>
-    <string name="filter"> Выбрать </string>
+    <string name="filter">Выбрать </string>
     <string name="wait_to_weather">Загружается.....</string>
 
-    <string name = "see_more"> Подробнее </string>
-    <string name = "call"> Вызов </string>
-    <string name = "map"> Карта </string>
-    <string name = "insta"> \@insta </string>
-    <string name = "certificate"> Сертификат </string>
-    <string name = "address"> Адрес </string>
-    <string name = "past_an_plan_text"> Вставить текст плана </string>
-    <string name = "payment"> Оплата </string>
-    <string name = "work_hours"> Часы работы </string>
-    <string name = "cuisine"> Кухня </string>
-    <string name = "deliver"> Доставить </string>
-    <string name = "average_check"> Средний чек </string>
-    <string name = "own_promotion"> Собственное продвижение </string>
-    <string name = "gallery"> Галерея </string>
-    <string name = "posts"> Сообщения </string>
-    <string name = "bron_movie"> Фильм Брон </string>
-    <string name = "description"> Описание </string>
-    <string name = "movie_time"> Время фильма </string>
+    <string name="see_more">Подробнее </string>
+    <string name="call">Вызов</string>
+    <string name="map"> Карта </string>
+    <string name="insta"> \@insta </string>
+    <string name="certificate">Сертификат </string>
+    <string name="address">Адрес </string>
+    <string name="past_an_plan_text">Вставить текст плана </string>
+    <string name="payment">Оплата </string>
+    <string name="work_hours">Часы работы </string>
+    <string name="cuisine">Кухня </string>
+    <string name="deliver">Доставка </string>
+    <string name="average_check">Средний чек </string>
+    <string name="own_promotion">Скидка заведений</string>
+    <string name="gallery">Галерея </string>
+    <string name="posts">Сообщения </string>
+    <string name="bron_movie">Бронь фильма </string>
+    <string name="description">Описание </string>
+    <string name="movie_time">Время показа </string>
     <string name="vr_image">VR "\n" Изображение </string>
-    <string name = "please_check_your_internet_connection"> Проверьте подключение к Интернету </string>
-    <string name = "top_keyword"> Главное ключевое слово </string>
-    <string name = "male"> мужчина </string>
-    <string name = "female"> женщина </string>
-    <string name="code_inncorect"> Код был введен неправильно </string>
-    <string name="clear_history_all">Отчистить</string>
+    <string name="please_check_your_internet_connection">Проверьте подключение к Интернету </string>
+    <string name="top_keyword">Ключевое слово </string>
+    <string name="male">мужчина </string>
+    <string name="female">женщина </string>
+    <string name="code_inncorect">Код был введен неправильно </string>
+    <string name="clear_history_all">Очистить</string>
     <string name="search_history">История поиска</string>
-    <string name="tm_muse_message">TM MUSE сообщение</string>
+    <string name="tm_muse_message">Tmmuse сообщение</string>
 
     <string name="enter_informations">Введите информацию:</string>
     <string name="select_date_and_time">Выберите дату и время:</string>
-    <string name="enter_count_off_ticket">Введите билеты со скидкой:</string>
-    <string name="Answer_buy_ticket">Хотите заказать этот фильм?</string>
-    <string name="price">Цена:</string>
-    <string name="buy_ticket_desc">Вы должны прийти в кинотеатр за 30 минут до начала фильма!</string>
+    <string name="enter_count_of_ticket">Введите количество билетов:</string>
+    <string name="Answer_buy_ticket">Вы подтверждаете  бронь фильма?</string>
+    <string name="price">Стоимость: </string>
+    <string name="buy_ticket_desc">Настоятельно советуем Вам прийти в кинотеатр за 30 минут до начала фильма!</string>
     <string name="no">Нет</string>
     <string name="yes">Да</string>
     <string name="visit_page">Посетить страницу</string>
@@ -123,8 +146,8 @@
     <string name="your_promo_code">Ваш промокод:</string>
     <string name="promo_code">Промокод</string>
     <string name="select_phone_number">Выберите номер телефона</string>
-    <string name="terminal_have">бар</string>
-    <string name = "access_get_card"> Мы свяжемся с Вами в ближайшее время </string>
+    <string name="terminal_have">да</string>
+    <string name="access_get_card"> Ваша заявка принята. Наш оператор свяжется с вами.</string>
 
     <string name="first_you_must_sign_up">Сначала вы должны <font color='#CD2791'> <u><b>зарегистрироваться</b></u></font> </string>
     <string name="wait">Пожалуйста, подождите...</string>
@@ -132,21 +155,29 @@
     <string name="chek_gender">Пожалуйста, выберите свой пол</string>
     <string name="chek_email">Напишите свой адрес электронной почты</string>
     <string name="chek_permission">Вы должны принять разрешение</string>
+
     <string name="chek_info_card">Выберите способ получения информации о вашей карте</string>
-    <string name="chek_permission_for">Пожалуйста, примите разрешения</string>
+    <string name="chek_permission_for">Пожалуйста, примите разрешения</string>???????
     <string name="two_click_exit">Пожалуйста, нажмите НАЗАД еще раз, чтобы выйти</string>
-    <string name="how_many_tickets">Укажите, сколько билетов вы хотите</string>
+    <string name="how_many_tickets">Укажите, сколько билетов вы хотите заказать?</string>
 
 
-    <string name = "error_values"> Введен неверный код </string>
-    <string name = "enter_number"> Полностью введите свой номер телефона </string>
-    <string name="get_sms"> Введите код, пришедший по SMS, в поля ниже! </string>
-    <string name = "enter_all_values"> Введите полные данные </string>
+    <string name="error_values">Введен неверный код </string>
+    <string name="enter_number">Полностью введите свой номер телефона </string>
+    <string name="get_sms">Введите код, пришедший по SMS. </string>
+    <string name="enter_all_values">Введите полные данные </string>
 
-    <string name = "ticket_details"> Информация о билете </string>
-    <string name = "no_data"> Нет данных </string>
+    <string name="ticket_details">Информация о брони </string>
+    <string name="no_data">Нет данных </string>
 
     <string name="terminal">Терминал</string>
     <string name="cash">наличными</string>
+    <string name="free_time">Время обеда</string>
+    <string name="cooming_soon">Скоро будет</string>
+    <string name="all_promo">Все</string>
+
+    <string name="count">Количества ,bktnjd</string>
+    <string name="get_code">Получить код</string>
+    <string name="success">Успешно</string>
 
 </resources>
