@@ -185,7 +185,7 @@
             <soup.neumorphism.NeumorphCardView
                 style="@style/CustomShapeAppearance"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_marginTop="@dimen/margins_five"
                 android:background="@drawable/gradient_press"
                 app:neumorph_shapeType="pressed">
@@ -200,16 +200,14 @@
                     <EditText
                         android:id="@+id/ed_message"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margins_edt"
                         android:layout_marginRight="@dimen/margins_edt"
                         android:background="@android:color/transparent"
                         android:gravity="top|start"
                         android:inputType="text"
                         android:textColor="@color/text_color"
-                        android:lines="15"
-                        android:maxLines="15"
-                        android:singleLine="false"/>
+                        android:maxLines="10"/>
 
                 </LinearLayout>
 

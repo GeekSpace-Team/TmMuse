@@ -21,7 +21,8 @@
             android:text="@string/pay_attention"
             android:textColor="@color/text_color"
             android:textSize="24sp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/pay_attention_desc"

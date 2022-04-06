@@ -33,7 +33,7 @@
     <string name="inbox">Входящие письма </string>
     <string name="tm_muse_card">Мультикарта TmMuse </string>
     <string name="get_card">Анкета на получение мультикарты </string>
-    <string name="tm_muse_card_desc">Чтобы получить доступ к скидкам по мультикарте TmMuse, заполните анкету.  <u><b>Для заполнения анкеты нажмите здесь:</b></u></string>
+    <string name="tm_muse_card_desc">Чтобы получить доступ к скидкам по мультикарте TmMuse, заполните анкету.  <font color='#CD2791'><u><b>Для заполнения анкеты нажмите здесь:</b></u></font></string>
     <string name="data_birth">Дата рождения: </string>
     <string name="gender">Пол: </string>
     <!--    Эта информация, которая будет размещена в поле, после клика в графе принимаю.-->
@@ -110,19 +110,19 @@
     <string name="map"> Карта </string>
     <string name="insta"> \@insta </string>
     <string name="certificate">Сертификат </string>
-    <string name="address">Адрес </string>
+    <string name="address">Адрес: </string>
     <string name="past_an_plan_text">Вставить текст плана </string>
-    <string name="payment">Оплата </string>
-    <string name="work_hours">Часы работы </string>
-    <string name="cuisine">Кухня </string>
-    <string name="deliver">Доставка </string>
-    <string name="average_check">Средний чек </string>
-    <string name="own_promotion">Скидка заведений</string>
+    <string name="payment">Оплата:</string>
+    <string name="work_hours">Часы работы: </string>
+    <string name="cuisine">Кухня: </string>
+    <string name="deliver">Доставка: </string>
+    <string name="average_check">Средний чек: </string>
+    <string name="own_promotion">Скидка заведений:</string>
     <string name="gallery">Галерея </string>
     <string name="posts">Сообщения </string>
     <string name="bron_movie">Бронь фильма </string>
-    <string name="description">Описание </string>
-    <string name="movie_time">Время показа </string>
+    <string name="description">Описание: </string>
+    <string name="movie_time">Время показа: </string>
     <string name="vr_image">VR "\n" Изображение </string>
     <string name="please_check_your_internet_connection">Проверьте подключение к Интернету </string>
     <string name="top_keyword">Ключевое слово </string>
